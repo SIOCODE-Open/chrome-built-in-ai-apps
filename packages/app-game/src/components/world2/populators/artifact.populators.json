@@ -1,0 +1,88 @@
+[
+    {
+        "id": "artifact.sculpture",
+        "populatorType": "item",
+        "name": [
+            "Beautiful Stone Sculpture",
+            "Exquisite Marvel Sculpture",
+            "Nice Bronze Sculpture"
+        ],
+        "tier": [
+            "rare"
+        ],
+        "type": "artifact"
+    },
+    {
+        "id": "artifact.map",
+        "populatorType": "item",
+        "name": [
+            "Map of Land",
+            "Map of the World"
+        ],
+        "tier": [
+            "rare"
+        ],
+        "type": "artifact"
+    },
+    {
+        "id": "artifact.letter",
+        "populatorType": "item",
+        "name": "Handwritten Letter",
+        "tier": [
+            "rare"
+        ],
+        "type": "artifact"
+    },
+    {
+        "id": "artifact.book",
+        "populatorType": "item",
+        "name": [
+            "Book on History",
+            "Book on Magic",
+            "Book on Science"
+        ],
+        "tier": [
+            "rare"
+        ],
+        "type": "artifact"
+    },
+    {
+        "id": "artifact.painting",
+        "populatorType": "item",
+        "name": [
+            "Beautiful Painting",
+            "Exquisite Painting",
+            "Nice Painting"
+        ],
+        "tier": [
+            "rare"
+        ],
+        "type": "artifact"
+    },
+    {
+        "id": "artifact.religious-icon",
+        "populatorType": "item",
+        "name": [
+            "Religious Icon",
+            "Holy Icon",
+            "Sacred Icon"
+        ],
+        "tier": [
+            "common"
+        ],
+        "type": "artifact"
+    },
+    {
+        "id": "artifact.religious-book",
+        "populatorType": "item",
+        "name": [
+            "Religious Book",
+            "Religious Singing Book",
+            "Sacred Book"
+        ],
+        "tier": [
+            "common"
+        ],
+        "type": "artifact"
+    }
+]

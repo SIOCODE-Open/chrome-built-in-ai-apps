@@ -1,0 +1,4 @@
+scope: siocode
+name: chrome-ai-apps
+description: Single Page Frontend Applications, that use the window.ai API. Created for the Google Chrome Built-in AI Challenge.
+version: 0.0.1

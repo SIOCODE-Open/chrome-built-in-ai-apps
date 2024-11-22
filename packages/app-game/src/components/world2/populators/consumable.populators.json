@@ -1,0 +1,131 @@
+[
+    {
+        "id": "consumable.healing-potion.small",
+        "populatorType": "item",
+        "name": [
+            "Small Healing Potion",
+            "Tiny Potion of Healing"
+        ],
+        "tier": "rare",
+        "type": "consumable",
+        "consumable": {
+            "effects": [
+                {
+                    "name": "Heal",
+                    "type": "heal",
+                    "value": [
+                        10,
+                        25
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": "consumable.healing-potion.normal",
+        "populatorType": "item",
+        "name": [
+            "Healing Potion",
+            "Potion of Healing"
+        ],
+        "tier": "rare",
+        "type": "consumable",
+        "consumable": {
+            "effects": [
+                {
+                    "name": "Heal",
+                    "type": "heal",
+                    "value": [
+                        100,
+                        150
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": "consumable.healing-potion.large",
+        "populatorType": "item",
+        "name": [
+            "Large Healing Potion",
+            "Big Potion of Healing"
+        ],
+        "tier": "epic",
+        "type": "consumable",
+        "consumable": {
+            "effects": [
+                {
+                    "name": "Heal",
+                    "type": "heal",
+                    "value": [
+                        500,
+                        750
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": "consumable.poison.small",
+        "populatorType": "item",
+        "name": [
+            "Small Vile of Poison",
+            "Poison Vile"
+        ],
+        "tier": "rare",
+        "type": "consumable",
+        "consumable": {
+            "effects": [
+                {
+                    "name": "Poison Yourself",
+                    "type": "damage-self",
+                    "value": [
+                        10,
+                        25
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": "consumable.poison.normal",
+        "populatorType": "item",
+        "name": [
+            "Vile of Poison",
+            "Glass of Poison"
+        ],
+        "tier": "rare",
+        "type": "consumable",
+        "consumable": {
+            "effects": [
+                {
+                    "name": "Poison Yourself",
+                    "type": "damage-self",
+                    "value": [
+                        100,
+                        150
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": "consumable.dynamite",
+        "populatorType": "item",
+        "name": "Dynamite Stick",
+        "tier": "rare",
+        "type": "consumable",
+        "consumable": {
+            "effects": [
+                {
+                    "name": "Explode Enemy",
+                    "type": "damage-enemy",
+                    "value": [
+                        100,
+                        150
+                    ]
+                }
+            ]
+        }
+    }
+]

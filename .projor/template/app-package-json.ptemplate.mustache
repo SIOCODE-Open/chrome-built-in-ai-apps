@@ -1,0 +1,37 @@
+{
+    "forEach": "apps",
+    "filename": "packages/app-{{kebabCase name}}/package.json",
+    "formatUsing": "json"
+}
+---
+{
+    "name": "@{{$.scope}}/app-{{kebabCase name}}",
+    "description": "{{{description}}}",
+    "version": "{{{$.version}}}",
+    "private": true,
+    "dependencies": {
+        "react": "*",
+        "react-dom": "*",
+        "rxjs": "*",
+        "classnames": "*",
+        "@iconify/react": "*",
+        "@{{$.scope}}/base": "*"
+    },
+    "devDependencies": {
+        "tailwindcss": "*",
+        "esbuild": "*",
+        "concurrently": "*",
+        "typescript": "*",
+        "@types/react": "*",
+        "@types/react-dom": "*",
+        "@types/classnames": "*"
+    },
+    "scripts": {
+        "build:js": "esbuild src/index.tsx --bundle --minify --jsx=automatic --outfile=public/index.js",
+        "build:css": "tailwindcss -i src/index.css -o public/index.css",
+        "serve:js": "esbuild src/index.tsx --bundle --servedir=public --jsx=automatic --outfile=public/index.js --serve=0.0.0.0:3200",
+        "serve:css": "tailwindcss -i src/index.css -o public/index.css --watch",
+        "serve": "concurrently \"npm run serve:js\" \"npm run serve:css\"",
+        "build": "npm run build:js && npm run build:css"
+    }
+}

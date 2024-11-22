@@ -1,0 +1,14 @@
+[
+    {
+        "id": "food.simple-food",
+        "populatorType": "item",
+        "name": [
+            "Edible Food",
+            "Tasty Snack",
+            "Healthy Food",
+            "Simple Meal"
+        ],
+        "tier": "common",
+        "type": "food"
+    }
+]

@@ -1,0 +1,36 @@
+{
+    "map": {
+        "enums": "world-enums"
+    },
+    "filename": "packages/app-game/src/model/world.enums.tsx",
+    "formatUsing": "typescript"
+}
+---
+{{#each enums}}
+/** {{{description}}} */
+export const WORLD_{{constantCase name}} = [
+    {{#each values}}
+    '{{{kebabCase name}}}',
+    {{/each}}
+];
+
+/** {{{description}}} */
+export type World{{pascalCase name}} =
+{{#each values}}
+    | '{{{kebabCase name}}}'{{#if @last}};{{/if}}
+{{/each}}
+
+/** Descriptions for {{{capitalCase name}}} */
+export const WORLD_{{constantCase name}}_DESCRIPTIONS = {
+    {{#each values}}
+    '{{{kebabCase name}}}': `{{{description}}}`,
+    {{/each}}
+};
+
+/** Display values for {{{capitalCase name}}} */
+export const WORLD_{{constantCase name}}_DISPLAYS = {
+    {{#each values}}
+    '{{{kebabCase name}}}': `{{{capitalCase name}}}`,
+    {{/each}}
+};
+{{/each}}

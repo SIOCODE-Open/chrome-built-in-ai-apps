@@ -1,0 +1,45 @@
+{
+    "forEach": "apps",
+    "filename": "packages/app-{{kebabCase name}}/tsconfig.json",
+    "formatUsing": "json"
+}
+---
+{
+    "compilerOptions": {
+        "target": "ES2015",
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "lib": [
+            "ES2015",
+            "ES2016",
+            "ES2017",
+            "ES2018",
+            "ES2019",
+            "ES2020",
+            "ES2021",
+            "DOM"
+        ],
+        "strict": false,
+        "noEmitOnError": false,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "jsx": "react-native",
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "outDir": "lib",
+        "rootDirs": [
+            "src",
+            "public"
+        ]
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.js",
+        "src/**/*.jsx",
+        "index.d.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

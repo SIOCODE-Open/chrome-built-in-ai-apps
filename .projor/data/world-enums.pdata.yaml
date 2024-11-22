@@ -1,0 +1,746 @@
+id: world-enums
+name: World Enums
+description: The enums of the world
+schema: WorldEnum
+objects:
+  - name: item_type
+    description: The type of an item
+    values:
+      - name: weapon
+        description: Items used for combat, wielded in one or both hands to attack foes.
+      - name: armor
+        description: Protective gear worn on the torso, offering defense against attacks.
+      - name: helmet
+        description: Headgear providing protection and sometimes magical enhancements.
+      - name: boots
+        description: Footwear that can improve movement or provide additional defense.
+      - name: wearable
+        description: Accessories worn on the body, often for enhancing attributes or abilities.
+      - name: consumable
+        description: Items that can be used once, providing various effects when consumed.
+      - name: food
+        description: Edible items that restore health or provide sustenance.
+      - name: drink
+        description: Beverages that quench thirst and may provide temporary boosts.
+      - name: material
+        description: Raw or crafted items used for creating or enhancing other objects.
+      - name: household
+        description: A household item, such as decoration or tools.
+      - name: artifact
+        description: A rare artifact, valuable for those who collect such items.
+
+  - name: item_tier
+    description: The rarity and power level of an item
+    values:
+      - name: garbage
+        description: Useless and discarded items, with no value or purpose.
+      - name: common
+        description: Easily found and widely available, with minimal special properties.
+      - name: rare
+        description: Uncommon items, often possessing unique traits or enhancements.
+      - name: epic
+        description: Highly sought after, with powerful abilities and distinctive features.
+      - name: legendary
+        description: Extremely rare and shrouded in legend, possessing extraordinary power.
+
+  - name: weapon_type
+    description: The type of weapon used in combat
+    values:
+      - name: sword
+        description: A balanced, sharp-edged blade suited for close combat.
+      - name: axe
+        description: A heavy, bladed weapon designed for powerful strikes.
+      - name: knife
+        description: A small, versatile blade, often used for stealth or quick attacks.
+      - name: dagger
+        description: A double-edged blade, ideal for precise strikes and close-quarters combat.
+      - name: bow
+        description: A ranged weapon that fires arrows, requiring skill and precision.
+      - name: crossbow
+        description: A mechanical ranged weapon that fires bolts, offering high power.
+      - name: staff
+        description: A long, wooden weapon often used by mages or monks for casting spells.
+
+  - name: wearable_type
+    description: The type of wearable accessories
+    values:
+      - name: necklace
+        description: Jewelry worn around the neck, often enchanted or decorative.
+      - name: ring
+        description: A small band worn on the finger, sometimes magical in nature.
+      - name: bracelet
+        description: A decorative or enchanted item worn on the wrist.
+      - name: belt
+        description: A strap worn around the waist, occasionally providing special effects.
+      - name: trinket
+        description: A small, unique item with minor magical properties.
+
+  - name: wearable_effect_activation
+    description: When an effect of a wearable item is activated
+    values:
+      - name: when_attacking
+        description: The effect is activated when attacking an enemy.
+      - name: when_defending
+        description: The effect is activated when defending against an enemy.
+
+  - name: wearable_effect_type
+    description: The type of effect provided by a wearable item
+    values:
+      - name: heal
+        description: The item heals you.
+      - name: damage
+        description: The item deals damage to your enemy.
+      - name: destroy_item
+        description: The item destroys an item of your enemy.
+
+  - name: consumable_effect_type
+    description: The type of effect provided by a consumable item
+    values:
+      - name: heal
+        description: The item heals you.
+      - name: damage_self
+        description: The item damages you.
+      - name: damage_enemy
+        description: The item damages your enemy.
+      - name: destroy_enemy_item
+        description: The item destroys an item of your enemy.
+      - name: create_item
+        description: The item creates a new item in your inventory.
+      - name: restore_hunger
+        description: The item restores your hunger level.
+      - name: restore_thirst
+        description: The item restores your thirst level.
+      - name: learn_skill
+        description: The item teaches you a new skill.
+
+  - name: npc_race
+    description: The race or species of a non-player character
+    values:
+      - name: human
+        description: The most common race, known for versatility and adaptability.
+      - name: elf
+        description: A graceful, long-lived race with a deep connection to nature.
+      - name: dwarf
+        description: A stout, sturdy race known for mining and craftsmanship.
+      - name: orc
+        description: A strong, warrior-like race with a fearsome reputation.
+      - name: animal
+        description: Non-humanoid creatures, varying greatly in appearance and behavior.
+
+  - name: npc_stance
+    description: The stance of the NPC towards the player character
+    values:
+      - name: friendly
+        description: They don't necessarily like the player, but they engage in conversation and trade with them.
+      - name: neutral
+        description: They don't care about the player, they are just there.
+      - name: hostile
+        description: They attack the player on sight.
+
+  - name: npc_personality_trait
+    description: Traits defining the personality of a non-player character
+    values:
+      - name: kind
+        description: Compassionate and helpful, showing genuine care for others.
+      - name: cruel
+        description: Enjoys causing pain and suffering, lacking empathy.
+      - name: brave
+        description: Faces danger with courage and resolve.
+      - name: cowardly
+        description: Easily frightened and avoids risky situations.
+      - name: honest
+        description: Truthful and forthright, values integrity.
+      - name: deceptive
+        description: Manipulative and skilled at hiding the truth.
+      - name: generous
+        description: Willing to give freely, often at personal cost.
+      - name: greedy
+        description: Desires wealth and possessions, often at the expense of others.
+      - name: patient
+        description: Calm and able to endure hardship without frustration.
+      - name: impatient
+        description: Easily frustrated, dislikes waiting or delays.
+      - name: loyal
+        description: Devoted and faithful, stands by allies no matter the cost.
+      - name: treacherous
+        description: Untrustworthy and likely to betray others for personal gain.
+      - name: curious
+        description: Eager to learn and explore new things.
+      - name: apathetic
+        description: Lacks interest or enthusiasm, indifferent to most situations.
+      - name: optimistic
+        description: Tends to see the bright side, expects positive outcomes.
+      - name: pessimistic
+        description: Focuses on the negative, expects the worst to happen.
+      - name: humble
+        description: Modest and unassuming, does not boast about achievements.
+      - name: arrogant
+        description: Overly proud and self-important, often looks down on others.
+      - name: diligent
+        description: Hardworking and attentive, puts in effort to complete tasks.
+      - name: lazy
+        description: Avoids work and seeks the easiest path, often idle.
+      - name: empathetic
+        description: Feels and understands the emotions of others deeply.
+      - name: selfish
+        description: Prioritizes personal gain over the needs of others.
+      - name: forgiving
+        description: Willing to let go of past wrongs and offer second chances.
+      - name: vengeful
+        description: Holds grudges and seeks retribution for perceived slights.
+      - name: cheerful
+        description: Maintains a positive demeanor, spreading joy to those around.
+      - name: gloomy
+        description: Often downcast, focusing on life's hardships and struggles.
+      - name: adventurous
+        description: Thrives on excitement and seeks out thrilling experiences.
+      - name: cautious
+        description: Careful and risk-averse, tends to overthink actions.
+      - name: disciplined
+        description: Strictly follows routines and rules, has strong self-control.
+      - name: undisciplined
+        description: Struggles with self-control, often inconsistent in actions.
+      - name: compassionate
+        description: Deeply caring and empathetic toward others' suffering.
+      - name: indifferent
+        description: Detached, often unbothered by the needs or feelings of others.
+
+  - name: npc_background
+    description: The background story of a non-player character
+    values:
+      - name: peasant
+        description: Born and raised in a rural village, they have spent most of their life toiling in the fields. Their hands are calloused, and they know the value of hard work. They have little, but they appreciate the simple things in life.
+      - name: noble
+        description: Raised in the luxury of a noble family, they are accustomed to fine clothing, formal gatherings, and the politics of high society. They hold a sense of entitlement but may struggle with the practicalities of everyday life.
+      - name: merchant
+        description: A skilled trader who has spent years traveling between towns and cities. They are shrewd and observant, always on the lookout for a good deal or potential profit. They are well-versed in negotiation and have a silver tongue.
+      - name: blacksmith
+        description: With strong arms and a steady hand, they have forged weapons, tools, and armor for many years. They take pride in their craft, and their face often bears a layer of soot. They are practical and straightforward in their speech.
+      - name: healer
+        description: A compassionate individual who has dedicated their life to tending to the sick and injured. They are gentle but firm, often calm in the face of crisis. They carry a deep understanding of herbs and medicine.
+      - name: scholar
+        description: An avid reader and thinker, they have spent years studying ancient texts and learning about the world’s history. They are well-spoken and enjoy intellectual debates, but may be socially awkward or dismissive of those less educated.
+      - name: soldier
+        description: Hardened by years of battle, they carry the weight of war on their shoulders. Disciplined and loyal, they follow orders without question, but their eyes show the fatigue of witnessing countless conflicts.
+      - name: orphan
+        description: They grew up without parents, learning to fend for themselves from a young age. Resourceful and resilient, they often keep their guard up, trusting few. Their childhood was harsh, and it has shaped them into a survivor.
+      - name: hunter
+        description: Skilled in tracking and archery, they have spent much of their life in the wilderness. They are quiet and observant, preferring the company of nature to crowded cities. They are quick on their feet and have sharp instincts.
+      - name: priest
+        description: A devoted follower of their faith, they provide guidance and spiritual support to the community. They speak with a calm, reassuring voice and often offer words of wisdom. Their demeanor is serene, but they may struggle with doubt.
+      - name: criminal
+        description: Having lived a life on the wrong side of the law, they are street-smart and cunning. They have connections in the underground world and know how to manipulate situations to their advantage. They are always looking for the next score.
+      - name: farmer
+        description: A hardworking individual, they are familiar with the cycles of planting and harvest. Their life revolves around the land and the seasons. They are pragmatic and speak plainly, valuing honesty and integrity.
+      - name: entertainer
+        description: Whether a bard, dancer, or acrobat, they have spent their life performing for others. They are charismatic and enjoy being the center of attention, often masking their own troubles behind a smile or a joke.
+      - name: sailor
+        description: With skin weathered by sun and salt, they have spent years at sea. They are used to a life of adventure and hardship, often speaking in nautical terms. They have a relaxed attitude but are ready to fight when danger arises.
+      - name: herbalist
+        description: Living close to nature, they have a deep knowledge of plants and their medicinal properties. They are often found foraging in the woods or brewing potions. They have a mystical air about them, and some believe they possess magical abilities.
+      - name: beggar
+        description: Once a person of better fortune, they have fallen on hard times and now live on the streets. They are desperate but not without pride, trying to maintain a shred of dignity despite their circumstances. They know the city’s hidden corners well.
+      - name: explorer
+        description: Driven by a thirst for adventure, they have traveled far and wide, seeking out uncharted lands and hidden treasures. They are bold and fearless, often regaling others with tales of their exploits. Their spirit is restless, always seeking the next discovery.
+      - name: artisan
+        description: A skilled craftsman, they take pride in creating beautiful works of art, be it pottery, paintings, or sculptures. They are meticulous and patient, often lost in thought as they perfect their creations. They have a deep appreciation for beauty.
+      - name: exiled
+        description: Banished from their homeland for reasons they may or may not speak about, they are haunted by their past. They are a wanderer now, looking for a place to belong. There is a sense of sorrow and regret in their demeanor.
+      - name: witch
+        description: Living on the outskirts of society, they are feared and respected for their knowledge of the dark arts. They have a mysterious, otherworldly presence and are often shunned by the superstitious. They carry secrets few dare to uncover.
+      - name: wanderer
+        description: A nomadic soul with no fixed home, drifting from place to place in search of new experiences and people. They are adaptable and know how to survive on the road.
+      - name: miner
+        description: Spent most of their life deep underground, extracting precious metals and stones. Their hands are rough, and they speak in a gruff, straightforward manner.
+      - name: diplomat
+        description: Skilled in the art of negotiation and persuasion, they have spent years brokering peace and alliances between warring factions. They are eloquent and tactful.
+      - name: gladiator
+        description: A fierce warrior trained in the arena, fighting for glory and survival. They are strong, disciplined, and unafraid of death, accustomed to the roar of the crowd.
+      - name: librarian
+        description: Spent years tending to ancient books and scrolls, surrounded by the scent of old paper. They are knowledgeable, introverted, and value the power of knowledge.
+      - name: spy
+        description: Trained in espionage and deception, they are masters of disguise and information gathering. They are secretive, observant, and trust very few people.
+      - name: fisherman
+        description: A life spent at sea or by the river, casting nets and hauling in the day’s catch. They are patient and resilient, often speaking in slow, measured tones.
+      - name: innkeeper
+        description: Owns and runs a bustling tavern, greeting travelers with a smile and a warm meal. They are social and good listeners, often hearing the latest gossip.
+      - name: alchemist
+        description: A seeker of knowledge in the mystical arts of transformation and potion-making. They are curious, experimental, and sometimes eccentric.
+      - name: nomad
+        description: Belongs to a wandering tribe, constantly on the move with their people and belongings. They value freedom and live in tune with the natural world.
+      - name: farmer_child
+        description: Grew up on a farm, learning the ways of the land from a young age. They are strong, used to hard work, and have a deep connection to nature.
+      - name: thief
+        description: Grew up on the streets, learning to steal to survive. They are quick, nimble, and have a sharp eye for valuable items. They are always watching their surroundings.
+      - name: artist
+        description: Devoted their life to creating beauty, be it painting, sculpture, or music. They are passionate and often sensitive, viewing the world through a unique lens.
+      - name: herbal healer
+        description: Spent years living in the wilderness, gathering herbs and creating remedies. They are quiet and calm, with a deep knowledge of plants and their uses.
+      - name: monk
+        description: Lives a life of solitude and meditation, dedicated to spiritual growth and self-discipline. They speak with a calm, measured voice and often offer words of wisdom.
+      - name: gravedigger
+        description: Spent years burying the dead, often working alone in silence. They are somber and introspective, with a unique perspective on life and death.
+      - name: black_market_dealer
+        description: Knows the ins and outs of the underground economy, dealing in forbidden or rare items. They are shrewd, secretive, and well-connected in the criminal world.
+      - name: escaped_slave
+        description: Fled a life of servitude and now seeks freedom above all else. They are wary of authority and often carry the scars, both physical and emotional, of their past.
+      - name: deserter
+        description: Once a soldier who abandoned their post, now on the run or trying to start a new life. They are haunted by their decision and may struggle with guilt or shame.
+      - name: merchant_apprentice
+        description: Trained under a successful merchant, learning the art of trade and negotiation. They are eager to prove themselves and have a good head for business.
+
+  - name: npc_gender
+    description: The gender of a non-player character
+    values:
+      - name: male
+        description: He is a man.
+      - name: female
+        description: She is a woman.
+
+  - name: npc_age
+    description: The age category of a non-player character
+    values:
+      - name: young_adult
+        description: Typically in their late teens to early twenties, full of energy and ambition.
+      - name: adult
+        description: In the prime of their life, experienced and capable.
+      - name: middle_aged
+        description: Past their youth, often more wise and reflective.
+      - name: elderly
+        description: Advanced in age, with many years of experience and a slower pace.
+
+  - name: npc_action
+    description: The action that a non-player character can take
+    values:
+      - name: talk
+        description: I say something.
+      - name: attack
+        description: I attack the player.
+
+  - name: node_temperature
+    description: The temperature of a world node
+    values:
+      - name: freezing
+        description: Extremely cold, ice and snow are common.
+      - name: cold
+        description: Chilly, requires warm clothing for comfort.
+      - name: cool
+        description: Mildly cold, a refreshing breeze is felt.
+      - name: mild
+        description: Pleasantly temperate, neither hot nor cold.
+      - name: warm
+        description: Comfortably warm, typical of spring or summer.
+      - name: hot
+        description: Very warm, can cause discomfort without shade.
+      - name: scorching
+        description: Extremely hot, the heat is intense and oppressive.
+
+  - name: node_humidity
+    description: The humidity level of a world node
+    values:
+      - name: dry
+        description: Very low moisture, arid conditions.
+      - name: normal
+        description: Balanced moisture, typical humidity levels.
+      - name: humid
+        description: High moisture, feels damp or sticky.
+      - name: wet
+        description: Saturated with moisture, rain or mist is common.
+
+  - name: node_area_type
+    description: Type of a location node
+    values:
+      - name: root
+        description: The end of the world, a huge volcano.
+      - name: wilderness
+        description: An area of untamed nature, with forests, rivers, and wildlife.
+      - name: settlement
+        description: Entrance to the streets of a town or village.
+      - name: street
+        description: A paved road or path, often lined with buildings and shops.
+      - name: building
+        description: The main place and entrance of a building.
+      - name: room
+        description: A room inside a building.
+
+  - name: node_settlement_type
+    description: Type of settlement
+    values:
+      - name: village
+        description: A small community of homes and shops, often surrounded by farmland.
+      - name: town
+        description: A larger settlement with more amenities and services, such as a market or inn.
+
+  - name: node_wilderness_type
+    description: Type of wilderness
+    values:
+      - name: forest
+        description: A dense forest with towering trees and undergrowth.
+      - name: mountain
+        description: A rugged mountain range with steep cliffs and rocky terrain.
+      - name: river
+        description: A flowing river with clear water and banks of pebbles.
+      - name: lake
+        description: A calm lake with still waters and a peaceful atmosphere.
+      - name: cave
+        description: A dark system of underground tunnels and chambers.
+      - name: swamp
+        description: A marshy area with murky water and tangled vegetation.
+      - name: desert
+        description: A vast expanse of sand dunes and scorching heat.
+      - name: tundra
+        description: A frozen wasteland of ice and snow, with biting winds.
+
+  - name: node_street_type
+    description: Type of street
+    values:
+      - name: village_street
+        description: Street of a village.
+      - name: town_street
+        description: Street of a town.
+
+  - name: node_building_type
+    description: Type of building
+    values:
+      - name: house
+        description: House of a family or individual.
+      - name: blacksmith
+        description: A workshop where metal is forged and crafted.
+      - name: tavern
+        description: A place to eat, drink, and socialize with other travelers.
+      - name: town_hall
+        description: The administrative center, and official place of gathering.
+      - name: church
+        description: A place of worship and spiritual reflection.
+      - name: farm
+        description: A place where crops are grown and animals are raised.
+
+  - name: node_room_type
+    description: Type of room
+    values:
+      - name: bedroom
+        description: A room for sleeping and resting.
+      - name: kitchen
+        description: A room for preparing and cooking food.
+      - name: hall
+        description: A large, open space.
+      - name: workshop
+        description: A space for crafting and creating items.
+      - name: storage
+        description: A room for storing goods and supplies.
+      - name: store
+        description: A place to buy and sell goods.
+
+  - name: player_class
+    description: The class of the player character
+    values:
+      - name: knight
+        description: A noble warrior skilled in combat and defense. Has the skills to wield any kind of melee weapon.
+      - name: archer
+        description: A skilled marksman who excels at ranged combat. Has the skills to wield ranged weapons, knives and daggers.
+      - name: mage
+        description: A wielder of arcane magic, capable of casting powerful spells. Has the skills to wield staves, knives and daggers.
+
+  - name: player_health
+    description: The health status of a player character
+    values:
+      - name: healthy
+        description: In good physical condition, free from injury or illness.
+      - name: injured
+        description: Suffering from wounds or physical trauma, in need of healing.
+      - name: sick
+        description: Afflicted by illness or disease, weakened and in need of rest.
+      - name: poisoned
+        description: Affected by toxins or venom, suffering from harmful effects.
+      - name: cursed
+        description: Under a malevolent enchantment, suffering from supernatural afflictions.
+      - name: dead
+        description: No longer living, the spirit has departed from the body.
+
+  - name: player_hunger
+    description: The hunger level of a player character
+    values:
+      - name: full
+        description: Satiated and content, with no immediate need for food.
+      - name: slightly_hungry
+        description: Feeling a bit peckish, could use a snack or light meal.
+      - name: hungry
+        description: Feeling hungry, you could use a good meal to satisfy your appetite.
+      - name: starving
+        description: Starving and weak, in urgent need of food.
+
+  - name: player_thirst
+    description: The thirst level of a player character
+    values:
+      - name: hydrated
+        description: Well-hydrated and comfortable, with no immediate need for water.
+      - name: slightly_thirsty
+        description: Feeling a bit parched, could use a drink to quench your thirst.
+      - name: thirsty
+        description: Feeling thirsty, you could use a refreshing drink to hydrate.
+      - name: dehydrated
+        description: Dehydrated and weak, in urgent need of water.
+
+  - name: player_skill
+    description: Skills are required to be able to perform actions in the game
+    values:
+      - name: wield_sword
+        description: The ability to wield a sword as a weapon.
+      - name: wield_axe
+        description: The ability to wield an axe as a weapon.
+      - name: wield_bow
+        description: The ability to wield a bow as a weapon.
+      - name: wield_crossbow
+        description: The ability to wield a crossbow as a weapon.
+      - name: wield_knife
+        description: The ability to wield a knife as a weapon.
+      - name: wield_dagger
+        description: The ability to wield a dagger as a weapon.
+      - name: wield_staff
+        description: The ability to wield a staff as a weapon.
+
+  - name: player_equip_slot
+    description: The equipment slots available for the player character
+    values:
+      - name: helmet
+        description: Slot for helmets.
+      - name: armor
+        description: Slot for chest armor.
+      - name: boots
+        description: Slot for boots.
+      - name: weapon
+        description: Slot for weapons.
+      - name: wearable
+        description: Slot for wearable accessories.
+
+  - name: player_situtation
+    description: The player is always exactly in one of these situations
+    values:
+      - name: wandering
+        description: The player is wandering around, looting, traveling, etc.
+      - name: combat
+        description: The player is in combat, fighting against an enemy.
+      - name: conversation
+        description: The player is in a conversation with an NPC
+      - name: settled
+        description: The player is currently settled, ready to do work requiring focus, or rest.
+
+  - name: player_wandering_action
+    description: Action, that can be taken by the player while wandering
+    values:
+      - name: pick_up
+        description: Pick up an item from the current location
+      - name: drop
+        description: Drop an item from the inventory at the current location
+      - name: equip
+        description: Equip an item from the inventory
+      - name: unequip
+        description: Unequip an item and put it back into the inventory
+      - name: move
+        description: Move to a different location
+      - name: look_around
+        description: Look for paths, items and NPCs at this location
+      - name: settle_down
+        description: Settle down at the current location
+      - name: talk
+        description: Talk to an NPC at the current location
+      - name: trade
+        description: Trade with an NPC at the current location
+      - name: attack
+        description: Attack an NPC at the current location
+      - name: use_item
+        description: Use an item from the inventory
+      - name: eat
+        description: Eat food from the inventory
+      - name: drink
+        description: Drink a beverage from the inventory
+      - name: unpack
+        description: Unpack the contents of a container at the current location
+
+  - name: player_settled_action
+    description: Action, that can be taken by the player while settled
+    values:
+      - name: hit_the_road
+        description: Hit the road and start wandering again
+      - name: work
+        description: Work on a task that requires focus (e.g. crafting)
+      - name: rest
+        description: Rest and recover health
+      - name: eat
+        description: Eat food from the inventory
+      - name: drink
+        description: Drink a beverage from the inventory
+      - name: use_item
+        description: Use an item from the inventory
+      - name: unpack
+        description: Unpack the contents of a container
+      - name: craft
+        description: Engage in the combination of tools and materials
+
+  - name: player_encounter_action
+    description: Action, that can be taken by the player while encountering something
+    values:
+      - name: attack
+        description: Attack the encountered entity
+      - name: talk
+        description: Talk to the encountered entity
+      - name: trade
+        description: Trade with the encountered entity
+      - name: flee
+        description: Flee from the encountered entity
+
+  - name: player_combat_action
+    description: Action, that can be taken by the player while in combat
+    values:
+      - name: attack
+        description: Attack the enemy
+      - name: use_item
+        description: Use an item from the inventory
+
+  - name: player_conversation_action
+    description: Action, that can be taken by the player while in a conversation
+    values:
+      - name: talk
+        description: Talk to the NPC
+      - name: leave
+        description: Leave the conversation
+
+  - name: player_crafting_type
+    description: The type of crafting performed by the player
+    values:
+      - name: disassemble
+        description: Carefully take apart an item to extract its components.
+      - name: smelt
+        description: Melt down items to extract materials.
+      - name: break
+        description: Break an item into smaller pieces.
+      - name: assemble
+        description: Combine components to create a new item.
+      - name: refine
+        description: Improve the quality of an item by refining its components.
+      - name: cook
+        description: Combine ingredients to create food, drink or consumables.
+
+  - name: player_npc_interaction_type
+    description: A possible type of interaction during a conversation between an NPC and the player
+    values:
+      - name: ask
+        description: The player asks the NPC for information.
+      - name: trade
+        description: The player offers a trade to the NPC.
+      - name: offer_help
+        description: The player offers help to the NPC.
+
+  - name: history_happening
+    description: Type of all events that are possible throughout the game
+    values:
+      - name: wake_up
+        description: You wake up in a dark room. You can't remember how you got here. In fact, you can't event remember who you are.
+      - name: end_turn
+        description: This turn has ended.
+      - name: action_look_around
+        description: You decide to take a look around, looking for details about your surroundings.
+      - name: action_pick_up
+        description: You decide to pick up an item from your current location.
+      - name: action_drop
+        description: You decide to drop an item from your inventory.
+      - name: action_equip
+        description: You decide to equip an item from your inventory.
+      - name: action_unequip
+        description: You decide to unequip an item and put it back into your inventory.
+      - name: action_move
+        description: You decide to move to a different location.
+      - name: action_settle_down
+        description: You decide to settle down at your current location.
+      - name: action_talk
+        description: You decide to talk to someone.
+      - name: action_attack
+        description: You decide to attack someone.
+      - name: action_use_item
+        description: You decide to use an item from your inventory.
+      - name: action_flee
+        description: You decide to flee from the current situation.
+      - name: action_buy
+        description: You decide to buy an item from someone.
+      - name: action_sell
+        description: You decide to sell an item to someone.
+      - name: action_leave
+        description: You decide to leave the current situation.
+      - name: action_rest
+        description: You decide to rest and recover health.
+      - name: action_work
+        description: You decide to work on a task that requires focus.
+      - name: action_eat
+        description: You decide to eat some food.
+      - name: action_drink
+        description: You decide to drink a beverage.
+      - name: action_hit_the_road
+        description: You decide to hit the road and start wandering again.
+      - name: action_unpack
+        description: You decide to unpack the contents of a container.
+      - name: action_craft
+        description: You decide to engage in the combination of tools and materials.
+      - name: action_trade
+        description: You give someone a good offer, and shake hands to perform the trade.
+      - name: npc_talk
+        description: The NPC says something.
+      - name: npc_attack
+        description: The NPC attacks you.
+      - name: get_gold
+        description: You get some gold.
+      - name: spend_gold
+        description: You spend some gold.
+      - name: get_item
+        description: You get an item.
+      - name: lose_item
+        description: You lose an item.
+      - name: change_health
+        description: Your health changes.
+      - name: change_hunger
+        description: Your hunger changes.
+      - name: change_thirst
+        description: Your thirst changes.
+      - name: change_situation
+        description: Your situation changes.
+      - name: inflict_damage
+        description: You inflict damage on someone.
+      - name: take_damage
+        description: You take damage from your foe.
+      - name: take_damage_from_world
+        description: You take damage.
+      - name: flee
+        description: You successfully flee from combat.
+      - name: fail_flee
+        description: You fail to flee from combat, and your foe catches up to you.
+      - name: arrive
+        description: You arrive at a new location.
+      - name: learn_skill
+        description: You learn a new skill.
+      - name: discover_path
+        description: You discover a new path.
+      - name: discover_item
+        description: You discover a new item.
+      - name: discover_npc
+        description: You discover a new NPC.
+      - name: noop
+        description: Nothing happens.
+      - name: consume_inventory_item
+        description: You consume an item from your inventory.
+      - name: consume_location_item
+        description: You consume an item from your current location.
+      - name: equip_item
+        description: You equip an item as a piece of gear.
+      - name: unequip_item
+        description: You unequip an item and put it back into your inventory.
+      - name: unpacked_item
+        description: You unpacked an item from a container.
+      - name: crafted_item
+        description: You created an item with your hands.
+      - name: start_combat
+        description: You engage in combat with an enemy.
+      - name: start_conversation
+        description: You start a conversation with an NPC.
+      - name: defeat_npc
+        description: You defeat an enemy.
+      - name: die
+        description: You die.

@@ -1,0 +1,51 @@
+[
+    {
+        "id": "helmet.common.simple-helmet",
+        "populatorType": "item",
+        "name": [
+            "Simple Helmet",
+            "Simple Headgear",
+            "Simple Hat"
+        ],
+        "tier": "common",
+        "type": "helmet",
+        "helmet": {
+            "defense": {
+                "min": 0,
+                "max": 3
+            }
+        }
+    },
+    {
+        "id": "helmet.rare.elegant-helmet",
+        "populatorType": "item",
+        "name": [
+            "Elegant Headwear",
+            "Noble Elegant Hat"
+        ],
+        "tier": "rare",
+        "type": "helmet",
+        "helmet": {
+            "defense": {
+                "min": 10,
+                "max": 20
+            }
+        }
+    },
+    {
+        "id": "helmet.rare.nice-helmet",
+        "populatorType": "item",
+        "name": [
+            "Nice Steel Helmet",
+            "Polished Iron Helmet"
+        ],
+        "tier": "rare",
+        "type": "helmet",
+        "helmet": {
+            "defense": {
+                "min": 20,
+                "max": 30
+            }
+        }
+    }
+]

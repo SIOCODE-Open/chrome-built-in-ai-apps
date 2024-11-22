@@ -1,0 +1,62 @@
+[
+    {
+        "id": "blacksmith-smith-npc",
+        "apply": "npc.blacksmith.smith",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "blacksmith"
+        }
+    },
+    {
+        "id": "blacksmith-raw-materials-iron",
+        "apply": "material.iron",
+        "count": {
+            "min": 3,
+            "max": 10
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "blacksmith"
+        }
+    },
+    {
+        "id": "blacksmith-raw-materials-wood",
+        "apply": "material.wood",
+        "count": {
+            "min": 1,
+            "max": 3
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "blacksmith"
+        }
+    },
+    {
+        "id": "blacksmith-raw-materials-copper",
+        "apply": "material.copper",
+        "count": {
+            "min": 0,
+            "max": 3
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "blacksmith"
+        }
+    },
+    {
+        "id": "blacksmith-raw-materials-steel",
+        "apply": "material.steel",
+        "count": {
+            "min": 0,
+            "max": 3
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "blacksmith"
+        }
+    }
+]

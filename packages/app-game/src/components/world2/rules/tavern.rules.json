@@ -1,0 +1,110 @@
+[
+    {
+        "id": "tavern-bedrooms",
+        "apply": "room.tavern.bedroom",
+        "count": {
+            "min": 1,
+            "max": 2
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    },
+    {
+        "id": "tavern-kitchens",
+        "apply": "room.tavern.kitchen",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    },
+    {
+        "id": "tavern-cellars",
+        "apply": "room.tavern.cellar",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    },
+    {
+        "id": "tavern-food",
+        "apply": "food.simple-food",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    },
+    {
+        "id": "tavern-drinks",
+        "apply": "drink.simple-drink",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    },
+    {
+        "id": "tavern-kitchen-items",
+        "apply": "household.kitchen-item",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    },
+    {
+        "id": "tavern-tavern-keeper",
+        "apply": "npc.tavern.tavern-keeper",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    },
+    {
+        "id": "tavern-peasant",
+        "apply": "npc.village.peasant",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    },
+    {
+        "id": "tavern-merchant",
+        "apply": "npc.merchant",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "tavern"
+        }
+    }
+]

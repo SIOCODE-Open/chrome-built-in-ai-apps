@@ -1,0 +1,42 @@
+[
+    {
+        "id": "wilderness.forest",
+        "populatorType": "children",
+        "name": "Forest",
+        "distance": 20,
+        "humidity": [
+            "normal",
+            "humid",
+            "wet"
+        ],
+        "temperature": [
+            "mild",
+            "cool",
+            "cold"
+        ],
+        "type": "wilderness",
+        "wilderness": {
+            "wildernessType": "forest"
+        }
+    },
+    {
+        "id": "npc.forest.wolf",
+        "populatorType": "npc",
+        "name": [
+            "Wolf",
+            "Common Wolf",
+            "Forest Wolf"
+        ],
+        "race": "animal",
+        "stance": "hostile",
+        "health": {
+            "status": "healthy",
+            "points": 250,
+            "max": 250
+        },
+        "gear": {
+            "weapon": "weapon.animal.wolf-paws",
+            "armor": "armor.animal.wolf-fur"
+        }
+    }
+]

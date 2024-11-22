@@ -1,0 +1,32 @@
+[
+    {
+        "id": "building.farm",
+        "populatorType": "children",
+        "name": "Farm",
+        "distance": 5,
+        "humidity": [
+            "normal",
+            "humid"
+        ],
+        "temperature": [
+            "mild",
+            "warm"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "farm"
+        }
+    },
+    {
+        "id": "room.farm.granary",
+        "populatorType": "children",
+        "name": "Granary",
+        "distance": 1,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "room",
+        "room": {
+            "roomType": "storage"
+        }
+    }
+]

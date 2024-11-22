@@ -1,0 +1,14 @@
+[
+    {
+        "id": "drink.simple-drink",
+        "populatorType": "item",
+        "name": [
+            "Drinkable Liquid",
+            "Cup of Refresher",
+            "Tasty Beverage",
+            "Simple Drink"
+        ],
+        "tier": "common",
+        "type": "drink"
+    }
+]

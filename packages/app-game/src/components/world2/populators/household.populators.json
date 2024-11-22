@@ -1,0 +1,72 @@
+[
+    {
+        "id": "household.common-item",
+        "populatorType": "item",
+        "name": [
+            "Household Item",
+            "Household Tool"
+        ],
+        "tier": "common",
+        "type": "household"
+    },
+    {
+        "id": "household.kitchen-item",
+        "populatorType": "item",
+        "name": [
+            "Kitchen Tool",
+            "Kitchen Container",
+            "Kitchen Equipment",
+            "Kitchen Utensil"
+        ],
+        "tier": "common",
+        "type": "household"
+    },
+    {
+        "id": "furniture.bed",
+        "populatorType": "item",
+        "name": "Bed",
+        "tier": "common",
+        "type": "household",
+        "static": true
+    },
+    {
+        "id": "furniture.chest",
+        "populatorType": "item",
+        "name": [
+            "Chest",
+            "Locker",
+            "Box"
+        ],
+        "tier": "common",
+        "type": "household",
+        "static": true,
+        "contains": [
+            {
+                "probability": 0.8,
+                "name": "Common Household Tool",
+                "tier": "common",
+                "type": "household"
+            },
+            {
+                "probability": 0.25,
+                "name": "Rare Household Tool",
+                "tier": "rare",
+                "type": "household"
+            }
+        ]
+    },
+    {
+        "id": "household.religious-item",
+        "populatorType": "item",
+        "name": [
+            "Religious Item",
+            "Faith Item",
+            "Sacred Item"
+        ],
+        "tier": [
+            "common",
+            "rare"
+        ],
+        "type": "household"
+    }
+]

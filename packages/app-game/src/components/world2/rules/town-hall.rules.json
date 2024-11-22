@@ -1,0 +1,50 @@
+[
+    {
+        "id": "town-hall-mayor",
+        "apply": "npc.town-hall.mayor",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "town-hall"
+        }
+    },
+    {
+        "id": "town-hall-artifacts-scuplture",
+        "apply": "artifact.sculpture",
+        "count": {
+            "min": 1,
+            "max": 2
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "town-hall"
+        }
+    },
+    {
+        "id": "town-hall-artifacts-painting",
+        "apply": "artifact.painting",
+        "count": {
+            "min": 1,
+            "max": 2
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "town-hall"
+        }
+    },
+    {
+        "id": "town-hall-artifacts-book",
+        "apply": "artifact.book",
+        "count": {
+            "min": 0,
+            "max": 4
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "town-hall"
+        }
+    }
+]

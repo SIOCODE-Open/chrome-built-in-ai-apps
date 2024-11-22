@@ -1,0 +1,26 @@
+[
+    {
+        "id": "village-street-peasant",
+        "apply": "npc.village.peasant",
+        "count": {
+            "min": 0,
+            "max": 2
+        },
+        "hasType": "street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    },
+    {
+        "id": "village-street-merchant",
+        "apply": "npc.merchant",
+        "count": {
+            "min": 0,
+            "max": 2
+        },
+        "hasType": "street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    }
+]

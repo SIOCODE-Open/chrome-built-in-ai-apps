@@ -1,0 +1,58 @@
+[
+    {
+        "id": "npc.merchant",
+        "populatorType": "npc",
+        "name": "Merchant",
+        "health": {
+            "status": "healthy",
+            "points": [
+                150,
+                200,
+                300
+            ],
+            "max": 300
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.common.simple-clothing",
+            "boots": "boots.common.simple-boots",
+            "helmet": "helmet.common.simple-helmet",
+            "weapon": {
+                "oneOf": [
+                    "weapon.common.simple-dagger",
+                    "weapon.common.simple-sword",
+                    "weapon.common.simple-axe",
+                    "weapon.common.simple-bow",
+                    "weapon.common.simple-crossbow",
+                    "weapon.common.simple-staff"
+                ]
+            }
+        },
+        "inventory": {
+            "gold": [
+                500,
+                700,
+                1200
+            ],
+            "items": [
+                "material.trade-commodity",
+                "material.trade-commodity",
+                "material.trade-commodity",
+                "material.trade-commodity",
+                "material.trade-commodity",
+                "material.trade-commodity"
+            ]
+        },
+        "personality": {
+            "traits": [
+                "adventurous",
+                "brave",
+                "diligent",
+                "disciplined",
+                "optimistic"
+            ],
+            "background": "merchant"
+        }
+    }
+]

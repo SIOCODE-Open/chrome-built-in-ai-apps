@@ -1,0 +1,137 @@
+[
+    {
+        "id": "village-streets",
+        "apply": "street.village-street",
+        "count": {
+            "min": 1,
+            "max": 2
+        },
+        "hasType": "settlement",
+        "settlement": {
+            "hasSettlementType": "village"
+        }
+    },
+    {
+        "id": "village-main-street",
+        "apply": "street.village-main-street",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "settlement",
+        "settlement": {
+            "hasSettlementType": "village"
+        }
+    },
+    {
+        "id": "village-church-street",
+        "apply": "street.village-church-street",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "settlement",
+        "settlement": {
+            "hasSettlementType": "village"
+        }
+    },
+    {
+        "id": "village-farm-street",
+        "apply": "street.village-farm-street",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "settlement",
+        "settlement": {
+            "hasSettlementType": "village"
+        }
+    },
+    {
+        "id": "village-street-houses",
+        "apply": "building.house",
+        "count": {
+            "min": 2,
+            "max": 4
+        },
+        "hasType": "street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    },
+    {
+        "id": "village-street-taverns",
+        "apply": "building.tavern",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    },
+    {
+        "id": "village-street-blacksmithes",
+        "apply": "building.blacksmith",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    },
+    {
+        "id": "village-main-street-town-hall",
+        "apply": "building.town-hall",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "street",
+        "hasLabel": "main-street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    },
+    {
+        "id": "village-church-street-church",
+        "apply": "building.church",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "street",
+        "hasLabel": "church-street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    },
+    {
+        "id": "village-farm-street-farms",
+        "apply": "building.farm",
+        "count": {
+            "min": 1,
+            "max": 4
+        },
+        "hasType": "street",
+        "hasLabel": "farm-street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    },
+    {
+        "id": "village-settlement-guards",
+        "apply": "npc.village.guard",
+        "count": {
+            "min": 2,
+            "max": 3
+        },
+        "hasType": "settlement",
+        "settlement": {
+            "hasSettlementType": "village"
+        }
+    }
+]

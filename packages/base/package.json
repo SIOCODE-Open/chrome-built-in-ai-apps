@@ -1,0 +1,20 @@
+{
+    "name": "@siocode/base",
+    "description": "Base package for building React SPAs that utilize window.ai (or cloud-based AI) APIs. Exports a full UI skeleton.",
+    "version": "0.0.1",
+    "private": true,
+    "main": "src/index.tsx",
+    "dependencies": {
+        "react": "*",
+        "react-dom": "*",
+        "rxjs": "*",
+        "classnames": "*",
+        "@iconify/react": "*"
+    },
+    "devDependencies": {
+        "typescript": "*",
+        "@types/react": "*",
+        "@types/react-dom": "*",
+        "@types/classnames": "*"
+    }
+}

@@ -1,0 +1,119 @@
+[
+    {
+        "id": "material.wood",
+        "populatorType": "item",
+        "name": [
+            "Wood",
+            "Lumber",
+            "Timber",
+            "Wooden Material",
+            "Small Wooden Material"
+        ],
+        "tier": "common",
+        "type": "material"
+    },
+    {
+        "id": "material.stone",
+        "populatorType": "item",
+        "name": [
+            "Stone",
+            "Rock",
+            "Pebble",
+            "Small Stone",
+            "Small Rock"
+        ],
+        "tier": "common",
+        "type": "material"
+    },
+    {
+        "id": "material.iron",
+        "populatorType": "item",
+        "name": [
+            "Iron",
+            "Iron Ingot",
+            "Iron Material",
+            "Small Iron Material"
+        ],
+        "tier": "common",
+        "type": "material"
+    },
+    {
+        "id": "material.copper",
+        "populatorType": "item",
+        "name": [
+            "Copper",
+            "Copper Ingot",
+            "Copper Material",
+            "Small Copper Material"
+        ],
+        "tier": "common",
+        "type": "material"
+    },
+    {
+        "id": "material.steel",
+        "populatorType": "item",
+        "name": [
+            "Steel",
+            "Steel Ingot",
+            "Steel Material",
+            "Small Steel Material"
+        ],
+        "tier": "common",
+        "type": "material"
+    },
+    {
+        "id": "material.common",
+        "populatorType": "item",
+        "name": [
+            "Common Material",
+            "Common Resource",
+            "Some Material",
+            "Some Resource"
+        ],
+        "tier": "common",
+        "type": "material"
+    },
+    {
+        "id": "material.food-ingredient",
+        "populatorType": "item",
+        "name": [
+            "Spice",
+            "Raw Meat",
+            "Raw Vegetable",
+            "Raw Fruit",
+            "Raw Grain",
+            "Mushroom",
+            "Fish",
+            "Food Ingredient"
+        ],
+        "tier": "common",
+        "type": "material"
+    },
+    {
+        "id": "material.drink-ingredient",
+        "populatorType": "item",
+        "name": [
+            "Water",
+            "Milk",
+            "Juice",
+            "Drink Ingredient"
+        ],
+        "tier": "common",
+        "type": "material"
+    },
+    {
+        "id": "material.trade-commodity",
+        "populatorType": "item",
+        "name": [
+            "Trade Commodity",
+            "Trade Good",
+            "Trade Material",
+            "Trade Resource"
+        ],
+        "tier": [
+            "common",
+            "rare"
+        ],
+        "type": "material"
+    }
+]

@@ -1,0 +1,83 @@
+[
+    {
+        "id": "populators.builtin.common-armor.simple-armor",
+        "populatorType": "item",
+        "name": [
+            "Simple Chestplate",
+            "Simple Armor",
+            "Simple Leather Armor"
+        ],
+        "tier": "common",
+        "type": "armor",
+        "armor": {
+            "defense": {
+                "min": 2,
+                "max": 10
+            }
+        }
+    },
+    {
+        "id": "armor.common.simple-clothing",
+        "populatorType": "item",
+        "name": [
+            "Simple Clothing",
+            "Simple Garment",
+            "Simple Outfit"
+        ],
+        "tier": "common",
+        "type": "armor",
+        "armor": {
+            "defense": {
+                "min": 0,
+                "max": 3
+            }
+        }
+    },
+    {
+        "id": "armor.rare.elegant-clothing",
+        "populatorType": "item",
+        "name": [
+            "Elegant Clothing",
+            "Noble Elegant Garment",
+            "Elegant Outfit"
+        ],
+        "tier": "rare",
+        "type": "armor",
+        "armor": {
+            "defense": {
+                "min": 25,
+                "max": 50
+            }
+        }
+    },
+    {
+        "id": "armor.rare.nice-armor",
+        "populatorType": "item",
+        "name": [
+            "Nice Steel Armor",
+            "Nice Iron Armor"
+        ],
+        "tier": "rare",
+        "type": "armor",
+        "armor": {
+            "defense": {
+                "min": 30,
+                "max": 150
+            }
+        }
+    },
+    {
+        "id": "armor.animal.wolf-fur",
+        "populatorType": "item",
+        "name": "Wolf Fur",
+        "tier": "common",
+        "type": "armor",
+        "armor": {
+            "defense": {
+                "min": 10,
+                "max": 13
+            }
+        },
+        "lootable": false
+    }
+]

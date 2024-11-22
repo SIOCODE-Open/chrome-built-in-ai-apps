@@ -1,0 +1,9 @@
+id: WorldEnum
+name: World Enum
+description: An enumerated value, pre-defined in the world.
+fields:
+  - name: values
+    description: The values of this enum
+    type: attachment
+    multiple: true
+    references: WorldEnumValue

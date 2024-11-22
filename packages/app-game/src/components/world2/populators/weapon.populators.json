@@ -1,0 +1,230 @@
+[
+    {
+        "id": "weapon.common.simple-sword",
+        "populatorType": "item",
+        "name": [
+            "Sword",
+            "Simple Sword",
+            "Rusty Sword"
+        ],
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "sword",
+            "damage": {
+                "min": 10,
+                "max": 20
+            }
+        }
+    },
+    {
+        "id": "weapon.rare.nice-sword",
+        "populatorType": "item",
+        "name": [
+            "Nice Steel Sword",
+            "Nice Iron Sword"
+        ],
+        "tier": "rare",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "sword",
+            "damage": {
+                "min": 50,
+                "max": 80
+            }
+        }
+    },
+    {
+        "id": "weapon.common.simple-axe",
+        "populatorType": "item",
+        "name": [
+            "Axe",
+            "Simple Axe",
+            "Rusty Axe"
+        ],
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "sword",
+            "damage": {
+                "min": 10,
+                "max": 30
+            }
+        }
+    },
+    {
+        "id": "weapon.rare.nice-axe",
+        "populatorType": "item",
+        "name": [
+            "Nice Steel Axe",
+            "Nice Iron Axe"
+        ],
+        "tier": "rare",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "sword",
+            "damage": {
+                "min": 60,
+                "max": 100
+            }
+        }
+    },
+    {
+        "id": "weapon.common.simple-knife",
+        "populatorType": "item",
+        "name": [
+            "Knife",
+            "Simple Knife",
+            "Rusty Knife"
+        ],
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "knife",
+            "damage": {
+                "min": 5,
+                "max": 15
+            },
+            "effects": [
+                {
+                    "name": "Random Crazy Superpower",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "heal",
+                        "damage",
+                        "destroy-item"
+                    ],
+                    "value": [
+                        100,
+                        500,
+                        1000
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.common.simple-dagger",
+        "populatorType": "item",
+        "name": [
+            "Dagger",
+            "Simple Dagger",
+            "Rusty Dagger"
+        ],
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "dagger",
+            "damage": {
+                "min": 5,
+                "max": 20
+            }
+        }
+    },
+    {
+        "id": "weapon.common.simple-bow",
+        "populatorType": "item",
+        "name": [
+            "Bow",
+            "Simple Bow",
+            "Lame Bow"
+        ],
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "bow",
+            "damage": {
+                "min": 5,
+                "max": 20
+            }
+        }
+    },
+    {
+        "id": "weapon.rare.nice-bow",
+        "populatorType": "item",
+        "name": [
+            "Nice Bow",
+            "Nice Longbow"
+        ],
+        "tier": "rare",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "bow",
+            "damage": {
+                "min": 20,
+                "max": 50
+            }
+        }
+    },
+    {
+        "id": "weapon.common.simple-crossbow",
+        "populatorType": "item",
+        "name": [
+            "Crossbow",
+            "Simple Crossbow",
+            "Lame Crossbow"
+        ],
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "crossbow",
+            "damage": {
+                "min": 5,
+                "max": 30
+            }
+        }
+    },
+    {
+        "id": "weapon.rare.nice-crossbow",
+        "populatorType": "item",
+        "name": [
+            "Nice Crossbow",
+            "Nice Heavy Crossbow"
+        ],
+        "tier": "rare",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "crossbow",
+            "damage": {
+                "min": 30,
+                "max": 70
+            }
+        }
+    },
+    {
+        "id": "weapon.common.simple-staff",
+        "populatorType": "item",
+        "name": [
+            "Staff",
+            "Simple Staff",
+            "Lame Staff"
+        ],
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "bow",
+            "damage": {
+                "min": 5,
+                "max": 30
+            }
+        }
+    },
+    {
+        "id": "weapon.animal.wolf-paws",
+        "populatorType": "item",
+        "name": "Wolf Paws",
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "knife",
+            "damage": {
+                "min": 10,
+                "max": 15
+            }
+        },
+        "lootable": false
+    }
+]

@@ -1,0 +1,111 @@
+[
+    {
+        "id": "building.tavern",
+        "populatorType": "children",
+        "name": "Tavern",
+        "distance": 5,
+        "humidity": [
+            "normal",
+            "humid"
+        ],
+        "temperature": [
+            "mild",
+            "warm"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "tavern"
+        }
+    },
+    {
+        "id": "room.tavern.bedroom",
+        "populatorType": "children",
+        "name": "Tavern Bedroom",
+        "distance": 1,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "room",
+        "room": {
+            "roomType": "bedroom"
+        }
+    },
+    {
+        "id": "room.tavern.kitchen",
+        "populatorType": "children",
+        "name": "Tavern Kitchen",
+        "distance": 1,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "room",
+        "room": {
+            "roomType": "kitchen"
+        }
+    },
+    {
+        "id": "room.tavern.cellar",
+        "populatorType": "children",
+        "name": "Tavern Cellar",
+        "distance": 1,
+        "humidity": "humid",
+        "temperature": [
+            "cool",
+            "cold"
+        ],
+        "type": "room",
+        "room": {
+            "roomType": "storage"
+        }
+    },
+    {
+        "id": "npc.tavern.tavern-keeper",
+        "populatorType": "npc",
+        "name": "Tavern Keeper",
+        "health": {
+            "status": "healthy",
+            "points": 1000,
+            "max": 1000
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.common.simple-clothing",
+            "boots": "boots.common.simple-boots",
+            "helmet": "helmet.common.simple-helmet",
+            "weapon": {
+                "oneOf": [
+                    "weapon.common.simple-dagger",
+                    "weapon.common.simple-sword",
+                    "weapon.common.simple-axe",
+                    "weapon.common.simple-bow",
+                    "weapon.common.simple-crossbow",
+                    "weapon.common.simple-staff"
+                ]
+            }
+        },
+        "inventory": {
+            "gold": [
+                100,
+                250,
+                400,
+                800
+            ],
+            "items": [
+                "household.kitchen-item",
+                "food.simple-food",
+                "drink.simple-drink"
+            ]
+        },
+        "personality": {
+            "traits": [
+                "brave",
+                "cheerful",
+                "adventurous",
+                "compassionate",
+                "disciplined",
+                "honest",
+                "humble"
+            ],
+            "background": "innkeeper"
+        }
+    }
+]

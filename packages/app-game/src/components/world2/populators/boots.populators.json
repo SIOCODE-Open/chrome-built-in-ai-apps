@@ -1,0 +1,53 @@
+[
+    {
+        "id": "boots.common.simple-boots",
+        "populatorType": "item",
+        "name": [
+            "Simple Boots",
+            "Simple Footwear",
+            "Simple Shoes"
+        ],
+        "tier": "common",
+        "type": "boots",
+        "boots": {
+            "defense": {
+                "min": 0,
+                "max": 3
+            }
+        }
+    },
+    {
+        "id": "boots.rare.elegant-boots",
+        "populatorType": "item",
+        "name": [
+            "Elegant Boots",
+            "Noble Elegant Footwear",
+            "Elegant Shoes"
+        ],
+        "tier": "rare",
+        "type": "boots",
+        "boots": {
+            "defense": {
+                "min": 20,
+                "max": 50
+            }
+        }
+    },
+    {
+        "id": "boots.rare.nice-boots",
+        "populatorType": "item",
+        "name": [
+            "Nice Steel Boots",
+            "Polished Iron Boots",
+            "Nice Boots"
+        ],
+        "tier": "rare",
+        "type": "boots",
+        "boots": {
+            "defense": {
+                "min": 30,
+                "max": 60
+            }
+        }
+    }
+]

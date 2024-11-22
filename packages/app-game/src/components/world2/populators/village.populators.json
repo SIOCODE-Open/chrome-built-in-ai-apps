@@ -1,0 +1,172 @@
+[
+    {
+        "id": "settlement.village",
+        "populatorType": "children",
+        "name": "Village",
+        "distance": 10,
+        "humidity": [
+            "dry",
+            "normal",
+            "humid",
+            "wet"
+        ],
+        "temperature": [
+            "cool",
+            "cold",
+            "mild",
+            "warm"
+        ],
+        "type": "settlement",
+        "settlement": {
+            "settlementType": "village"
+        }
+    },
+    {
+        "id": "street.village-street",
+        "populatorType": "children",
+        "name": "Village Street",
+        "distance": 5,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "street",
+        "street": {
+            "streetType": "village-street"
+        }
+    },
+    {
+        "id": "street.village-main-street",
+        "populatorType": "children",
+        "name": "Village Street",
+        "distance": 5,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "street",
+        "labels": [
+            "main-street"
+        ],
+        "street": {
+            "streetType": "village-street"
+        }
+    },
+    {
+        "id": "street.village-church-street",
+        "populatorType": "children",
+        "name": "Village Street",
+        "distance": 5,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "street",
+        "labels": [
+            "church-street"
+        ],
+        "street": {
+            "streetType": "village-street"
+        }
+    },
+    {
+        "id": "street.village-farm-street",
+        "populatorType": "children",
+        "name": "Village Street",
+        "distance": 5,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "street",
+        "labels": [
+            "farm-street"
+        ],
+        "street": {
+            "streetType": "village-street"
+        }
+    },
+    {
+        "id": "npc.village.peasant",
+        "populatorType": "npc",
+        "name": "Peasant",
+        "health": {
+            "status": "healthy",
+            "points": [
+                150,
+                200
+            ],
+            "max": 200
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.common.simple-clothing",
+            "boots": "boots.common.simple-boots",
+            "helmet": "helmet.common.simple-helmet"
+        },
+        "inventory": {
+            "gold": [
+                10,
+                20,
+                50
+            ]
+        },
+        "personality": {
+            "traits": [
+                "apathetic",
+                "arrogant",
+                "cowardly",
+                "indifferent",
+                "pessimistic",
+                "selfish"
+            ],
+            "background": "peasant"
+        }
+    },
+    {
+        "id": "npc.village.guard",
+        "populatorType": "npc",
+        "name": "Peasant",
+        "health": {
+            "status": "healthy",
+            "points": [
+                150,
+                200
+            ],
+            "max": 200
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.rare.nice-armor",
+            "boots": "boots.rare.nice-boots",
+            "helmet": "helmet.rare.nice-helmet",
+            "weapon": {
+                "oneOf": [
+                    "weapon.rare.nice-sword",
+                    "weapon.rare.nice-axe",
+                    "weapon.rare.nice-bow",
+                    "weapon.rare.nice-crossbow"
+                ]
+            }
+        },
+        "inventory": {
+            "gold": [
+                100,
+                200,
+                300
+            ],
+            "items": [
+                "food.simple-food",
+                "food.simple-food",
+                "drink.simple-drink",
+                "drink.simple-drink"
+            ]
+        },
+        "personality": {
+            "traits": [
+                "brave",
+                "cheerful",
+                "adventurous",
+                "compassionate",
+                "disciplined",
+                "honest",
+                "humble"
+            ],
+            "background": "peasant"
+        }
+    }
+]

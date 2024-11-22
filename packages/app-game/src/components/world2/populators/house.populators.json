@@ -1,0 +1,59 @@
+[
+    {
+        "id": "building.house",
+        "populatorType": "children",
+        "name": "House",
+        "distance": 5,
+        "humidity": [
+            "dry",
+            "normal",
+            "humid"
+        ],
+        "temperature": [
+            "cool",
+            "mild",
+            "warm",
+            "hot"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "house"
+        }
+    },
+    {
+        "id": "room.house.bedroom",
+        "populatorType": "children",
+        "name": "Bedroom",
+        "distance": 1,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "room",
+        "room": {
+            "roomType": "bedroom"
+        }
+    },
+    {
+        "id": "room.house.kitchen",
+        "populatorType": "children",
+        "name": "Kitchen",
+        "distance": 1,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "room",
+        "room": {
+            "roomType": "kitchen"
+        }
+    },
+    {
+        "id": "room.house.storage",
+        "populatorType": "children",
+        "name": "Storeroom",
+        "distance": 1,
+        "humidity": "same",
+        "temperature": "same",
+        "type": "room",
+        "room": {
+            "roomType": "storage"
+        }
+    }
+]

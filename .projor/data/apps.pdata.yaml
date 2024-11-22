@@ -1,0 +1,9 @@
+id: apps
+name: Apps
+description: The apps hosted in this repository.
+schema: App
+objects:
+  - name: brainstorm
+    description: A brainstorming app. Enter any notes, and let the AI start generating ideas. Then, you can task the AI with any of these ideas.
+  - name: game
+    description: A text-based role playing game. The AI is the storyteller, but the game still has its rules.

@@ -1,0 +1,122 @@
+[
+    {
+        "id": "building.blacksmith",
+        "populatorType": "children",
+        "name": "Blacksmith Workshop",
+        "distance": 5,
+        "humidity": "dry",
+        "temperature": [
+            "warm",
+            "hot"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "blacksmith"
+        }
+    },
+    {
+        "id": "npc.blacksmith.smith",
+        "populatorType": "npc",
+        "name": "Smith",
+        "health": {
+            "status": "healthy",
+            "points": 2000,
+            "max": 2000
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.common.simple-clothing",
+            "boots": "boots.rare.elegant-boots",
+            "helmet": "helmet.common.simple-helmet",
+            "weapon": {
+                "oneOf": [
+                    "weapon.rare.nice-sword",
+                    "weapon.rare.nice-axe"
+                ]
+            }
+        },
+        "inventory": {
+            "gold": [
+                4000,
+                10000
+            ],
+            "items": [
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "weapon.rare.nice-sword",
+                        "weapon.rare.nice-axe",
+                        "armor.rare.nice-armor"
+                    ]
+                }
+            ]
+        },
+        "personality": {
+            "traits": [
+                "cautious",
+                "indifferent",
+                "disciplined",
+                "apatethic",
+                "patient",
+                "honest"
+            ],
+            "background": "blacksmith"
+        }
+    }
+]

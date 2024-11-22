@@ -1,0 +1,30 @@
+{
+    "name": "@siocode/chrome-ai-apps",
+    "description": "Single Page Frontend Applications, that use the window.ai API. Created for the Google Chrome Built-in AI Challenge.",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "rxjs": "7.8.1",
+        "classnames": "2.5.1",
+        "@iconify/react": "5.0.2"
+    },
+    "devDependencies": {
+        "tailwindcss": "3.4.14",
+        "esbuild": "0.24.0",
+        "concurrently": "9.1.0",
+        "typescript": "5.6.3",
+        "@types/react": "18.3.12",
+        "@types/react-dom": "18.3.1",
+        "@types/classnames": "2.3.4"
+    },
+    "workspaces": ["packages/*"],
+    "scripts": {
+        "build:brainstorm": "npm run -w @siocode/app-brainstorm build",
+        "serve:brainstorm": "npm run -w @siocode/app-brainstorm serve",
+        "build:game": "npm run -w @siocode/app-game build",
+        "serve:game": "npm run -w @siocode/app-game serve",
+        "build:all": "npm run build:brainstorm && npm run build:game && echo 'All apps built.'"
+    }
+}

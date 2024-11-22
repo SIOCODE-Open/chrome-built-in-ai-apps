@@ -1,0 +1,34 @@
+{
+    "map": {
+        "apps": "apps"
+    },
+    "filename": "package.json",
+    "formatUsing": "json"
+}
+---
+{
+    "name": "@{{$.scope}}/{{$.name}}",
+    "description": "{{{$.description}}}",
+    "version": "{{{$.version}}}",
+    "private": true,
+    "dependencies": {
+        {{#each $.dependencies}}
+        "{{{@key}}}": "{{{this}}}"{{#unless @last}},{{/unless}}
+        {{/each}}
+    },
+    "devDependencies": {
+        {{#each $.devDependencies}}
+        "{{{@key}}}": "{{{this}}}"{{#unless @last}},{{/unless}}
+        {{/each}}
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        {{#each apps}}
+        "build:{{kebabCase name}}": "npm run -w @{{../$.scope}}/app-{{kebabCase name}} build",
+        "serve:{{kebabCase name}}": "npm run -w @{{../$.scope}}/app-{{kebabCase name}} serve",
+        {{/each}}
+        "build:all": "{{#each apps}}npm run build:{{kebabCase name}} && {{/each}}echo 'All apps built.'"
+    }
+}

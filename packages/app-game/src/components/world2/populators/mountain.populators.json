@@ -1,0 +1,41 @@
+[
+    {
+        "id": "wilderness.mountain",
+        "populatorType": "children",
+        "name": "Mountain",
+        "distance": 50,
+        "humidity": [
+            "normal",
+            "dry"
+        ],
+        "temperature": [
+            "cool",
+            "cold",
+            "freezing"
+        ],
+        "type": "wilderness",
+        "wilderness": {
+            "wildernessType": "mountain"
+        }
+    },
+    {
+        "id": "npc.mountain.wolf",
+        "populatorType": "npc",
+        "name": [
+            "Wolf",
+            "Common Wolf",
+            "Mountain Wolf"
+        ],
+        "race": "animal",
+        "stance": "hostile",
+        "health": {
+            "status": "healthy",
+            "points": 750,
+            "max": 750
+        },
+        "gear": {
+            "weapon": "weapon.animal.wolf-paws",
+            "armor": "armor.animal.wolf-fur"
+        }
+    }
+]

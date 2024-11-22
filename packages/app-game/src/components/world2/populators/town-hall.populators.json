@@ -1,0 +1,111 @@
+[
+    {
+        "id": "building.town-hall",
+        "populatorType": "children",
+        "name": "Town Hall",
+        "distance": 5,
+        "humidity": [
+            "normal"
+        ],
+        "temperature": [
+            "mild"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "town-hall"
+        }
+    },
+    {
+        "id": "npc.town-hall.mayor",
+        "populatorType": "npc",
+        "name": "Mayor",
+        "health": {
+            "status": "healthy",
+            "points": 800,
+            "max": 800
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.rare.elegant-clothing",
+            "boots": "boots.rare.elegant-boots",
+            "helmet": "helmet.rare.elegant-helmet",
+            "weapon": {
+                "oneOf": [
+                    "weapon.common.simple-dagger",
+                    "weapon.common.simple-sword",
+                    "weapon.common.simple-axe",
+                    "weapon.common.simple-bow",
+                    "weapon.common.simple-crossbow",
+                    "weapon.common.simple-staff"
+                ]
+            }
+        },
+        "inventory": {
+            "gold": [
+                1000,
+                3000,
+                8000
+            ],
+            "items": [
+                {
+                    "oneOf": [
+                        "artifact.sculpture",
+                        "artifact.painting",
+                        "artifact.book",
+                        "artifact.letter",
+                        "artifact.map"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "artifact.sculpture",
+                        "artifact.painting",
+                        "artifact.book",
+                        "artifact.letter",
+                        "artifact.map"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "artifact.sculpture",
+                        "artifact.painting",
+                        "artifact.book",
+                        "artifact.letter",
+                        "artifact.map"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "artifact.sculpture",
+                        "artifact.painting",
+                        "artifact.book",
+                        "artifact.letter",
+                        "artifact.map"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "artifact.sculpture",
+                        "artifact.painting",
+                        "artifact.book",
+                        "artifact.letter",
+                        "artifact.map"
+                    ]
+                }
+            ]
+        },
+        "personality": {
+            "traits": [
+                "kind",
+                "generous",
+                "loyal",
+                "curious",
+                "empathetic",
+                "cheerful",
+                "compassionate"
+            ],
+            "background": "diplomat"
+        }
+    }
+]
