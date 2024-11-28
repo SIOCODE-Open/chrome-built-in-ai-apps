@@ -35,41 +35,6 @@
         }
     },
     {
-        "id": "weapon.epic.amazing-sword",
-        "populatorType": "item",
-        "name": [
-            "Powerful Steel Sword",
-            "Blessed Iron Sword"
-        ],
-        "tier": "epic",
-        "type": "weapon",
-        "weapon": {
-            "weaponType": "sword",
-            "damage": {
-                "min": 100,
-                "max": 150
-            },
-            "effects": [
-                {
-                    "name": "Superpower",
-                    "activation": [
-                        "when-attacking",
-                        "when-defending"
-                    ],
-                    "type": [
-                        "heal",
-                        "damage"
-                    ],
-                    "value": [
-                        100,
-                        500,
-                        1000
-                    ]
-                }
-            ]
-        }
-    },
-    {
         "id": "weapon.common.simple-axe",
         "populatorType": "item",
         "name": [
@@ -256,6 +221,418 @@
             "damage": {
                 "min": 10,
                 "max": 15
+            }
+        },
+        "lootable": false
+    },
+    {
+        "id": "weapon.epic.amazing-staff",
+        "populatorType": "item",
+        "name": [
+            "Powerful Steel Staff",
+            "Blessed Iron Staff"
+        ],
+        "tier": "epic",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "staff",
+            "damage": {
+                "min": 100,
+                "max": 150
+            },
+            "effects": [
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking"
+                    ],
+                    "type": [
+                        "damage"
+                    ],
+                    "value": [
+                        90,
+                        500,
+                        1000
+                    ],
+                    "probability": 1
+                },
+                {
+                    "name": "Superpower2",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "value": [
+                        90,
+                        500,
+                        1000
+                    ],
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.epic.amazing-sword",
+        "populatorType": "item",
+        "name": [
+            "Powerful Steel Sword",
+            "Blessed Iron Sword"
+        ],
+        "tier": "epic",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "sword",
+            "damage": {
+                "min": 100,
+                "max": 150
+            },
+            "effects": [
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking"
+                    ],
+                    "type": [
+                        "damage"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 1
+                },
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.epic.amazing-axe",
+        "populatorType": "item",
+        "name": [
+            "Mighty Steel Axe",
+            "Blessed Iron Axe"
+        ],
+        "tier": "epic",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "axe",
+            "damage": {
+                "min": 120,
+                "max": 180
+            },
+            "effects": [
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking"
+                    ],
+                    "type": [
+                        "damage"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 1
+                },
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.epic.amazing-knife",
+        "populatorType": "item",
+        "name": [
+            "Sharp Steel Knife",
+            "Blessed Iron Knife"
+        ],
+        "tier": "epic",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "knife",
+            "damage": {
+                "min": 60,
+                "max": 90
+            },
+            "effects": [
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking"
+                    ],
+                    "type": [
+                        "damage"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 1
+                },
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.epic.amazing-dagger",
+        "populatorType": "item",
+        "name": [
+            "Poisonous Steel Dagger",
+            "Blessed Iron Dagger"
+        ],
+        "tier": "epic",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "dagger",
+            "damage": {
+                "min": 70,
+                "max": 100
+            },
+            "effects": [
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking"
+                    ],
+                    "type": [
+                        "damage"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 1
+                },
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.epic.amazing-bow",
+        "populatorType": "item",
+        "name": [
+            "Powerful Steel Bow",
+            "Blessed Iron Bow"
+        ],
+        "tier": "epic",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "bow",
+            "damage": {
+                "min": 80,
+                "max": 120
+            },
+            "effects": [
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking"
+                    ],
+                    "type": [
+                        "damage"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 1
+                },
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.epic.amazing-crossbow",
+        "populatorType": "item",
+        "name": [
+            "Powerful Steel Crossbow",
+            "Blessed Iron Crossbow"
+        ],
+        "tier": "epic",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "crossbow",
+            "damage": {
+                "min": 90,
+                "max": 130
+            },
+            "effects": [
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking"
+                    ],
+                    "type": [
+                        "damage"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 1
+                },
+                {
+                    "name": "Smite",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "value": [
+                        10,
+                        12,
+                        15,
+                        18,
+                        20
+                    ],
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.animal.scorpion-venom-claws",
+        "populatorType": "item",
+        "name": "Scorpion Venom Claws",
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "knife",
+            "damage": {
+                "min": 75,
+                "max": 100
+            }
+        },
+        "noAi": true,
+        "lootable": false
+    },
+    {
+        "id": "weapon.animal.spider-fangs",
+        "populatorType": "item",
+        "name": "Spider Fangs",
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "knife",
+            "damage": {
+                "min": 15,
+                "max": 25
             }
         },
         "lootable": false

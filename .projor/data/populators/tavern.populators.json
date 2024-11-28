@@ -1,23 +1,5 @@
 [
     {
-        "id": "building.tavern",
-        "populatorType": "children",
-        "name": "Tavern",
-        "distance": 5,
-        "humidity": [
-            "normal",
-            "humid"
-        ],
-        "temperature": [
-            "mild",
-            "warm"
-        ],
-        "type": "building",
-        "building": {
-            "buildingType": "tavern"
-        }
-    },
-    {
         "id": "room.tavern.bedroom",
         "populatorType": "children",
         "name": "Tavern Bedroom",
@@ -117,6 +99,27 @@
                     ]
                 }
             }
+        ]
+    },
+    {
+        "id": "building.tavern",
+        "populatorType": "children",
+        "name": "Tavern",
+        "distance": 5,
+        "humidity": [
+            "normal",
+            "humid"
+        ],
+        "temperature": [
+            "mild",
+            "warm"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "base"
+        },
+        "labels": [
+            "tavern"
         ]
     }
 ]

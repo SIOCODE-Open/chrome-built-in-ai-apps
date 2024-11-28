@@ -1,1 +1,82 @@
-[]
+[
+    {
+        "id": "building.engineers-guild",
+        "populatorType": "children",
+        "name": "Engineer's Guild",
+        "distance": 5,
+        "humidity": [
+            "normal",
+            "dry"
+        ],
+        "temperature": [
+            "mild",
+            "warm"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "store"
+        },
+        "labels": [
+            "engineers-guild"
+        ]
+    },
+    {
+        "id": "item.engineers-guild.engineer.loot",
+        "populatorType": "item",
+        "oneOf": [
+            "material.common",
+            "material.iron",
+            "material.steel",
+            "material.wood",
+            "consumable.dynamite"
+        ],
+        "probability": 1,
+        "lootable": true
+    },
+    {
+        "id": "npc.engineers-guild.engineer",
+        "populatorType": "npc",
+        "name": "Engineer",
+        "health": {
+            "status": "healthy",
+            "points": 1500,
+            "max": 1500
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.rare.nice-armor",
+            "boots": "boots.rare.nice-boots",
+            "helmet": "helmet.rare.nice-helmet",
+            "weapon": "weapon.rare.nice-staff"
+        },
+        "personality": {
+            "traits": [
+                "curious",
+                "diligent",
+                "patient",
+                "optimistic",
+                "humble"
+            ],
+            "background": "artisan"
+        },
+        "inventory": {
+            "gold": [
+                500,
+                1000,
+                2000,
+                3000
+            ],
+            "items": [
+                "item.engineers-guild.engineer.loot",
+                "item.engineers-guild.engineer.loot",
+                "item.engineers-guild.engineer.loot",
+                "item.engineers-guild.engineer.loot",
+                "item.engineers-guild.engineer.loot",
+                "item.engineers-guild.engineer.loot",
+                "item.engineers-guild.engineer.loot",
+                "item.engineers-guild.engineer.loot"
+            ]
+        }
+    }
+]

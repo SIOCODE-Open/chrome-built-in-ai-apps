@@ -1,1 +1,108 @@
-[]
+[
+    {
+        "id": "building.alchemists-guild",
+        "populatorType": "children",
+        "name": "Alchemist's Guild",
+        "distance": 5,
+        "humidity": [
+            "normal",
+            "dry"
+        ],
+        "temperature": [
+            "mild",
+            "warm"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "store"
+        },
+        "labels": [
+            "alchemists-guild"
+        ]
+    },
+    {
+        "id": "wearable.rare.nice-amulet",
+        "populatorType": "item",
+        "name": [
+            "Nice Amulet",
+            "Amulet of Protection",
+            "Silver Amulet"
+        ],
+        "tier": "rare",
+        "type": "wearable",
+        "wearable": {
+            "wearableType": "necklace",
+            "defense": {
+                "min": 10,
+                "max": 20
+            },
+            "effects": [
+                {
+                    "name": "minor-heal",
+                    "type": "heal",
+                    "activation": "when-defending",
+                    "value": 20
+                }
+            ]
+        }
+    },
+    {
+        "id": "item.alchemists-guild.alchemist.loot",
+        "populatorType": "item",
+        "oneOf": [
+            "consumable.healing-potion.small",
+            "consumable.healing-potion.normal",
+            "consumable.healing-potion.large",
+            "consumable.poison.small",
+            "consumable.poison.normal",
+            "material.herb",
+            "material.potion-ingredient"
+        ],
+        "probability": 1,
+        "lootable": true
+    },
+    {
+        "id": "npc.alchemists-guild.alchemist",
+        "populatorType": "npc",
+        "name": "Alchemist",
+        "health": {
+            "status": "healthy",
+            "points": 1200,
+            "max": 1200
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.rare.nice-armor",
+            "boots": "boots.rare.nice-boots",
+            "helmet": "helmet.rare.nice-helmet",
+            "wearable": "wearable.rare.nice-amulet",
+            "weapon": "weapon.rare.nice-staff"
+        },
+        "personality": {
+            "traits": [
+                "curious",
+                "diligent",
+                "patient",
+                "optimistic",
+                "humble"
+            ],
+            "background": "alchemist"
+        },
+        "inventory": {
+            "gold": [
+                500,
+                1000,
+                2000,
+                3000
+            ],
+            "items": [
+                "item.alchemists-guild.alchemist.loot",
+                "item.alchemists-guild.alchemist.loot",
+                "item.alchemists-guild.alchemist.loot",
+                "item.alchemists-guild.alchemist.loot",
+                "item.alchemists-guild.alchemist.loot"
+            ]
+        }
+    }
+]

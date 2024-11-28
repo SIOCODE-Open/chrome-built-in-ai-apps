@@ -1,0 +1,174 @@
+[
+    {
+        "id": "wilderness.swamp",
+        "populatorType": "children",
+        "name": "Swamp",
+        "distance": 25,
+        "humidity": [
+            "humid",
+            "wet"
+        ],
+        "temperature": [
+            "mild",
+            "warm"
+        ],
+        "type": "wilderness",
+        "wilderness": {
+            "wildernessType": "swamp"
+        },
+        "labels": [
+            "swamp"
+        ]
+    },
+    {
+        "id": "npc.swamp.swamp-monster",
+        "populatorType": "npc",
+        "name": "Swamp Monster",
+        "race": "animal",
+        "stance": "hostile",
+        "health": {
+            "status": "healthy",
+            "points": 1000,
+            "max": 1000
+        },
+        "gear": {
+            "weapon": "weapon.animal.swamp-monster-claws",
+            "armor": "armor.animal.swamp-monster-skin"
+        },
+        "labels": [
+            "swamp-monster"
+        ]
+    },
+    {
+        "id": "npc.swamp.alligator",
+        "populatorType": "npc",
+        "name": "Alligator",
+        "race": "animal",
+        "stance": "hostile",
+        "health": {
+            "status": "healthy",
+            "points": 500,
+            "max": 500
+        },
+        "gear": {
+            "weapon": "weapon.animal.alligator-teeth"
+        },
+        "labels": [
+            "alligator"
+        ]
+    },
+    {
+        "id": "npc.swamp.bog-witch",
+        "populatorType": "npc",
+        "name": "Bog Witch",
+        "race": "human",
+        "stance": [
+            "neutral",
+            "hostile"
+        ],
+        "health": {
+            "status": "healthy",
+            "points": 750,
+            "max": 750
+        },
+        "gear": {
+            "weapon": "weapon.rare.nice-staff",
+            "wearable": "wearable.rare.nice-amulet"
+        },
+        "inventory": {
+            "items": [
+                "consumable.healing-potion.normal",
+                "consumable.poison.small"
+            ]
+        },
+        "personality": {
+            "traits": [
+                "cruel",
+                "deceptive",
+                "greedy",
+                "patient",
+                "vengeful"
+            ],
+            "background": [
+                "witch"
+            ]
+        },
+        "labels": [
+            "bog-witch"
+        ]
+    },
+    {
+        "id": "item.swamp.swamp-herb",
+        "populatorType": "item",
+        "name": "Swamp Herb",
+        "tier": [
+            "common",
+            "rare"
+        ],
+        "type": "material",
+        "labels": [
+            "herb",
+            "swamp-herb"
+        ]
+    },
+    {
+        "id": "item.swamp.mud-boots",
+        "populatorType": "item",
+        "name": "Mud Boots",
+        "tier": "common",
+        "type": "boots",
+        "boots": {
+            "defense": {
+                "min": 5,
+                "max": 10
+            }
+        },
+        "labels": [
+            "mud-boots"
+        ]
+    },
+    {
+        "id": "weapon.animal.swamp-monster-claws",
+        "populatorType": "item",
+        "name": "Swamp Monster Claws",
+        "tier": "rare",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "knife",
+            "damage": {
+                "min": 20,
+                "max": 40
+            }
+        },
+        "lootable": false
+    },
+    {
+        "id": "armor.animal.swamp-monster-skin",
+        "populatorType": "item",
+        "name": "Swamp Monster Skin",
+        "tier": "rare",
+        "type": "armor",
+        "armor": {
+            "defense": {
+                "min": 25,
+                "max": 50
+            }
+        },
+        "lootable": false
+    },
+    {
+        "id": "weapon.animal.alligator-teeth",
+        "populatorType": "item",
+        "name": "Alligator Teeth",
+        "tier": "common",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "knife",
+            "damage": {
+                "min": 10,
+                "max": 20
+            }
+        },
+        "lootable": false
+    }
+]

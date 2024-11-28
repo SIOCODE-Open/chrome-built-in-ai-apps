@@ -7,9 +7,7 @@
             "max": 2
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     },
     {
         "id": "tavern-kitchens",
@@ -19,9 +17,7 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     },
     {
         "id": "tavern-cellars",
@@ -31,9 +27,7 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     },
     {
         "id": "tavern-food",
@@ -43,9 +37,7 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     },
     {
         "id": "tavern-drinks",
@@ -55,9 +47,7 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     },
     {
         "id": "tavern-kitchen-items",
@@ -67,9 +57,7 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     },
     {
         "id": "tavern-tavern-keeper",
@@ -79,9 +67,7 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     },
     {
         "id": "tavern-peasant",
@@ -91,9 +77,7 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     },
     {
         "id": "tavern-merchant",
@@ -103,8 +87,6 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "tavern"
-        }
+        "hasLabel": "tavern"
     }
 ]

@@ -1,0 +1,67 @@
+[
+    {
+        "id": "engineers-guild-engineer",
+        "apply": "npc.engineers-guild.engineer",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "engineers-guild"
+    },
+    {
+        "id": "engineers-guild-materials",
+        "apply": "material.common",
+        "count": {
+            "min": 2,
+            "max": 5
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "engineers-guild"
+    },
+    {
+        "id": "engineers-guild-iron",
+        "apply": "material.iron",
+        "count": {
+            "min": 2,
+            "max": 5
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "engineers-guild"
+    },
+    {
+        "id": "engineers-guild-steel",
+        "apply": "material.steel",
+        "count": {
+            "min": 2,
+            "max": 5
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "engineers-guild"
+    },
+    {
+        "id": "engineers-guild-wood",
+        "apply": "material.wood",
+        "count": {
+            "min": 2,
+            "max": 5
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "engineers-guild"
+    }
+]

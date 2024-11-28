@@ -323,7 +323,7 @@ export function GamePlayer(
             const sub = world.nodesGenerated.subscribe(
                 (allNodes) => {
                     if (allNodes) {
-                        const candidates = allNodes.filter(n => n.type === "room" && n.room?.roomType === "bedroom" && n.ancestor && n.ancestor.type === "building" && n.ancestor.building?.buildingType === "tavern");
+                        const candidates = allNodes.filter(n => n.type === "room" && n.room?.roomType === "bedroom" && n.ancestor && n.ancestor.type === "building" && n.ancestor.labels.includes("tavern"));
                         const startingNode = candidates[Math.floor(Math.random() * candidates.length)];
 
                         startingNode.name = "Dark Room";

@@ -1,0 +1,90 @@
+[
+    {
+        "id": "building.wizards-tower",
+        "populatorType": "children",
+        "name": "Wizard's Tower",
+        "distance": 5,
+        "humidity": [
+            "normal",
+            "dry"
+        ],
+        "temperature": [
+            "mild",
+            "cool"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "house"
+        },
+        "labels": [
+            "wizards-tower"
+        ]
+    },
+    {
+        "id": "material.magical-material",
+        "populatorType": "item",
+        "name": "Magical Material",
+        "tier": "rare",
+        "type": "material",
+        "labels": [
+            "magical"
+        ]
+    },
+    {
+        "id": "material.magical-dust",
+        "populatorType": "item",
+        "name": "Magical Dust",
+        "tier": "common",
+        "type": "material",
+        "labels": [
+            "magical"
+        ]
+    },
+    {
+        "id": "npc.wizards-tower.wizard",
+        "populatorType": "npc",
+        "name": "Wizard",
+        "race": "human",
+        "stance": "friendly",
+        "health": {
+            "status": "healthy",
+            "points": 1000,
+            "max": 1000
+        },
+        "gear": {
+            "armor": "armor.rare.nice-armor",
+            "boots": "boots.rare.nice-boots",
+            "helmet": "helmet.rare.nice-helmet",
+            "weapon": "weapon.rare.nice-staff"
+        },
+        "inventory": {
+            "gold": [
+                1000,
+                2000,
+                3000
+            ],
+            "items": [
+                "material.magical-material",
+                "material.magical-material",
+                "weapon.rare.nice-staff",
+                "weapon.rare.nice-staff",
+                "material.magical-dust",
+                "material.magical-dust",
+                "material.magical-dust"
+            ]
+        },
+        "personality": {
+            "traits": [
+                "curious",
+                "diligent",
+                "patient",
+                "optimistic",
+                "humble"
+            ],
+            "background": "scholar"
+        },
+        "labels": [
+            "wizard"
+        ]
+    }
+]

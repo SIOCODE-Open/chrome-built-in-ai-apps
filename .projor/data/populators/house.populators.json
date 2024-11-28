@@ -1,26 +1,5 @@
 [
     {
-        "id": "building.house",
-        "populatorType": "children",
-        "name": "House",
-        "distance": 5,
-        "humidity": [
-            "dry",
-            "normal",
-            "humid"
-        ],
-        "temperature": [
-            "cool",
-            "mild",
-            "warm",
-            "hot"
-        ],
-        "type": "building",
-        "building": {
-            "buildingType": "house"
-        }
-    },
-    {
         "id": "room.house.bedroom",
         "populatorType": "children",
         "name": "Bedroom",
@@ -55,5 +34,29 @@
         "room": {
             "roomType": "storage"
         }
+    },
+    {
+        "id": "building.house",
+        "populatorType": "children",
+        "name": "House",
+        "distance": 5,
+        "humidity": [
+            "dry",
+            "normal",
+            "humid"
+        ],
+        "temperature": [
+            "cool",
+            "mild",
+            "warm",
+            "hot"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "house"
+        },
+        "labels": [
+            "house"
+        ]
     }
 ]

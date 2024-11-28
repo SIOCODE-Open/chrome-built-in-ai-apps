@@ -1,0 +1,85 @@
+[
+    {
+        "id": "building.mine",
+        "populatorType": "children",
+        "name": "Mine",
+        "distance": 10,
+        "humidity": [
+            "normal",
+            "humid",
+            "wet"
+        ],
+        "temperature": [
+            "cool",
+            "cold"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "base"
+        },
+        "labels": [
+            "mine"
+        ]
+    },
+    {
+        "id": "npc.mine.miner",
+        "populatorType": "npc",
+        "name": "Miner",
+        "race": "human",
+        "stance": "friendly",
+        "health": {
+            "status": "healthy",
+            "points": 1500,
+            "max": 1500
+        },
+        "inventory": {
+            "gold": [
+                100,
+                200,
+                300,
+                500
+            ],
+            "items": [
+                {
+                    "oneOf": [
+                        "material.ore",
+                        "material.crude-rock"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "material.ore",
+                        "material.crude-rock"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "material.ore",
+                        "material.crude-rock"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "material.ore",
+                        "material.crude-rock"
+                    ]
+                }
+            ]
+        },
+        "gear": {
+            "armor": "armor.common.simple-clothing",
+            "boots": "boots.common.simple-boots",
+            "helmet": "helmet.common.simple-helmet",
+            "weapon": "weapon.common.simple-axe"
+        },
+        "personality": {
+            "traits": [
+                "diligent",
+                "patient",
+                "honest",
+                "humble"
+            ],
+            "background": "miner"
+        }
+    }
+]

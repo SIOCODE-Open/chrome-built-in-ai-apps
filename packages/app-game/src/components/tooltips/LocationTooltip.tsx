@@ -1,6 +1,7 @@
 import { IWorldItem, IWorldNode } from "../../context/World.context";
 import { WORLD_NODE_AREA_TYPE_DISPLAYS, WORLD_NODE_BUILDING_TYPE_DISPLAYS, WORLD_NODE_HUMIDITY_DISPLAYS, WORLD_NODE_ROOM_TYPE_DISPLAYS, WORLD_NODE_SETTLEMENT_TYPE_DISPLAYS, WORLD_NODE_STREET_TYPE_DISPLAYS, WORLD_NODE_TEMPERATURE_DISPLAYS, WORLD_NODE_WILDERNESS_TYPE_DISPLAYS, WORLD_WEAPON_TYPE_DISPLAYS, WORLD_WEARABLE_TYPE_DISPLAYS, WorldItemTier, WorldItemType, WorldWeaponType, WorldWearableType } from "../../model/world.enums";
 import { CardInfoTable } from "../card/CardInfoTable";
+import { CardLabelList } from "../card/CardLabelList";
 import { TooltipText } from "../TooltipText";
 
 export function LocationTooltip(
@@ -38,7 +39,26 @@ export function LocationTooltip(
         infoTable["Room"] = WORLD_NODE_ROOM_TYPE_DISPLAYS[props.value.room.roomType]
     }
 
-    const tt = <CardInfoTable value={infoTable} />;
+    const labels = [];
+
+    if (props.value.labels && props.value.labels.length > 0) {
+        labels.push(
+            ...props.value.labels
+        );
+    }
+
+    const tt = <>
+        <CardInfoTable value={infoTable} />
+        {
+            labels.length > 0 && <div className="flex flex-row flex-wrap justify-start items-center gap-2">
+                {
+                    labels.map(
+                        label => <span className="px-2 py-1 text-xs font-bold bg-neutral-500 text-white rounded-full">{label}</span>
+                    )
+                }
+            </div>
+        }
+    </>;
 
     return tt;
 }

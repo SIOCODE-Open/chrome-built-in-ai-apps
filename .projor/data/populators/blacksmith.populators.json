@@ -11,8 +11,21 @@
         ],
         "type": "building",
         "building": {
-            "buildingType": "blacksmith"
-        }
+            "buildingType": "store"
+        },
+        "labels": [
+            "blacksmith"
+        ]
+    },
+    {
+        "id": "item.blacksmith.smith.loot",
+        "populatorType": "item",
+        "oneOf": [
+            "weapon.rare.nice-sword",
+            "weapon.rare.nice-axe",
+            "armor.rare.nice-armor"
+        ],
+        "lootable": true
     },
     {
         "id": "npc.blacksmith.smith",
@@ -42,69 +55,15 @@
                 10000
             ],
             "items": [
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                },
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                },
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                },
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                },
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                },
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                },
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                },
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                },
-                {
-                    "oneOf": [
-                        "weapon.rare.nice-sword",
-                        "weapon.rare.nice-axe",
-                        "armor.rare.nice-armor"
-                    ]
-                }
+                "item.blacksmith.smith.loot",
+                "item.blacksmith.smith.loot",
+                "item.blacksmith.smith.loot",
+                "item.blacksmith.smith.loot",
+                "item.blacksmith.smith.loot",
+                "item.blacksmith.smith.loot",
+                "item.blacksmith.smith.loot",
+                "item.blacksmith.smith.loot",
+                "item.blacksmith.smith.loot"
             ]
         },
         "personality": {
@@ -112,7 +71,6 @@
                 "cautious",
                 "indifferent",
                 "disciplined",
-                "apatethic",
                 "patient",
                 "honest"
             ],

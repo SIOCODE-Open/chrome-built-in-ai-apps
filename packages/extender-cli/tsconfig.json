@@ -20,10 +20,16 @@
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "outDir": "lib",
-        "rootDir": "src",
         "declaration": true,
-        "declarationDir": "types"
+        "declarationDir": "types",
+        "jsx": "react-native"
     },
-    "include": ["src/**/*.ts", "src/**/*.js", "index.d.ts"],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.js",
+        "src/**/*.jsx",
+        "index.d.ts"
+    ],
     "exclude": ["node_modules"]
 }

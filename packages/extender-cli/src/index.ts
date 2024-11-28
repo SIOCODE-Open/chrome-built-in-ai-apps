@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { input, password } from '@inquirer/prompts';
 import path from "path";
 import { readdir, readFile, writeFile } from "fs/promises";
+import * as worldenums from "./world.enums";
 
 const LOGTAG = chalk.dim("[extender-cli]");
 const CLOUD_URL = `https://chrome-builtin-ai-challenge-gemini-gateway-700248413310.europe-west4.run.app`;
@@ -190,17 +191,44 @@ function displayCommand(req: IProjectCommand): void {
             }
         }
         if (req.populators.change) {
-            for (const [name, change] of Object.entries(req.populators.change)) {
-                createAffectedFiles(name);
-                affectedFiles[name].change.push(
-                    ...change.map(o => o.id)
-                );
+
+            if (Array.isArray(req.populators.change)) {
+                // Handle changes as array
+                for (const change of req.populators.change) {
+                    for (const pc of project.populatorCollections) {
+                        const foundPopulator = pc.populators.find(p => p.id === change.id);
+                        if (foundPopulator) {
+                            createAffectedFiles(pc.name);
+                            affectedFiles[pc.name].change.push(change.id);
+                            break;
+                        }
+                    }
+                }
+            } else {
+
+                for (const [name, change] of Object.entries(req.populators.change)) {
+                    createAffectedFiles(name);
+                    affectedFiles[name].change.push(
+                        ...change.map(o => o.id)
+                    );
+                }
             }
         }
         if (req.populators.remove) {
-            for (const [name, remove] of Object.entries(req.populators.remove)) {
-                createAffectedFiles(name);
-                affectedFiles[name].remove.push(...remove);
+
+            if (Array.isArray(req.populators.remove)) {
+                // Handle removals as array
+                for (const populatorId of req.populators.remove) {
+                    for (const pc of project.populatorCollections) {
+                        pc.populators = pc.populators.filter(p => p.id !== populatorId);
+                    }
+                }
+            } else {
+
+                for (const [name, remove] of Object.entries(req.populators.remove)) {
+                    createAffectedFiles(name);
+                    affectedFiles[name].remove.push(...remove);
+                }
             }
         }
     }
@@ -214,17 +242,44 @@ function displayCommand(req: IProjectCommand): void {
             }
         }
         if (req.rules.change) {
-            for (const [name, change] of Object.entries(req.rules.change)) {
-                createAffectedFiles(name);
-                affectedFiles[name].change.push(
-                    ...change.map(o => o.id)
-                );
+
+            if (Array.isArray(req.rules.change)) {
+                // Handle changes as array
+                for (const change of req.rules.change) {
+                    for (const pc of project.ruleCollections) {
+                        const foundRule = pc.rules.find(r => r.id === change.id);
+                        if (foundRule) {
+                            createAffectedFiles(pc.name);
+                            affectedFiles[pc.name].change.push(change.id);
+                            break;
+                        }
+                    }
+                }
+            } else {
+
+                for (const [name, change] of Object.entries(req.rules.change)) {
+                    createAffectedFiles(name);
+                    affectedFiles[name].change.push(
+                        ...change.map(o => o.id)
+                    );
+                }
             }
         }
         if (req.rules.remove) {
-            for (const [name, remove] of Object.entries(req.rules.remove)) {
-                createAffectedFiles(name);
-                affectedFiles[name].remove.push(...remove);
+
+            if (Array.isArray(req.rules.remove)) {
+                // Handle removals as array
+                for (const ruleId of req.rules.remove) {
+                    for (const pc of project.ruleCollections) {
+                        pc.rules = pc.rules.filter(r => r.id !== ruleId);
+                    }
+                }
+            } else {
+
+                for (const [name, remove] of Object.entries(req.rules.remove)) {
+                    createAffectedFiles(name);
+                    affectedFiles[name].remove.push(...remove);
+                }
             }
         }
     }
@@ -295,7 +350,7 @@ async function readProject() {
             .map(async (ruleFilename) => ({ name: ruleFilename, rules: JSON.parse(await readFile(path.resolve(rulesDirectory, ruleFilename), "utf-8")) }))
     )).flat();
     project.rules = project.ruleCollections.map(pc => pc.rules).flat();
-    print("Loaded", chalk.bold(project.rules.length), "rules.");
+    print("Loaded", chalk.bold(project.rules.length), "rules from", chalk.bold(project.ruleCollections.length), "collections.");
 
     const systemPromptDebugPath = path.resolve(
         cwd,
@@ -347,15 +402,371 @@ async function saveProject() {
     print("Wrote interfaces to", chalk.bold(interfacesFilePath));
 }
 
+function addPopulatorCollectionIfNecessary(name: string): any {
+    let pc = project.populatorCollections.find(pc => pc.name === name);
+    if (!pc) {
+        pc = { name, populators: [] };
+        project.populatorCollections.push(pc);
+    }
+    return pc;
+}
+
+function addRuleCollectionIfNecessary(name: string): any {
+    let pc = project.ruleCollections.find(pc => pc.name === name);
+    if (!pc) {
+        pc = { name, rules: [] };
+        project.ruleCollections.push(pc);
+    }
+    return pc;
+}
+
+function applyCommand(req: IProjectCommand) {
+
+    if (req.populators) {
+        if (req.populators.add) {
+            for (const [populatorCollectionName, toAdd] of Object.entries(req.populators.add)) {
+                const pc = addPopulatorCollectionIfNecessary(populatorCollectionName);
+                for (const populator of toAdd) {
+                    // Remove existing populator with same ID
+                    pc.populators = pc.populators.filter(p => p.id !== populator.id);
+                    pc.populators.push(populator);
+                }
+            }
+        }
+
+        if (req.populators.change) {
+
+            if (Array.isArray(req.populators.change)) {
+                // Handle changes as array
+                for (const populator of req.populators.change) {
+                    for (const pc of project.populatorCollections) {
+                        const foundPopulator = pc.populators.find(p => p.id === populator.id);
+                        if (foundPopulator) {
+                            pc.populators = pc.populators.filter(p => p.id !== populator.id);
+                            pc.populators.push(populator);
+                            break;
+                        }
+                    }
+                }
+            } else {
+
+                for (const [populatorCollectionName, toChange] of Object.entries(req.populators.change)) {
+                    const pc = addPopulatorCollectionIfNecessary(populatorCollectionName);
+                    for (const populator of toChange) {
+                        // Remove existing populator with same ID
+                        pc.populators = pc.populators.filter(p => p.id !== populator.id);
+                        pc.populators.push(populator);
+                    }
+                }
+
+            }
+        }
+
+        if (req.populators.remove) {
+
+            if (Array.isArray(req.populators.remove)) {
+                // Handle removals as array
+                for (const populatorId of req.populators.remove) {
+                    for (const pc of project.populatorCollections) {
+                        pc.populators = pc.populators.filter(p => p.id !== populatorId);
+                    }
+                }
+            } else {
+
+                for (const [populatorCollectionName, toRemove] of Object.entries(req.populators.remove)) {
+                    const pc = addPopulatorCollectionIfNecessary(populatorCollectionName);
+                    for (const populatorId of toRemove) {
+                        pc.populators = pc.populators.filter(p => p.id !== populatorId);
+                    }
+                }
+
+            }
+        }
+    }
+
+    if (req.rules) {
+        if (req.rules.add) {
+            for (const [ruleCollectionName, toAdd] of Object.entries(req.rules.add)) {
+                const pc = addRuleCollectionIfNecessary(ruleCollectionName);
+                for (const rule of toAdd) {
+                    // Remove existing rule with same ID
+                    pc.rules = pc.rules.filter(r => r.id !== rule.id);
+                    pc.rules.push(rule);
+                }
+            }
+        }
+
+        if (req.rules.change) {
+
+            if (Array.isArray(req.rules.change)) {
+                // Handle changes as array
+                for (const rule of req.rules.change) {
+                    for (const pc of project.ruleCollections) {
+                        const foundRule = pc.rules.find(r => r.id === rule.id);
+                        if (foundRule) {
+                            pc.rules = pc.rules.filter(r => r.id !== rule.id);
+                            pc.rules.push(rule);
+                            break;
+                        }
+                    }
+                }
+            } else {
+
+                for (const [ruleCollectionName, toChange] of Object.entries(req.rules.change)) {
+                    const pc = addRuleCollectionIfNecessary(ruleCollectionName);
+                    for (const rule of toChange) {
+                        // Remove existing rule with same ID
+                        pc.rules = pc.rules.filter(r => r.id !== rule.id);
+                        pc.rules.push(rule);
+                    }
+                }
+
+            }
+        }
+
+        if (req.rules.remove) {
+
+            if (Array.isArray(req.rules.remove)) {
+                // Handle removals as array
+                for (const ruleId of req.rules.remove) {
+                    for (const pc of project.ruleCollections) {
+                        pc.rules = pc.rules.filter(r => r.id !== ruleId);
+                    }
+                }
+            } else {
+
+                for (const [ruleCollectionName, toRemove] of Object.entries(req.rules.remove)) {
+                    const pc = addRuleCollectionIfNecessary(ruleCollectionName);
+                    for (const ruleId of toRemove) {
+                        pc.rules = pc.rules.filter(r => r.id !== ruleId);
+                    }
+                }
+
+            }
+        }
+    }
+
+    project.populators = project.populatorCollections.map(pc => pc.populators).flat();
+    project.rules = project.ruleCollections.map(pc => pc.rules).flat();
+
+    print("Applied command.", chalk.bold(project.populatorCollections.length), "populator collections with", chalk.bold(project.populators.length), "populators,", chalk.bold(project.ruleCollections.length), "rule collections with", chalk.bold(project.rules.length), "rules.");
+
+}
+
+function checkProjectIntegrity() {
+
+    let noViolations = true;
+
+    for (const ruleCollection of project.ruleCollections) {
+
+        let violations = [];
+
+        for (let rule of ruleCollection.rules) {
+
+            if (typeof rule.apply !== "string") {
+                violations.push([chalk.yellow(chalk.bold("  [!]")), "Rule", rule.id, "has invalid apply field."]);
+                continue;
+            }
+
+            const applyPopulator = project.populators.find(p => p.id === rule.apply);
+
+            if (!applyPopulator) {
+                violations.push([chalk.red(chalk.bold("  [!]")), "Rule", rule.id, "has missing apply populator", rule.apply]);
+            }
+
+        }
+
+        if (violations.length > 0) {
+            print(chalk.red(chalk.bold(ruleCollection.name)), "INTEGRITY VIOLATIONS");
+            for (const violation of violations) {
+                print(...violation);
+            }
+            noViolations = false;
+        } else {
+            // print(chalk.green(chalk.bold(ruleCollection.name)), "OK");
+        }
+    }
+
+    for (const populatorCollection of project.populatorCollections) {
+        let violations = [];
+
+        let refsToCheck = [];
+        let enumsToCheck = [];
+
+        for (let populator of populatorCollection.populators) {
+
+            if (populator.populatorType === "npc") {
+
+                if (populator.gear) {
+                    refsToCheck.push(
+                        populator.gear.armor,
+                        populator.gear.boots,
+                        populator.gear.helmet,
+                        populator.gear.weapon,
+                        populator.gear.wearable,
+                    )
+                }
+
+                if (populator.inventory && populator.inventory.items) {
+                    refsToCheck.push(
+                        ...populator.inventory.items
+                    )
+                }
+
+                if (populator.health && populator.health.status) {
+                    enumsToCheck.push([worldenums.WORLD_PLAYER_HEALTH, populator.health.status]);
+                }
+
+                if (populator.race) {
+                    enumsToCheck.push([worldenums.WORLD_NPC_RACE, populator.race]);
+                }
+
+                if (populator.stance) {
+                    enumsToCheck.push([worldenums.WORLD_NPC_STANCE, populator.stance]);
+                }
+
+                if (populator.personality && Array.isArray(populator.personality.traits)) {
+                    if (populator.personality.traits.length < 3) {
+                        violations.push([chalk.red(chalk.bold("  [!]")), "Populator", populator.id, "has less than 3 personality traits."]);
+                    }
+                    enumsToCheck.push(
+                        ...populator.personality.traits.map(t => [worldenums.WORLD_NPC_PERSONALITY_TRAIT, t])
+                    );
+                }
+
+                if (populator.personality && populator.personality.background) {
+                    enumsToCheck.push([worldenums.WORLD_NPC_BACKGROUND, populator.personality.background]);
+                }
+
+            } else if (populator.populatorType === "item") {
+
+                enumsToCheck.push([worldenums.WORLD_ITEM_TYPE, populator.type]);
+                enumsToCheck.push([worldenums.WORLD_ITEM_TIER, populator.tier]);
+
+                if (populator.weapon && populator.weapon.weaponType) {
+                    enumsToCheck.push([worldenums.WORLD_WEAPON_TYPE, populator.weapon.weaponType]);
+                }
+
+                if (populator.weapon && Array.isArray(populator.weapon.effects)) {
+                    enumsToCheck.push(
+                        ...populator.weapon.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_ACTIVATION, e.activation]),
+                        ...populator.weapon.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_TYPE, e.type]),
+                    );
+                }
+
+                if (populator.armor && Array.isArray(populator.armor.effects)) {
+                    enumsToCheck.push(
+                        ...populator.armor.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_ACTIVATION, e.activation]),
+                        ...populator.armor.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_TYPE, e.type]),
+                    );
+                }
+
+                if (populator.boots && Array.isArray(populator.boots.effects)) {
+                    enumsToCheck.push(
+                        ...populator.boots.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_ACTIVATION, e.activation]),
+                        ...populator.boots.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_TYPE, e.type]),
+                    );
+                }
+
+                if (populator.helmet && Array.isArray(populator.helmet.effects)) {
+                    enumsToCheck.push(
+                        ...populator.helmet.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_ACTIVATION, e.activation]),
+                        ...populator.helmet.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_TYPE, e.type]),
+                    );
+                }
+
+                if (populator.wearable && populator.wearableType) {
+                    enumsToCheck.push([worldenums.WORLD_WEARABLE_TYPE, populator.wearableType]);
+                }
+
+                if (populator.wearable && Array.isArray(populator.wearable.effects)) {
+                    enumsToCheck.push(
+                        ...populator.wearable.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_ACTIVATION, e.activation]),
+                        ...populator.wearable.effects.map(e => [worldenums.WORLD_WEARABLE_EFFECT_TYPE, e.type]),
+                    );
+                }
+
+            }
+
+        }
+
+        for (let ref of refsToCheck) {
+            if (typeof ref === "string") {
+                if (!project.populators.find(p => p.id === ref)) {
+                    violations.push([chalk.red(chalk.bold("  [!]")), "Populator", ref, "is missing."]);
+                }
+            } else if (Array.isArray(ref)) {
+                for (let r of ref) {
+                    if (!project.populators.find(p => p.id === r)) {
+                        violations.push([chalk.red(chalk.bold("  [!]")), "Populator", r, "is missing."]);
+                    }
+                }
+            } else if (typeof ref === "object" && Array.isArray(ref.oneOf)) {
+                for (let r of ref.oneOf) {
+                    if (!project.populators.find(p => p.id === r)) {
+                        violations.push([chalk.red(chalk.bold("  [!]")), "Populator", r, "is missing."]);
+                    }
+                }
+            }
+        }
+
+        for (let [enumValues, checkValue] of enumsToCheck) {
+            if (typeof checkValue === "string") {
+                if (!enumValues.includes(checkValue)) {
+                    violations.push([chalk.red(chalk.bold("  [!]")), "Enum", checkValue, "is invalid."]);
+                }
+            } else if (Array.isArray(checkValue)) {
+                for (let cv of checkValue) {
+                    if (!enumValues.includes(cv)) {
+                        violations.push([chalk.red(chalk.bold("  [!]")), "Enum", cv, "is invalid."]);
+                    }
+                }
+            } else if (typeof checkValue === "object" && Array.isArray(checkValue.oneOf)) {
+                violations.push([chalk.red(chalk.bold("  [!]")), "Enum oneOf is not implemented."]);
+            }
+        }
+
+        if (violations.length > 0) {
+            print(chalk.red(chalk.bold(populatorCollection.name)), "INTEGRITY VIOLATIONS");
+            for (const violation of violations) {
+                print(...violation);
+            }
+            noViolations = false;
+        } else {
+            // print(chalk.green(chalk.bold(populatorCollection.name)), "OK");
+        }
+
+    }
+
+    if (noViolations) {
+        print(chalk.green("Project integrity OK."));
+    }
+
+}
+
 async function mainLoopTick(password: string) {
 
-    const userCommand = await input({
+    let userCommand = await input({
         message: '>',
         theme
     });
+    userCommand = userCommand.trim().toLowerCase();
 
     if (userCommand === "exit" || userCommand === "quit") {
         return false;
+    }
+
+    if (userCommand === "save" || userCommand === "dump" || userCommand === "write") {
+        await saveProject();
+        print(chalk.green("Saved project."), chalk.bold(project.populatorCollections.length), "populator collections,", chalk.bold(project.ruleCollections.length), "rule collections.");
+        return true;
+    }
+
+    if (userCommand === "reset" || userCommand === "reload" || userCommand === "load" || userCommand === "read" || userCommand === "restore") {
+        await readProject();
+        checkProjectIntegrity();
+        print(chalk.green("Reloaded project."), chalk.bold(project.populatorCollections.length), "populator collections,", chalk.bold(project.ruleCollections.length), "rule collections.");
+        return true;
     }
 
     const machineResponse = await callCloud({
@@ -375,6 +786,8 @@ async function mainLoopTick(password: string) {
     await writeFile(parsedResponseDebugPath, JSON.stringify(parsedResponse, null, 2), "utf-8");
     print("Wrote parsed response debug to", chalk.bold(parsedResponseDebugPath));
     displayCommand(parsedResponse);
+    applyCommand(parsedResponse);
+    checkProjectIntegrity();
 
     return true;
 }
@@ -384,13 +797,19 @@ async function main() {
 
     print(chalk.bold("Please enter the cloud password."));
 
-    const cloudPassword = await password({
-        message: '>',
-        theme
-    });
-    if (!cloudPassword || cloudPassword.length === 0) {
-        print(chalk.red("Invalid password. Password cannot be empty."));
-        process.exit(1);
+    let cloudPassword = process.env.CLOUD_PASSWORD || "";
+
+    if (cloudPassword === "") {
+
+        cloudPassword = await password({
+            message: '>',
+            theme
+        });
+        if (!cloudPassword || cloudPassword.length === 0) {
+            print(chalk.red("Invalid password. Password cannot be empty."));
+            process.exit(1);
+        }
+
     }
 
     print("Connecting to cloud ...");
@@ -403,6 +822,7 @@ async function main() {
     }
 
     await readProject();
+    checkProjectIntegrity();
 
     while (true) {
         const keepRunning = await mainLoopTick(cloudPassword);

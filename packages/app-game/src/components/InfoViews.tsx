@@ -85,6 +85,8 @@ export function InfoViews() {
             <SkillInformation />
             <GearInformation />
             <CraftingInformation />
+
+            <DebugInformation />
         </div>
     </>;
 

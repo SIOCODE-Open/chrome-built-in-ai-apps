@@ -127,5 +127,45 @@
                 }
             ]
         }
+    },
+    {
+        "id": "consumable.scroll.fireball",
+        "populatorType": "item",
+        "name": "Scroll of Fireball",
+        "tier": "rare",
+        "type": "consumable",
+        "consumable": {
+            "effects": [
+                {
+                    "name": "Fireball",
+                    "type": "damage-enemy",
+                    "value": [
+                        100,
+                        200
+                    ]
+                }
+            ]
+        },
+        "probability": 0.3
+    },
+    {
+        "id": "consumable.scroll.lightning",
+        "populatorType": "item",
+        "name": "Scroll of Lightning Bolt",
+        "tier": "epic",
+        "type": "consumable",
+        "consumable": {
+            "effects": [
+                {
+                    "name": "Lightning Bolt",
+                    "type": "damage-enemy",
+                    "value": [
+                        250,
+                        500
+                    ]
+                }
+            ]
+        },
+        "probability": 0.1
     }
 ]

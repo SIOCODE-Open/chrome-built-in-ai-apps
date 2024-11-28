@@ -92,5 +92,22 @@
             }
         },
         "lootable": false
+    },
+    {
+        "id": "armor.common.simple-chainmail",
+        "populatorType": "item",
+        "name": [
+            "Simple Chainmail",
+            "Chainmail Armor",
+            "Simple Chainmail Armor"
+        ],
+        "tier": "common",
+        "type": "armor",
+        "armor": {
+            "defense": {
+                "min": 5,
+                "max": 15
+            }
+        }
     }
 ]

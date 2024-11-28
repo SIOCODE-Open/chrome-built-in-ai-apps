@@ -7,9 +7,7 @@
             "max": 1
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "blacksmith"
-        }
+        "hasLabel": "blacksmith"
     },
     {
         "id": "blacksmith-raw-materials-iron",
@@ -19,9 +17,7 @@
             "max": 10
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "blacksmith"
-        }
+        "hasLabel": "blacksmith"
     },
     {
         "id": "blacksmith-raw-materials-wood",
@@ -31,9 +27,7 @@
             "max": 3
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "blacksmith"
-        }
+        "hasLabel": "blacksmith"
     },
     {
         "id": "blacksmith-raw-materials-copper",
@@ -43,9 +37,7 @@
             "max": 3
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "blacksmith"
-        }
+        "hasLabel": "blacksmith"
     },
     {
         "id": "blacksmith-raw-materials-steel",
@@ -55,8 +47,6 @@
             "max": 3
         },
         "hasType": "building",
-        "building": {
-            "hasBuildingType": "blacksmith"
-        }
+        "hasLabel": "blacksmith"
     }
 ]

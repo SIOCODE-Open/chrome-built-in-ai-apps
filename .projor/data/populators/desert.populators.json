@@ -1,0 +1,59 @@
+[
+    {
+        "id": "wilderness.desert",
+        "populatorType": "children",
+        "name": "Desert",
+        "distance": 40,
+        "humidity": "dry",
+        "temperature": "scorching",
+        "type": "wilderness",
+        "wilderness": {
+            "wildernessType": "desert"
+        }
+    },
+    {
+        "id": "npc.desert.scorpion.venom",
+        "populatorType": "npc",
+        "name": "Scorpion",
+        "race": "animal",
+        "stance": "hostile",
+        "health": {
+            "status": "healthy",
+            "points": 50,
+            "max": 50
+        },
+        "gear": {
+            "weapon": {
+                "id": "weapon.animal.scorpion-venom-claws",
+                "populatorType": "item",
+                "name": "Scorpion Venom Claws",
+                "tier": "common",
+                "type": "weapon",
+                "weapon": {
+                    "weaponType": "knife",
+                    "damage": {
+                        "min": 75,
+                        "max": 100
+                    }
+                },
+                "noAi": true,
+                "lootable": false
+            }
+        }
+    },
+    {
+        "id": "npc.desert.scorpion",
+        "populatorType": "npc",
+        "name": "Scorpion",
+        "race": "animal",
+        "stance": "hostile",
+        "health": {
+            "status": "healthy",
+            "points": 50,
+            "max": 50
+        },
+        "gear": {
+            "weapon": "weapon.animal.scorpion-venom-claws"
+        }
+    }
+]

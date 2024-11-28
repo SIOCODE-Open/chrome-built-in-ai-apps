@@ -1,0 +1,20 @@
+[
+    {
+        "id": "wizards-tower.scrolls",
+        "populatorType": "item",
+        "name": [
+            "Scroll",
+            "Magical Scroll"
+        ],
+        "tier": [
+            "rare",
+            "epic"
+        ],
+        "type": "consumable",
+        "oneOf": [
+            "consumable.scroll.fireball",
+            "consumable.scroll.lightning"
+        ],
+        "probability": 0.5
+    }
+]

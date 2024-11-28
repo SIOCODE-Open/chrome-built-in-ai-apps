@@ -1,0 +1,81 @@
+[
+    {
+        "id": "wilderness.cave",
+        "populatorType": "children",
+        "name": "Cave",
+        "distance": 15,
+        "humidity": [
+            "normal",
+            "humid",
+            "wet"
+        ],
+        "temperature": [
+            "cool",
+            "cold"
+        ],
+        "type": "wilderness",
+        "wilderness": {
+            "wildernessType": "cave"
+        },
+        "labels": [
+            "cave"
+        ]
+    },
+    {
+        "id": "material.cave.stone",
+        "populatorType": "item",
+        "name": [
+            "Stone",
+            "Rock",
+            "Rough Stone",
+            "Cave Stone",
+            "Crystalline Rock"
+        ],
+        "tier": "common",
+        "type": "material",
+        "labels": [
+            "stone",
+            "cave-material"
+        ],
+        "probability": 0.8
+    },
+    {
+        "id": "material.cave.ore",
+        "populatorType": "item",
+        "name": [
+            "Ore",
+            "Iron Ore",
+            "Copper Ore",
+            "Cave Ore",
+            "Rare Ore"
+        ],
+        "tier": [
+            "common",
+            "rare"
+        ],
+        "type": "material",
+        "labels": [
+            "ore",
+            "cave-material"
+        ],
+        "probability": 0.3
+    },
+    {
+        "id": "npc.cave.giant-spider",
+        "populatorType": "npc",
+        "name": "Giant Spider",
+        "race": "animal",
+        "stance": "hostile",
+        "health": {
+            "status": "healthy",
+            "points": 1500,
+            "max": 1500
+        },
+        "gear": {
+            "weapon": "weapon.animal.spider-fangs"
+        },
+        "labels": [
+            "spider"
+        ]
+    }
+]

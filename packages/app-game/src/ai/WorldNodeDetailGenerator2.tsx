@@ -16,7 +16,7 @@ const EXAMPLES = [
         ancestor: {
             type: "building",
             building: {
-                buildingType: "tavern"
+                buildingType: "base"
             }
         },
         name: "Tavern Bedroom",
@@ -48,8 +48,9 @@ const EXAMPLES = [
         ancestor: {
             type: "building",
             building: {
-                buildingType: "tavern"
-            }
+                buildingType: "inn"
+            },
+            labels: ["tavern"]
         },
         name: "Tavern Bedroom",
         proposedName: "Tavern Bedroom"
@@ -97,7 +98,8 @@ const EXAMPLES = [
             type: "building",
             building: {
                 buildingType: "castle"
-            }
+            },
+            labels: ["castle"]
         },
         name: "Forge",
         proposedName: "Blazing Forge"
@@ -113,7 +115,8 @@ const EXAMPLES = [
             type: "building",
             building: {
                 buildingType: "inn"
-            }
+            },
+            labels: ["inn"]
         },
         name: "Bathroom",
         proposedName: "Steamy Washroom"
@@ -129,7 +132,8 @@ const EXAMPLES = [
             type: "building",
             building: {
                 buildingType: "tavern"
-            }
+            },
+            labels: ["tavern"]
         },
         name: "Cellar",
         proposedName: "Chilled Wine Storage"
@@ -370,6 +374,7 @@ function nodeToJsonData(node: IWorldNode) {
             wilderness: node.ancestor.wilderness ? {
                 wildernessType: node.ancestor.wilderness.wildernessType
             } : undefined,
+            labels: (node.ancestor.labels && node.ancestor.labels.length > 0) ? node.ancestor.labels : undefined
         } : undefined,
     }
 }

@@ -6,6 +6,7 @@ import { CardTitle } from "../card/CardTitle";
 import { usePlayerActions } from "../../context/PlayerActions.context";
 import { useGameSimulation } from "../../context/GameSimulation.context";
 import { WORLD_NODE_AREA_TYPE, WORLD_NODE_AREA_TYPE_DISPLAYS } from "../../model/world.enums";
+import { LocationTooltip } from "../tooltips/LocationTooltip";
 
 export function TravelInformation(props: any) {
 
@@ -47,6 +48,7 @@ export function TravelInformation(props: any) {
     );
 
     const travelTable = {};
+    const travelTooltips = {};
     const possibleTravels = {};
 
     if (playerLocation) {
@@ -66,11 +68,13 @@ export function TravelInformation(props: any) {
         if (edges.length === 1) {
             travelTable[key] = <button className="text-xs px-2 py-1 disabled:bg-neutral-500 bg-blue-500 text-white font-bold rounded-full"
                 disabled={controlsDisabled} onClick={() => actions.move(edges[0])}>Go</button>;
+            travelTooltips[key] = <LocationTooltip value={edges[0].to} />;
         } else {
             for (let i = 0; i < edges.length; i++) {
                 const newKey = `${key} [${i + 1}]`;
                 travelTable[newKey] = <button className="text-xs px-2 py-1 disabled:bg-neutral-500 bg-blue-500 text-white font-bold rounded-full"
                     disabled={controlsDisabled} onClick={() => actions.move(edges[i])}>Go</button>;
+                travelTooltips[newKey] = <LocationTooltip value={edges[i].to} />;
             }
         }
     }
@@ -79,7 +83,7 @@ export function TravelInformation(props: any) {
         {
             playerLocation && <Card>
                 <CardTitle>You can go to</CardTitle>
-                <CardInfoTable value={travelTable} />
+                <CardInfoTable value={travelTable} tooltips={travelTooltips} />
                 {
                     Object.keys(travelTable).length === 0 && <p className="text-xs italic text-center">
                         You don't know where you can go yet.

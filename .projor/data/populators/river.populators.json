@@ -1,0 +1,37 @@
+[
+    {
+        "id": "wilderness.river",
+        "populatorType": "children",
+        "name": "River",
+        "distance": 30,
+        "humidity": [
+            "normal",
+            "humid",
+            "wet"
+        ],
+        "temperature": [
+            "mild",
+            "warm",
+            "cool"
+        ],
+        "type": "wilderness",
+        "wilderness": {
+            "wildernessType": "river"
+        }
+    },
+    {
+        "id": "npc.river.fish",
+        "populatorType": "npc",
+        "name": "Fish",
+        "race": "animal",
+        "stance": "neutral",
+        "health": {
+            "status": "healthy",
+            "points": 50,
+            "max": 50
+        },
+        "labels": [
+            "fish"
+        ]
+    }
+]

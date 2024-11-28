@@ -1,21 +1,5 @@
 [
     {
-        "id": "building.town-hall",
-        "populatorType": "children",
-        "name": "Town Hall",
-        "distance": 5,
-        "humidity": [
-            "normal"
-        ],
-        "temperature": [
-            "mild"
-        ],
-        "type": "building",
-        "building": {
-            "buildingType": "town-hall"
-        }
-    },
-    {
         "id": "npc.town-hall.mayor",
         "populatorType": "npc",
         "name": "Mayor",
@@ -107,5 +91,24 @@
             ],
             "background": "diplomat"
         }
+    },
+    {
+        "id": "building.town-hall",
+        "populatorType": "children",
+        "name": "Town Hall",
+        "distance": 5,
+        "humidity": [
+            "normal"
+        ],
+        "temperature": [
+            "mild"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "town-hall"
+        },
+        "labels": [
+            "town-hall"
+        ]
     }
 ]

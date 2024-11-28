@@ -146,5 +146,68 @@
             "rare"
         ],
         "type": "material"
+    },
+    {
+        "id": "material.ore",
+        "populatorType": "item",
+        "name": [
+            "Ore",
+            "Iron Ore",
+            "Copper Ore",
+            "Gold Ore",
+            "Silver Ore"
+        ],
+        "tier": "common",
+        "type": "material",
+        "labels": [
+            "ore"
+        ]
+    },
+    {
+        "id": "material.crude-rock",
+        "populatorType": "item",
+        "name": [
+            "Crude Rock",
+            "Rough Stone",
+            "Unrefined Rock",
+            "Stone",
+            "Rock"
+        ],
+        "tier": "common",
+        "type": "material",
+        "labels": [
+            "crude-rock"
+        ]
+    },
+    {
+        "id": "household.mining-equipment",
+        "populatorType": "item",
+        "name": [
+            "Mining Pickaxe",
+            "Mining Shovel",
+            "Mining Cart",
+            "Mining Lantern",
+            "Mining Helmet"
+        ],
+        "tier": "common",
+        "type": "household",
+        "labels": [
+            "mining-equipment"
+        ]
+    },
+    {
+        "id": "material.sand",
+        "populatorType": "item",
+        "name": [
+            "Sand",
+            "Fine Sand",
+            "Coarse Sand",
+            "Desert Sand"
+        ],
+        "tier": "common",
+        "type": "material",
+        "labels": [
+            "sand"
+        ]
     }
 ]

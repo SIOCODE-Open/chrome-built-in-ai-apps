@@ -146,5 +146,31 @@
         "settlement": {
             "hasSettlementType": "village"
         }
+    },
+    {
+        "id": "village-main-street-engineers-guild",
+        "apply": "building.engineers-guild",
+        "count": {
+            "min": 0,
+            "max": 2
+        },
+        "hasType": "street",
+        "hasLabel": "main-street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
+    },
+    {
+        "id": "village-main-street-wizards-tower",
+        "apply": "building.wizards-tower",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "street",
+        "hasLabel": "main-street",
+        "street": {
+            "hasStreetType": "village-street"
+        }
     }
 ]

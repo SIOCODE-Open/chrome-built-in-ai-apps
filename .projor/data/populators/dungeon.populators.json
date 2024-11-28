@@ -1,0 +1,104 @@
+[
+    {
+        "id": "building.dungeon",
+        "populatorType": "children",
+        "name": "Dungeon",
+        "distance": 10,
+        "humidity": [
+            "normal",
+            "humid",
+            "wet"
+        ],
+        "temperature": [
+            "cool",
+            "cold"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "dungeon"
+        },
+        "labels": [
+            "dungeon"
+        ]
+    },
+    {
+        "id": "item.dungeon.epic.loot",
+        "populatorType": "item",
+        "oneOf": [
+            "weapon.epic.amazing-sword",
+            "weapon.epic.amazing-axe",
+            "weapon.epic.amazing-knife",
+            "weapon.epic.amazing-dagger",
+            "weapon.epic.amazing-bow",
+            "weapon.epic.amazing-crossbow",
+            "weapon.epic.amazing-staff",
+            "armor.rare.nice-armor",
+            "helmet.rare.nice-helmet",
+            "boots.rare.nice-boots",
+            "wearable.rare.nice-amulet",
+            "consumable.healing-potion.large",
+            "consumable.scroll.lightning"
+        ],
+        "lootable": true
+    },
+    {
+        "id": "item.dungeon.rare.loot",
+        "populatorType": "item",
+        "oneOf": [
+            "weapon.rare.nice-sword",
+            "weapon.rare.nice-axe",
+            "weapon.rare.nice-bow",
+            "weapon.rare.nice-crossbow",
+            "weapon.rare.nice-staff",
+            "armor.rare.nice-armor",
+            "helmet.rare.nice-helmet",
+            "boots.rare.nice-boots",
+            "wearable.rare.nice-amulet",
+            "consumable.healing-potion.normal",
+            "consumable.scroll.fireball",
+            "consumable.dynamite"
+        ],
+        "lootable": true
+    },
+    {
+        "id": "item.dungeon.skeleton.loot",
+        "populatorType": "item",
+        "oneOf": [
+            "weapon.common.simple-sword",
+            "armor.common.simple-chainmail",
+            "helmet.common.simple-helmet",
+            "boots.common.simple-boots"
+        ],
+        "lootable": true
+    },
+    {
+        "id": "npc.dungeon.undead",
+        "populatorType": "npc",
+        "name": [
+            "Undead",
+            "Zombie",
+            "Skeleton"
+        ],
+        "race": "animal",
+        "stance": "hostile",
+        "health": {
+            "status": [
+                "healthy",
+                "injured"
+            ],
+            "points": [
+                100,
+                200,
+                300
+            ],
+            "max": 300
+        },
+        "inventory": {
+            "items": [
+                "item.dungeon.skeleton.loot",
+                "item.dungeon.skeleton.loot",
+                "item.dungeon.skeleton.loot"
+            ]
+        }
+    }
+]

@@ -416,6 +416,10 @@ objects:
         description: A place where crops are grown and animals are raised.
       - name: store
         description: A generic or specialized store for buying and selling goods.
+      - name: dungeon
+        description: A dangerous building, often found standalone in wilderness, possibly holding good loot.
+      - name: base
+        description: A friendly base, often found standalone in wilderness, possibly housing allies and providing loot.
 
   - name: node_room_type
     description: Type of room
