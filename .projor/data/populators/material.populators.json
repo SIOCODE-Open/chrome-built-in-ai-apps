@@ -115,5 +115,36 @@
             "rare"
         ],
         "type": "material"
+    },
+    {
+        "id": "material.herb",
+        "populatorType": "item",
+        "name": [
+            "Herb",
+            "Medicinal Herb",
+            "Healing Herb",
+            "Rare Herb",
+            "Common Herb"
+        ],
+        "tier": [
+            "common",
+            "rare"
+        ],
+        "type": "material"
+    },
+    {
+        "id": "material.potion-ingredient",
+        "populatorType": "item",
+        "name": [
+            "Potion Ingredient",
+            "Brewing Ingredient",
+            "Alchemical Ingredient",
+            "Magical Ingredient"
+        ],
+        "tier": [
+            "common",
+            "rare"
+        ],
+        "type": "material"
     }
 ]

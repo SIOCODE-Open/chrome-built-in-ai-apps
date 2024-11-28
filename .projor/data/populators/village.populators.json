@@ -36,7 +36,7 @@
     {
         "id": "street.village-main-street",
         "populatorType": "children",
-        "name": "Village Street",
+        "name": "Main Street",
         "distance": 5,
         "humidity": "same",
         "temperature": "same",
@@ -51,7 +51,7 @@
     {
         "id": "street.village-church-street",
         "populatorType": "children",
-        "name": "Village Street",
+        "name": "Church Street",
         "distance": 5,
         "humidity": "same",
         "temperature": "same",
@@ -66,7 +66,7 @@
     {
         "id": "street.village-farm-street",
         "populatorType": "children",
-        "name": "Village Street",
+        "name": "Farm Street",
         "distance": 5,
         "humidity": "same",
         "temperature": "same",

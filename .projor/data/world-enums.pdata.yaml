@@ -414,6 +414,8 @@ objects:
         description: A place of worship and spiritual reflection.
       - name: farm
         description: A place where crops are grown and animals are raised.
+      - name: store
+        description: A generic or specialized store for buying and selling goods.
 
   - name: node_room_type
     description: Type of room

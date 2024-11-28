@@ -45,6 +45,7 @@ export function GameOverScreen() {
                     (turn, idx) => <div key={idx} className="w-full border border-1 dark:border-neutral-600 border-neutral-400 p-2 flex flex-col justify-start items-stretch gap-2 rounded-lg">
 
                         <Card>
+                            <h1 className="font-serif text-2xl font-bold" dangerouslySetInnerHTML={{ __html: turn.endTurnEvent.details?.headline }} />
                             <CardTitle>
                                 Turn {idx + 1}
                             </CardTitle>

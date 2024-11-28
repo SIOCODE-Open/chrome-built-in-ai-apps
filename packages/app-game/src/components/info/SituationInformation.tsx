@@ -9,6 +9,7 @@ import { TooltipText } from "../TooltipText";
 import { WORLD_NODE_AREA_TYPE, WORLD_NODE_AREA_TYPE_DESCRIPTIONS, WORLD_NODE_AREA_TYPE_DISPLAYS, WORLD_NODE_BUILDING_TYPE_DESCRIPTIONS, WORLD_NODE_BUILDING_TYPE_DISPLAYS, WORLD_NODE_HUMIDITY_DESCRIPTIONS, WORLD_NODE_HUMIDITY_DISPLAYS, WORLD_NODE_ROOM_TYPE_DESCRIPTIONS, WORLD_NODE_ROOM_TYPE_DISPLAYS, WORLD_NODE_SETTLEMENT_TYPE_DESCRIPTIONS, WORLD_NODE_SETTLEMENT_TYPE_DISPLAYS, WORLD_NODE_STREET_TYPE_DESCRIPTIONS, WORLD_NODE_STREET_TYPE_DISPLAYS, WORLD_NODE_TEMPERATURE_DESCRIPTIONS, WORLD_NODE_TEMPERATURE_DISPLAYS, WORLD_NODE_WILDERNESS_TYPE_DESCRIPTIONS, WORLD_NODE_WILDERNESS_TYPE_DISPLAYS, WORLD_NPC_RACE_DESCRIPTIONS, WORLD_NPC_RACE_DISPLAYS, WORLD_PLAYER_HEALTH_DESCRIPTIONS, WORLD_PLAYER_HEALTH_DISPLAYS, WorldPlayerSitutation } from "../../model/world.enums";
 import { usePlayerActions } from "../../context/PlayerActions.context";
 import { useGameSimulation } from "../../context/GameSimulation.context";
+import { HealthTooltip } from "../tooltips/HealthTooltip";
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -142,7 +143,7 @@ export function SituationInformation(props: any) {
         infoTable["Foe Race"] = <TooltipText tooltip={<span className="text-xs font-normal italic text-left">{WORLD_NPC_RACE_DESCRIPTIONS[inCombatWith.race]}</span>}>
             {WORLD_NPC_RACE_DISPLAYS[inCombatWith.race]}
         </TooltipText>;
-        infoTable["Foe Health"] = <TooltipText tooltip={<span className="text-xs font-normal italic text-left">{WORLD_PLAYER_HEALTH_DESCRIPTIONS[inCombatWith.health.status]}</span>}>
+        infoTable["Foe Health"] = <TooltipText tooltip={<HealthTooltip value={inCombatWith.health} />}>
             {WORLD_PLAYER_HEALTH_DISPLAYS[inCombatWith.health.status]}
         </TooltipText>;
     }

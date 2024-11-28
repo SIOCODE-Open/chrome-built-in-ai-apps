@@ -35,6 +35,37 @@ export function DefeatNpcProcessor() {
             );
         }
 
+        if (target.gear.weapon && target.gear.weapon.lootable) {
+            player.addItem(target.gear.weapon);
+            R.push(
+                history.getItem(target.gear.weapon, "Looted from " + target.name)
+            );
+        }
+        if (target.gear.armor && target.gear.armor.lootable) {
+            player.addItem(target.gear.armor);
+            R.push(
+                history.getItem(target.gear.armor, "Looted from " + target.name)
+            );
+        }
+        if (target.gear.helmet && target.gear.helmet.lootable) {
+            player.addItem(target.gear.helmet);
+            R.push(
+                history.getItem(target.gear.helmet, "Looted from " + target.name)
+            );
+        }
+        if (target.gear.boots && target.gear.boots.lootable) {
+            player.addItem(target.gear.boots);
+            R.push(
+                history.getItem(target.gear.boots, "Looted from " + target.name)
+            );
+        }
+        if (target.gear.wearable && target.gear.wearable.lootable) {
+            player.addItem(target.gear.wearable);
+            R.push(
+                history.getItem(target.gear.wearable, "Looted from " + target.name)
+            );
+        }
+
         const nextTarget = currentLocation.npcs.find(npc => npc.id !== target.id && npc.stance === "hostile" && npc.health.status !== "dead");
 
         if (nextTarget) {

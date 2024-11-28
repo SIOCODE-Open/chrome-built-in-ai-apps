@@ -1,0 +1,54 @@
+[
+    {
+        "id": "pharmacy-npc-pharmacist",
+        "apply": "npc.pharmacy.pharmacist",
+        "count": {
+            "min": 1,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "pharmacy"
+    },
+    {
+        "id": "pharmacy-materials-herbs",
+        "apply": "material.herb",
+        "count": {
+            "min": 0,
+            "max": 2
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "pharmacy"
+    },
+    {
+        "id": "pharmacy-materials-potion-ingredients",
+        "apply": "material.potion-ingredient",
+        "count": {
+            "min": 0,
+            "max": 2
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "pharmacy"
+    },
+    {
+        "id": "pharmacy-household-potion-brewing-equipment",
+        "apply": "household.potion-brewing-equipment",
+        "count": {
+            "min": 0,
+            "max": 1
+        },
+        "hasType": "building",
+        "building": {
+            "hasBuildingType": "store"
+        },
+        "hasLabel": "pharmacy"
+    }
+]

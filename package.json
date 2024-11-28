@@ -8,7 +8,9 @@
         "react-dom": "18.3.1",
         "rxjs": "7.8.1",
         "classnames": "2.5.1",
-        "@iconify/react": "5.0.2"
+        "@iconify/react": "5.0.2",
+        "chalk": "5.3.0",
+        "@inquirer/prompts": "7.1.0"
     },
     "devDependencies": {
         "tailwindcss": "3.4.14",
@@ -17,7 +19,8 @@
         "typescript": "5.6.3",
         "@types/react": "18.3.12",
         "@types/react-dom": "18.3.1",
-        "@types/classnames": "2.3.4"
+        "@types/classnames": "2.3.4",
+        "@types/node": "22.10.1"
     },
     "workspaces": ["packages/*"],
     "scripts": {
@@ -25,6 +28,8 @@
         "serve:brainstorm": "npm run -w @siocode/app-brainstorm serve",
         "build:game": "npm run -w @siocode/app-game build",
         "serve:game": "npm run -w @siocode/app-game serve",
-        "build:all": "npm run build:brainstorm && npm run build:game && echo 'All apps built.'"
+        "build:all": "npm run build:brainstorm && npm run build:game && echo 'All apps built.'",
+        "build:extender": "npm run -w @siocode/extender-cli build",
+        "start:extender": "npm run -w @siocode/extender-cli start"
     }
 }

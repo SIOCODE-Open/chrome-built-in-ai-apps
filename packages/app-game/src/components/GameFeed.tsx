@@ -16,6 +16,7 @@ export function GameFeed() {
 
     const [gameEvents, setGameEvents] = useState<Array<IGameEvent>>([]);
     const [gameNarration, setGameNarration] = useState<string>("");
+    const [gameHeadline, setGameHeadline] = useState<string>("");
     const allTurnsRef = useRef<Array<{ events: Array<IGameEvent>, narration: string }>>([]);
     const [turnCount, setTurnCount] = useState(0);
     const [selectedTurn, setSelectedTurn] = useState(-1);
@@ -47,6 +48,7 @@ export function GameFeed() {
                     setTurnCount(newTurns.length);
                     setGameEvents(opts.events);
                     setGameNarration(opts.endTurnEvent.notes);
+                    setGameHeadline(opts.endTurnEvent.details?.headline);
                     forceUpdate();
 
                     console.log("Turn ended", opts, newTurns);
@@ -120,8 +122,6 @@ export function GameFeed() {
         <div className={cn}>
             <div className="flex flex-row justify-start items-center gap-2 w-full py-4">
 
-                <span className="text-xs italic text-neutral-500">{now}</span>
-
                 {
                     turnCount > 0 && <>
 
@@ -155,11 +155,15 @@ export function GameFeed() {
                 }
 
             </div>
-            <Card>
-                <p className="font-serif italic">
-                    {gameNarration}
-                </p>
-            </Card>
+            {
+                turnCount > 0 && <Card>
+                    <h1 className="font-serif text-2xl font-bold" dangerouslySetInnerHTML={{ __html: gameHeadline }} />
+                    <span className="text-xs italic text-neutral-500">{now}</span>
+                    <p className="font-serif italic">
+                        {gameNarration}
+                    </p>
+                </Card>
+            }
             {
                 gameEvents.map(
                     (event, idx) => <GameEvent value={event} key={`${selectedTurn}.${event.origin}.${idx}`} />

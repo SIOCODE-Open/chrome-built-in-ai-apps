@@ -1,0 +1,27 @@
+{
+    "map": {},
+    "filename": "packages/extender-cli/package.json",
+    "formatUsing": "json"
+}
+---
+{
+    "name": "@{{$.scope}}/extender-cli",
+    "description": "CLI for extending this project via AI",
+    "version": "{{{$.version}}}",
+    "private": true,
+    "type": "module",
+    "main": "lib/index.js",
+    "types": "types/index.d.ts",
+    "dependencies": {
+        "chalk": "*",
+        "@inquirer/prompts": "*"
+    },
+    "devDependencies": {
+        "typescript": "*",
+        "@types/node": "*"
+    },
+    "scripts": {
+        "build": "tsc",
+        "start": "node lib/index.js"
+    }
+}

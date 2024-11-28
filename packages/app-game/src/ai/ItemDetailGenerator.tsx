@@ -323,7 +323,7 @@ export class ItemDetailGenerator {
             ];
             const llm = await this.lm.create(
                 inPrompt as any,
-                { temperature: 1.0, topK: 4, stopSequence: "\n" }
+                { temperature: 1.0, topK: 4, stopSequence: "\n", maxTokens: 40 }
             );
             const itemEffects = [
                 ...(item.weapon?.effects || []),
@@ -359,13 +359,23 @@ export class ItemDetailGenerator {
 
                 let didStartWith = false;
 
-                if (extractedName.startsWith("\"") && extractedName.endsWith("\"")) {
-                    extractedName = extractedName.substring(1, extractedName.length - 1);
+                if (extractedName.startsWith("\"")) {
+                    extractedName = extractedName.substring(1);
                     didStartWith = true;
                 }
 
-                if (extractedName.startsWith("'") && extractedName.endsWith("'")) {
-                    extractedName = extractedName.substring(1, extractedName.length - 1);
+                if (extractedName.endsWith("\"")) {
+                    extractedName = extractedName.substring(0, extractedName.length - 1);
+                    didStartWith = true;
+                }
+
+                if (extractedName.startsWith("'")) {
+                    extractedName = extractedName.substring(1);
+                    didStartWith = true;
+                }
+
+                if (extractedName.endsWith("'")) {
+                    extractedName = extractedName.substring(0, extractedName.length - 1);
                     didStartWith = true;
                 }
 

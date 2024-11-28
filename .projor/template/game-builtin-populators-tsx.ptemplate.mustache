@@ -1,0 +1,15 @@
+{
+    "map": {
+        "populators": "game-worldgen-populators"
+    },
+    "filename": "packages/app-game/src/components/world2/BuiltinPopulators.tsx",
+    "formatUsing": "typescript"
+}
+---
+import { INodePopulator } from "./WorldGenerator2";
+
+export const BuiltinPopulators: Array<INodePopulator> = [
+    {{#each populators}}
+    {{{jsonData}}}{{#unless @last}},{{/unless}}
+    {{/each}}
+] as Array<INodePopulator>;

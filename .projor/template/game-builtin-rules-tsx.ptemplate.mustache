@@ -1,0 +1,15 @@
+{
+    "map": {
+        "rules": "game-worldgen-rules"
+    },
+    "filename": "packages/app-game/src/components/world2/BuiltinRules.tsx",
+    "formatUsing": "typescript"
+}
+---
+import { INodePopulatorRule } from "./WorldGenerator2";
+
+export const BuiltinRules: Array<INodePopulatorRule> = [
+    {{#each rules}}
+    {{{jsonData}}}{{#unless @last}},{{/unless}}
+    {{/each}}
+] as Array<INodePopulatorRule>;

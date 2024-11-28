@@ -63,8 +63,10 @@ export interface IPlayerContext {
     learnSkill(skill: WorldPlayerSkill): void;
     changeSituation(situation: WorldPlayerSitutation): void;
     startCombat(npc: INonPlayerCharacter): void;
+    updateInCombatWith(npc: INonPlayerCharacter): void;
     endCombat(): void;
     startConversation(npc: INonPlayerCharacter): void;
+    updateInConversationWith(npc: INonPlayerCharacter): void;
     endConversation(): void;
 }
 

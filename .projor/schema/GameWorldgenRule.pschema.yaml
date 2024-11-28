@@ -1,0 +1,12 @@
+id: GameWorldgenRule
+name: Game Worldgen Rule
+description: A rule for the game world generator
+fields:
+  - name: jsonData
+    type: string
+    description: The JSON data of the rule
+    required: true
+  - name: source
+    type: string
+    description: The source of the populator
+    required: true

@@ -47,12 +47,30 @@ export function TravelInformation(props: any) {
     );
 
     const travelTable = {};
+    const possibleTravels = {};
 
     if (playerLocation) {
         for (const edge of playerLocation.outEdges) {
             if (edge.discovered) {
-                travelTable[`${edge.to.name} (${WORLD_NODE_AREA_TYPE_DISPLAYS[edge.to.type]})`] = <button className="text-xs px-2 py-1 disabled:bg-neutral-500 bg-blue-500 text-white font-bold rounded-full"
-                    disabled={controlsDisabled} onClick={() => actions.move(edge)}>Go</button>;
+                const travelKey = `${edge.to.name} (${WORLD_NODE_AREA_TYPE_DISPLAYS[edge.to.type]})`;
+                if (!possibleTravels[travelKey]) {
+                    possibleTravels[travelKey] = [];
+                }
+                possibleTravels[travelKey].push(edge);
+            }
+        }
+    }
+
+    for (const key in possibleTravels) {
+        const edges = possibleTravels[key];
+        if (edges.length === 1) {
+            travelTable[key] = <button className="text-xs px-2 py-1 disabled:bg-neutral-500 bg-blue-500 text-white font-bold rounded-full"
+                disabled={controlsDisabled} onClick={() => actions.move(edges[0])}>Go</button>;
+        } else {
+            for (let i = 0; i < edges.length; i++) {
+                const newKey = `${key} [${i + 1}]`;
+                travelTable[newKey] = <button className="text-xs px-2 py-1 disabled:bg-neutral-500 bg-blue-500 text-white font-bold rounded-full"
+                    disabled={controlsDisabled} onClick={() => actions.move(edges[i])}>Go</button>;
             }
         }
     }

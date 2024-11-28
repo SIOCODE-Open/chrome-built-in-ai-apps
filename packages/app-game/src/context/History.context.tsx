@@ -116,7 +116,7 @@ export interface IHistoryContext {
     flee(notes: string): IGameEvent;
     failFlee(notes: string): IGameEvent;
 
-    endTurn(turnNumber: number, notes: string): IGameEvent;
+    endTurn(turnNumber: number, notes: string, headline: string): IGameEvent;
 }
 
 export const HistoryContext = createContext({} as IHistoryContext);

@@ -1,0 +1,9 @@
+id: GameWorldgenRuleCollection
+name: Game Worldgen Rule Collection
+description: A collection of rules
+fields:
+  - name: rules
+    type: reference
+    references: GameWorldgenRule
+    multiple: true
+    description: The rules of the collection

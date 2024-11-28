@@ -204,6 +204,7 @@ export interface IWorldContext {
         race: WorldNpcRace,
         location: IWorldNode,
     ): INonPlayerCharacter;
+    generateItems(populatorId: string): Array<IWorldItem>;
 }
 
 export const WorldContext = createContext({} as IWorldContext);

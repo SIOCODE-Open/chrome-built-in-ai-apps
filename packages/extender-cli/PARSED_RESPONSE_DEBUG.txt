@@ -1,0 +1,153 @@
+{
+  "populators": {
+    "add": {
+      "alchemists.populators.json": [
+        {
+          "id": "building.alchemists-lab",
+          "populatorType": "children",
+          "name": "Alchemist's Lab",
+          "distance": 5,
+          "humidity": "normal",
+          "temperature": [
+            "mild",
+            "warm"
+          ],
+          "type": "building",
+          "building": {
+            "buildingType": "house"
+          },
+          "labels": [
+            "alchemists-lab"
+          ]
+        },
+        {
+          "id": "material.potion-ingredient.rare",
+          "populatorType": "item",
+          "name": [
+            "Rare Potion Ingredient",
+            "Magical Herb",
+            "Alchemical Extract"
+          ],
+          "tier": "rare",
+          "type": "material",
+          "labels": [
+            "potion-ingredient"
+          ]
+        },
+        {
+          "id": "npc.alchemist",
+          "populatorType": "npc",
+          "name": "Alchemist",
+          "race": "human",
+          "stance": "friendly",
+          "health": {
+            "status": "healthy",
+            "points": 150,
+            "max": 150
+          },
+          "gear": {
+            "armor": "armor.rare.nice-armor",
+            "helmet": "helmet.rare.nice-helmet",
+            "boots": "boots.rare.nice-boots",
+            "wearable": null,
+            "weapon": "weapon.rare.nice-staff"
+          },
+          "inventory": {
+            "gold": [
+              500,
+              1000,
+              1500,
+              2000,
+              3000
+            ],
+            "items": [
+              "material.potion-ingredient.rare",
+              "material.potion-ingredient.rare",
+              "consumable.healing-potion.small",
+              "consumable.healing-potion.normal",
+              "consumable.poison.small",
+              "consumable.poison.normal"
+            ]
+          },
+          "personality": {
+            "traits": [
+              "kind",
+              "honest",
+              "generous",
+              "patient",
+              "humble",
+              "empathetic",
+              "curious",
+              "diligent"
+            ],
+            "background": "alchemist"
+          }
+        }
+      ]
+    },
+    "change": {},
+    "remove": {}
+  },
+  "rules": {
+    "add": {
+      "alchemists.rules.json": [
+        {
+          "id": "alchemists-lab-alchemist",
+          "apply": "npc.alchemist",
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "hasType": "building",
+          "building": {
+            "hasBuildingType": "house"
+          },
+          "hasLabel": "alchemists-lab"
+        },
+        {
+          "id": "alchemists-lab-potion-ingredients",
+          "apply": "material.potion-ingredient.rare",
+          "count": {
+            "min": 0,
+            "max": 2
+          },
+          "hasType": "building",
+          "building": {
+            "hasBuildingType": "house"
+          },
+          "hasLabel": "alchemists-lab"
+        },
+        {
+          "id": "alchemists-lab-potions",
+          "apply": "consumable.healing-potion.normal",
+          "count": {
+            "min": 1,
+            "max": 3
+          },
+          "hasType": "building",
+          "building": {
+            "hasBuildingType": "house"
+          },
+          "hasLabel": "alchemists-lab",
+          "probability": 0.5
+        },
+        {
+          "id": "alchemists-lab-poisons",
+          "apply": "consumable.poison.normal",
+          "count": {
+            "min": 1,
+            "max": 3
+          },
+          "hasType": "building",
+          "building": {
+            "hasBuildingType": "house"
+          },
+          "hasLabel": "alchemists-lab",
+          "probability": 0.5
+        }
+      ]
+    },
+    "change": {},
+    "remove": {}
+  }
+}

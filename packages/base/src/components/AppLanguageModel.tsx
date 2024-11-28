@@ -4,6 +4,24 @@ import { BehaviorSubject } from "rxjs";
 
 export const CLOUD_ENDPOINT_URL = "https://chrome-builtin-ai-challenge-gemini-gateway-700248413310.europe-west4.run.app";
 
+export interface IPromptMessage {
+    role: "system" | "user" | "assistant";
+    content: string;
+}
+
+export interface IPromptParameters {
+    temperature: number;
+    topK: number;
+    stopSequence?: string;
+    maxTokens?: number;
+}
+
+export interface IPromptRequest {
+    messages: Array<IPromptMessage>;
+    opts: IPromptParameters;
+    nextMessage: string;
+}
+
 const KINDS: Array<ILanguageModelKind> = [
     {
         name: "Built-in",
@@ -30,13 +48,7 @@ const KINDS: Array<ILanguageModelKind> = [
 class GlobalScheduledBuiltinLanguageModel {
 
     private tickInterval: number = 10;
-    private queue: Array<{
-        messages: Array<{
-            role: "system" | "user" | "assistant";
-            content: string;
-        }>;
-        nextMessage: string;
-        stopSequence?: string;
+    private queue: Array<IPromptRequest & {
         resolve: (response: string) => void;
         reject: (error: any) => void;
     }> = [];
@@ -60,11 +72,13 @@ class GlobalScheduledBuiltinLanguageModel {
 
         var llm = null;
 
+        const controller = new AbortController();
         try {
             llm = await ai.languageModel.create({
                 initialPrompts: qo.messages,
                 temperature: qo.opts ? qo.opts.temperature : 0.3,
                 topK: qo.opts ? qo.opts.topK : 1,
+                signal: controller.signal
             });
 
             if (!llm) {
@@ -74,50 +88,55 @@ class GlobalScheduledBuiltinLanguageModel {
             qo.reject(`Failed to create Language Model: ${err}`);
         }
 
-        if (typeof qo.stopSequence !== 'undefined') {
+        try {
+            console.log("[GlobalScheduledBuiltinLanguageModel]", "Prompting LLM (streaming) with", qo.messages.length, "messages");
+            let result = '';
+            let previousChunk = '';
             try {
-                console.log("[GlobalScheduledBuiltinLanguageModel]", "Prompting LLM (with stop sequence) with", qo.messages.length, "messages");
-                let result = '';
-                let previousChunk = '';
-                const controller = new AbortController();
-                const stream = await llm.promptStreaming(qo.nextMessage, { signal: controller.signal });
-                try {
-                    for await (const chunk of stream) {
-                        const newChunk = chunk.startsWith(previousChunk)
-                            ? chunk.slice(previousChunk.length) : chunk;
-                        result += newChunk;
-                        previousChunk = chunk;
+                const stream = await llm.promptStreaming(qo.nextMessage);
 
-                        const stopIndex = result.indexOf(qo.stopSequence);
-                        if (stopIndex !== -1) {
-                            result = result.substring(0, stopIndex);
-                            controller.abort();
-                            break;
-                        }
+                for await (const chunk of stream) {
+                    const newChunk = chunk.startsWith(previousChunk)
+                        ? chunk.slice(previousChunk.length) : chunk;
+                    result += newChunk;
+                    previousChunk = chunk;
+
+                    const stopIndex = result.indexOf(qo.stopSequence);
+                    if (stopIndex !== -1) {
+                        result = result.substring(0, stopIndex);
+                        console.log("[GlobalScheduledBuiltinLanguageModel]", "Stop sequence found, stopping stream");
+                        controller.abort();
+                        break;
                     }
-                } catch (err: any) {
-                    // Stream was aborted, ignore
+
+                    const generatedTokens = await llm.countPromptTokens(result);
+                    console.log("[GlobalScheduledBuiltinLanguageModel]", "Generated tokens:", generatedTokens);
+                    if (qo.opts && qo.opts.maxTokens && generatedTokens >= qo.opts.maxTokens) {
+                        console.log("[GlobalScheduledBuiltinLanguageModel]", "Max tokens reached, stopping stream");
+                        let finalResult = "";
+                        let finalResultTokens = 0;
+                        for (const character of result) {
+                            finalResult += character;
+                            finalResultTokens = await llm.countPromptTokens(finalResult);
+                            if (finalResultTokens >= qo.opts.maxTokens) {
+                                break;
+                            }
+                        }
+                        result = finalResult;
+                        controller.abort();
+                        break;
+                    }
                 }
-                const response = result.trim();
-                await llm.destroy();
-                qo.resolve(response);
-                console.log(llm);
             } catch (err: any) {
-                qo.reject(err);
+                // Stream was aborted, ignore
+                console.info("[GlobalScheduledBuiltinLanguageModel]", "Stream was aborted", result);
             }
-
-        } else {
-
-            try {
-                console.log("[GlobalScheduledBuiltinLanguageModel]", "Prompting LLM with", qo.messages.length, "messages");
-                const response = await llm.prompt(qo.nextMessage);
-                await llm.destroy();
-                qo.resolve(response);
-                console.log(llm);
-            } catch (err: any) {
-                qo.reject(err);
-            }
-
+            const response = result.trim();
+            await llm.destroy();
+            qo.resolve(response);
+            console.log(llm);
+        } catch (err: any) {
+            qo.reject(err);
         }
 
     }
@@ -147,18 +166,13 @@ class GlobalScheduledBuiltinLanguageModel {
     }
 
     async prompt(
-        messages: Array<{
-            role: "system" | "user" | "assistant";
-            content: string;
-        }>,
-        nextMessage: string,
-        opts?: { temperature: number, topK: number, stopSequence?: string }
+        request: IPromptRequest
     ) {
+        const { messages, opts, nextMessage } = request;
         const queueObject = {
             messages,
             nextMessage,
             opts,
-            stopSequence: opts ? opts.stopSequence : undefined,
             resolve: null,
             reject: null
         }
@@ -184,13 +198,17 @@ export function AppLanguageModel(props: any) {
         )
     );
 
-    const createBuiltinModel = async (messages: Array<{
-        role: "system" | "user" | "assistant";
-        content: string;
-    }>, opts?: { temperature: number, topK: number, stopSequence?: string }) => {
+    const createBuiltinModel = async (
+        messages: Array<IPromptMessage>,
+        opts?: IPromptParameters
+    ) => {
         return {
             prompt: async (nextMessage: string) => {
-                return await globalScheduledBuiltinLanguageModel.prompt(messages, nextMessage, opts);
+                return await globalScheduledBuiltinLanguageModel.prompt({
+                    messages,
+                    opts,
+                    nextMessage
+                });
             }
         }
     };

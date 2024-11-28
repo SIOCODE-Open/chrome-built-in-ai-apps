@@ -118,7 +118,7 @@ export function ActionAttackProcessor(props: any) {
                 const gearItem = foeGear[gearKey];
                 if (gearItem) {
                     R.push(
-                        history.noop("You destroy " + gearItem.name + " of " + target.name + " due to item effect " + eff.name)                    
+                        history.noop("You destroy " + gearItem.name + " of " + target.name + " due to item effect " + eff.name)
                     );
                     foeGear[gearKey] = undefined;
                 }
@@ -152,18 +152,27 @@ export function ActionAttackProcessor(props: any) {
 
         }
 
+        if (target.health.points < target.health.max / 2 && target.health.points > 0) {
+            target.health.status = "injured";
+            player.updateInCombatWith(target);
+        }
+
         if (target.health.points <= 0) {
             target.health.status = "dead";
             R.push(
                 history.defeatNpc(target)
             );
             currentLocation.npcs = currentLocation.npcs.filter((npc) => npc.id !== target.id);
-        } else {
+        }
+
+        if (target.health.points > 0) {
             // Enemy attacks as well
             R.push(
                 history.npcAttack(target)
             );
         }
+
+        player.updatePlayerLocation(currentLocation);
 
         return R;
     };

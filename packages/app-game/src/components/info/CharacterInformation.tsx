@@ -7,6 +7,7 @@ import { CardTitle } from "../card/CardTitle";
 import { WORLD_PLAYER_CLASS_DESCRIPTIONS, WORLD_PLAYER_CLASS_DISPLAYS, WORLD_PLAYER_HEALTH_DESCRIPTIONS, WORLD_PLAYER_HEALTH_DISPLAYS, WORLD_PLAYER_HUNGER_DESCRIPTIONS, WORLD_PLAYER_HUNGER_DISPLAYS, WORLD_PLAYER_THIRST_DESCRIPTIONS, WORLD_PLAYER_THIRST_DISPLAYS, WorldPlayerClass, WorldPlayerHealth, WorldPlayerHunger, WorldPlayerThirst } from "../../model/world.enums";
 import { TooltipText } from "../TooltipText";
 import { ICharacterHealth } from "../../context/World.context";
+import { HealthTooltip } from "../tooltips/HealthTooltip";
 
 export function CharacterInformation(props: any) {
 
@@ -52,8 +53,9 @@ export function CharacterInformation(props: any) {
         []
     );
 
-    const displayHealth = (status: WorldPlayerHealth) => {
-        return <TooltipText tooltip={<span className="text-xs font-normal italic text-left">{WORLD_PLAYER_HEALTH_DESCRIPTIONS[status]}</span>}>
+    const displayHealth = (h: ICharacterHealth) => {
+        const { status } = h;
+        return <TooltipText tooltip={<HealthTooltip value={h} />}>
             {WORLD_PLAYER_HEALTH_DISPLAYS[status]}
         </TooltipText>;
     };
@@ -83,7 +85,7 @@ export function CharacterInformation(props: any) {
                 <CardInfoTable value={{
                     "Name": character.name,
                     "Class": displayClass(character.characterClass),
-                    "Health": displayHealth(health.status),
+                    "Health": displayHealth(health),
                     "Hunger": displayHunger(hunger.status),
                     "Thirst": displayThirst(thirst.status)
                 }} />

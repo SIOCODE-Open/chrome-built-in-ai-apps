@@ -3,12 +3,14 @@ import { useGameSimulation } from "../../context/GameSimulation.context";
 import { IGameEvent, useHistory } from "../../context/History.context";
 import { usePlayer } from "../../context/Player.context";
 import { IWorldItem, IWorldNode, useWorld } from "../../context/World.context";
-import { WORLD_ITEM_TYPE_DISPLAYS, WorldItemTier, WorldPlayerCraftingType } from "../../model/world.enums";
+import { WORLD_ITEM_TYPE_DISPLAYS, WORLD_WEAPON_TYPE, WORLD_WEARABLE_TYPE, WorldItemTier, WorldPlayerCraftingType, WorldWeaponType, WorldWearableType } from "../../model/world.enums";
 import { ItemDetailGenerator } from "../../ai/ItemDetailGenerator";
 import { useLanguageModel } from "@siocode/base";
 import { CraftingGenerator } from "../../ai/CraftingGenerator";
 import { ArmorDefenseGenerator } from "../../model/ArmorDefenseGenerator";
 import { WeaponDamageGenerator } from "../../model/WeaponDamageGenerator";
+import { WeaponSpecializer } from "../../ai/WeaponSpecializer";
+import { WearableSpecializer } from "../../ai/WearableSpecializer";
 
 const tierNumbers = {
     "garbage": 0,
@@ -30,9 +32,8 @@ const craftingResultTypes = {
         "household": ["material", "household", "consumable"],
     },
     "assemble": {
-        "household": ["household", "consumable", "material", "wearable", "armor", "weapon", "helmet", "boots"],
-        "material": ["material", "household", "consumable", "wearable", "armor", "weapon", "helmet", "boots", "food", "drink"],
-        "consumable": ["consumable", "household", "material", "food", "drink"],
+        "household": ["wearable", "armor", "weapon", "helmet", "boots"],
+        "material": ["wearable", "armor", "weapon", "helmet", "boots"],
     },
     "cook": {
         "food": ["food", "drink", "consumable"],
@@ -61,6 +62,7 @@ const craftingResultTypes = {
         "drink": ["food", "drink", "consumable"],
         "household": ["household", "consumable"],
         "material": ["material", "household", "consumable"],
+        "consumable": ["consumable"],
     },
     "smelt": {
         "weapon": ["material"],
@@ -193,7 +195,7 @@ export function ActionCraftProcessor() {
         }
 
         const maxIngredientTier = ingredients.reduce((max, item) => Math.max(max, tierNumbers[item.tier]), 0);
-        const minIngredientTier = ingredients.reduce((min, item) => Math.min(min, tierNumbers[item.tier]), 0);
+        const minIngredientTier = ingredients.reduce((min, item) => Math.min(min, tierNumbers[item.tier]), Infinity);
         let assembleDescription = `created by assembling ${ingredients.map(i => i.name).join(", ")}`;
         if (tools.length > 0) {
             assembleDescription += ` using ${tools.map(i => i.name).join(", ")}`;
@@ -201,10 +203,15 @@ export function ActionCraftProcessor() {
 
         let resultTier = Math.floor(Math.random() * (maxIngredientTier - minIngredientTier + 1)) + minIngredientTier;
         const luckyRoll = Math.random();
-        if (luckyRoll < 0.1) {
+        let luckyChance = 0.1;
+        if (tools.length > 0) {
+            luckyChance = 0.5;
+        }
+        if (luckyRoll < luckyChance) {
             resultTier = Math.min(4, resultTier + 1);
         }
         const resultTierName = Object.keys(tierNumbers).find(k => tierNumbers[k] === resultTier);
+        // TODO: Better control over result type
         const resultType = possibleResults[Math.floor(Math.random() * possibleResults.length)];
         const resultItem = world.createItem(
             WORLD_ITEM_TYPE_DISPLAYS[resultType] + " " + WORLD_ITEM_TYPE_DISPLAYS[resultTierName],
@@ -358,57 +365,76 @@ export function ActionCraftProcessor() {
 
     const onPostProcessNewItem = async (ingredients: Array<IWorldItem>, item: IWorldItem) => {
 
+        item.details = {
+            description: "Crafted by the player",
+        };
+
         if (item.type === "weapon") {
 
-            // TODO: Detect weapon type
-            // TODO: Calculate damage, like in ForestBiomeModule.tsx
+            const weaponSpecializer = new WeaponSpecializer(lm);
+            const specializationRequest = {
+                name: item.name,
+                desiredWeaponType: WORLD_WEAPON_TYPE[Math.floor(Math.random() * WORLD_WEAPON_TYPE.length)],
+            };
+            const newName = await weaponSpecializer.prompt(specializationRequest);
+
             item.weapon = {
-                weaponType: "sword",
+                weaponType: specializationRequest.desiredWeaponType as WorldWeaponType,
                 damage: new WeaponDamageGenerator().generate(item),
             };
+            item.name = newName;
 
         } else if (item.type === "armor") {
 
-            // TODO: Calculate defense
             item.armor = {
                 defense: new ArmorDefenseGenerator().generate(item),
             };
 
         } else if (item.type === "wearable") {
 
-            // TODO: Detect wearable type
-            // TODO: Calculate defense
+            const wearableSpecializer = new WearableSpecializer(lm);
+            const specializationRequest = {
+                name: item.name,
+                desiredWearableType: WORLD_WEARABLE_TYPE[Math.floor(Math.random() * WORLD_WEARABLE_TYPE.length)],
+            };
+            const newName = await wearableSpecializer.prompt(specializationRequest);
+
             item.wearable = {
-                wearableType: "necklace",
+                wearableType: specializationRequest.desiredWearableType as WorldWearableType,
                 defense: new ArmorDefenseGenerator().generate(item),
             };
+            item.name = newName;
 
         } else if (item.type === "helmet") {
 
-            // TODO: Calculate defense
             item.helmet = {
                 defense: new ArmorDefenseGenerator().generate(item),
             };
 
         } else if (item.type === "boots") {
 
-            // TODO: Calculate defense
             item.boots = {
                 defense: new ArmorDefenseGenerator().generate(item),
             };
 
         }
 
+        // TODO: Add effects
+
     };
 
     const onPostProcessRefinedItem = async (ingredients: Array<IWorldItem>, item: IWorldItem) => {
+
+        item.details = {
+            description: "Refined by the player",
+        };
 
         if (item.type === "weapon") {
 
             // TODO: Detect weapon type
             // TODO: Calculate damage, like in ForestBiomeModule.tsx
             item.weapon = {
-                weaponType: "sword",
+                weaponType: item.weapon.weaponType,
                 damage: new WeaponDamageGenerator().generateAtLeast(item, item.weapon.damage),
             };
 

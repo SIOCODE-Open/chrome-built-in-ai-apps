@@ -68,5 +68,21 @@
             "rare"
         ],
         "type": "household"
+    },
+    {
+        "id": "household.potion-brewing-equipment",
+        "populatorType": "item",
+        "name": [
+            "Potion Brewing Equipment",
+            "Alchemy Set",
+            "Brewing Apparatus",
+            "Cauldron",
+            "Distillation Kit"
+        ],
+        "tier": [
+            "common",
+            "rare"
+        ],
+        "type": "household"
     }
 ]

@@ -1,5 +1,5 @@
-import { IWorldItem } from "../../context/World.context";
-import { WORLD_WEAPON_TYPE_DISPLAYS, WORLD_WEARABLE_TYPE_DISPLAYS, WorldItemTier, WorldItemType, WorldWeaponType, WorldWearableType } from "../../model/world.enums";
+import { IConsumableItemEffect, IWearableItemEffect, IWorldItem } from "../../context/World.context";
+import { WORLD_WEAPON_TYPE_DISPLAYS, WORLD_WEARABLE_EFFECT_ACTIVATION_DISPLAYS, WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS, WORLD_WEARABLE_TYPE_DISPLAYS, WorldItemTier, WorldItemType, WorldWeaponType, WorldWearableType } from "../../model/world.enums";
 import { CardInfoTable } from "../card/CardInfoTable";
 import { TooltipText } from "../TooltipText";
 
@@ -80,7 +80,59 @@ export function ItemTooltip(
         infoTable["Contains"] = `${props.value.contains.length} items`;
     }
 
-    const tt = <CardInfoTable value={infoTable} />;
+    const effects = [];
+
+    const wEffect = (eff: IWearableItemEffect) => {
+        return <span className="text-xs font-normal italic text-left">
+            {eff.value && <span className="font-bold">[{eff.value}]</span>} <span className="font-bold">{WORLD_WEARABLE_EFFECT_ACTIVATION_DISPLAYS[eff.activation]}</span> {WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS[eff.type]}
+        </span>;
+    };
+    const cEffect = (eff: IConsumableItemEffect) => {
+        return <span className="text-xs font-normal italic text-left">
+            {eff.value && <span className="font-bold">[{eff.value}]</span>} {WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS[eff.type]}
+        </span>;
+    };
+
+    if (props.value.weapon?.effects) {
+        props.value.weapon.effects.forEach(
+            eff => effects.push(wEffect(eff))
+        );
+    }
+
+    if (props.value.armor?.effects) {
+        props.value.armor.effects.forEach(
+            eff => effects.push(wEffect(eff))
+        );
+    }
+
+    if (props.value.boots?.effects) {
+        props.value.boots.effects.forEach(
+            eff => effects.push(wEffect(eff))
+        );
+    }
+
+    if (props.value.helmet?.effects) {
+        props.value.helmet.effects.forEach(
+            eff => effects.push(wEffect(eff))
+        );
+    }
+
+    if (props.value.wearable?.effects) {
+        props.value.wearable.effects.forEach(
+            eff => effects.push(wEffect(eff))
+        );
+    }
+
+    if (props.value.consumable?.effects) {
+        props.value.consumable.effects.forEach(
+            eff => effects.push(cEffect(eff))
+        );
+    }
+
+    const tt = <>
+        <CardInfoTable value={infoTable} />
+        {effects}
+    </>;
 
     return tt;
 }

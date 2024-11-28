@@ -1,0 +1,9 @@
+id: GameWorldgenPopulatorCollection
+name: Game Worldgen Populator Collection
+description: A collection of populators
+fields:
+  - name: populators
+    type: reference
+    references: GameWorldgenPopulator
+    multiple: true
+    description: The populators of the collection

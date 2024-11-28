@@ -1,0 +1,122 @@
+[
+    {
+        "id": "building.pharmacy",
+        "populatorType": "children",
+        "name": "Pharmacy",
+        "distance": 5,
+        "humidity": [
+            "normal"
+        ],
+        "temperature": [
+            "mild",
+            "cool"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "store"
+        },
+        "labels": [
+            "pharmacy"
+        ]
+    },
+    {
+        "id": "npc.pharmacy.pharmacist",
+        "populatorType": "npc",
+        "name": "Pharmacist",
+        "health": {
+            "status": "healthy",
+            "points": 100,
+            "max": 100
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.rare.nice-armor",
+            "helmet": "helmet.rare.nice-helmet",
+            "boots": "boots.rare.nice-boots",
+            "weapon": "weapon.rare.nice-staff"
+        },
+        "personality": {
+            "traits": [
+                "kind",
+                "honest",
+                "generous",
+                "patient",
+                "humble",
+                "empathetic"
+            ],
+            "background": "healer"
+        },
+        "inventory": {
+            "gold": [
+                500,
+                1000,
+                1500,
+                2000,
+                3000
+            ],
+            "items": [
+                {
+                    "oneOf": [
+                        "consumable.healing-potion.small",
+                        "consumable.healing-potion.normal",
+                        "consumable.poison.small",
+                        "consumable.poison.normal"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "consumable.healing-potion.small",
+                        "consumable.healing-potion.normal",
+                        "consumable.poison.small",
+                        "consumable.poison.normal"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "consumable.healing-potion.small",
+                        "consumable.healing-potion.normal",
+                        "consumable.poison.small",
+                        "consumable.poison.normal"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "consumable.healing-potion.small",
+                        "consumable.healing-potion.normal",
+                        "consumable.poison.small",
+                        "consumable.poison.normal"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "consumable.healing-potion.small",
+                        "consumable.healing-potion.normal",
+                        "consumable.poison.small",
+                        "consumable.poison.normal"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "consumable.healing-potion.small",
+                        "consumable.healing-potion.normal",
+                        "consumable.poison.small",
+                        "consumable.poison.normal"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "material.herb",
+                        "material.potion-ingredient"
+                    ]
+                },
+                {
+                    "oneOf": [
+                        "material.herb",
+                        "material.potion-ingredient"
+                    ]
+                }
+            ]
+        }
+    }
+]

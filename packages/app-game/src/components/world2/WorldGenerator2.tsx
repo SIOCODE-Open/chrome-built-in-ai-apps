@@ -168,7 +168,7 @@ export interface INodeRuleMatcher {
 
 export interface INodePopulatorRule extends INodeRuleMatcher {
     id: string;
-    apply: string;
+    apply: string | Array<string> | { oneOf: Array<string> };
     count: {
         min: number;
         max: number;
@@ -201,6 +201,17 @@ function attributeChoice<T>(
 }
 
 const NPC_KNOWLEDGE_TYPES = ["item", "npc", "location"];
+
+
+
+
+
+
+
+
+
+
+
 
 export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory, INpcFactory {
 
@@ -484,6 +495,190 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
         }
     }
 
+
+    private generateWearableEffectsFromSpecs = (specs: Array<INodeItemWearableEffectSpec>) => {
+        const resultEffects: Array<{ name: string, type: WorldWearableEffectType, activation: WorldWearableEffectActivation, value: number }> = [];
+        for (const effectSpec of specs) {
+            const effect: any = {
+                name: attributeChoice(effectSpec.name),
+                type: attributeChoice(effectSpec.type),
+                activation: attributeChoice(effectSpec.activation)
+            };
+            if (typeof effectSpec.value === "number") {
+                effect.value = effectSpec.value;
+            }
+            if (Array.isArray(effectSpec.value)) {
+                effect.value = effectSpec.value[Math.floor(Math.random() * effectSpec.value.length)];
+            }
+            if (typeof effectSpec.probability === "number") {
+                const roll = Math.random();
+                if (roll > effectSpec.probability) {
+                    continue;
+                }
+            }
+            if (effect.type === "destroy-item") {
+                effect.value = undefined;
+            }
+            resultEffects.push(effect);
+        }
+        return resultEffects;
+    };
+
+    private generateConsumableEffectsFromSpecs = (specs: Array<INodeItemConsumableEffectSpec>) => {
+        const resultEffects: Array<{ name: string, type: WorldConsumableEffectType, value: number }> = [];
+        for (const effectSpec of specs) {
+            const effect: any = {
+                name: attributeChoice(effectSpec.name),
+                type: attributeChoice(effectSpec.type)
+            };
+            if (typeof effectSpec.value === "number") {
+                effect.value = effectSpec.value;
+            }
+            if (Array.isArray(effectSpec.value)) {
+                effect.value = effectSpec.value[Math.floor(Math.random() * effectSpec.value.length)];
+            }
+            if (typeof effectSpec.probability === "number") {
+                const roll = Math.random();
+                if (roll > effectSpec.probability) {
+                    continue;
+                }
+            }
+            if (effect.type === "destroy-enemy-item"
+                || effect.type === "restore-hunger"
+                || effect.type === "restore-thirst"
+                || effect.type === "learn-skill") {
+                effect.value = undefined;
+            }
+            resultEffects.push(effect);
+        }
+        return resultEffects;
+    };
+
+    private generateItemsFromSpecs: (specs: Array<INodeItemSpec | string>) => Array<IWorldItem> = (specs) => {
+        const resultItems: Array<IWorldItem> = [];
+
+        for (const inputSpec of specs) {
+
+            let spec = inputSpec;
+
+            if (typeof inputSpec === "object" && inputSpec.oneOf && inputSpec.oneOf.length > 0) {
+                spec = inputSpec.oneOf[Math.floor(Math.random() * inputSpec.oneOf.length)] as any;
+            }
+
+            if (typeof spec === "string") {
+                spec = this.populators.find(p => p.id === spec) as any as INodeItemSpec;
+                if (!spec) {
+                    console.warn("[WorldGenerator2] Could not find item populator with id", spec);
+                    continue;
+                }
+
+            }
+            if (!spec) {
+                console.warn("[WorldGenerator2] Could not find spec for inputSpec", inputSpec);
+                continue;
+            }
+
+            if (typeof spec.probability === "number") {
+                const roll = Math.random();
+                if (roll > spec.probability) {
+                    continue;
+                }
+            }
+
+            const newItem = this.item(
+                attributeChoice(spec.name),
+                attributeChoice(spec.type),
+                attributeChoice(spec.tier)
+            );
+
+            if (spec.static) {
+                newItem.static = true;
+            }
+
+            if (spec.noAi) {
+                newItem.details = {
+                    description: ""
+                };
+            }
+
+            if (typeof spec.lootable === "boolean") {
+                newItem.lootable = spec.lootable;
+            }
+
+            if (spec.weapon) {
+                newItem.weapon = {
+                    weaponType: attributeChoice(spec.weapon.weaponType),
+                    damage: (spec.weapon.damage.min + Math.floor(Math.random() * (spec.weapon.damage.max - spec.weapon.damage.min + 1)))
+                };
+                if (spec.weapon.effects) {
+                    newItem.weapon.effects = this.generateWearableEffectsFromSpecs(spec.weapon.effects);
+                }
+            }
+
+            if (spec.armor) {
+                newItem.armor = {
+                    defense: (spec.armor.defense.min + Math.floor(Math.random() * (spec.armor.defense.max - spec.armor.defense.min + 1)))
+                };
+                if (spec.armor.effects) {
+                    newItem.armor.effects = this.generateWearableEffectsFromSpecs(spec.armor.effects);
+                }
+            }
+
+            if (spec.wearable) {
+                newItem.wearable = {
+                    wearableType: attributeChoice(spec.wearable.wearableType),
+                    defense: (spec.wearable.defense.min + Math.floor(Math.random() * (spec.wearable.defense.max - spec.wearable.defense.min + 1)))
+                };
+                if (spec.wearable.effects) {
+                    newItem.wearable.effects = this.generateWearableEffectsFromSpecs(spec.wearable.effects);
+                }
+            }
+
+            if (spec.helmet) {
+                newItem.helmet = {
+                    defense: (spec.helmet.defense.min + Math.floor(Math.random() * (spec.helmet.defense.max - spec.helmet.defense.min + 1)))
+                };
+                if (spec.helmet.effects) {
+                    newItem.helmet.effects = this.generateWearableEffectsFromSpecs(spec.helmet.effects);
+                }
+            }
+
+            if (spec.boots) {
+                newItem.boots = {
+                    defense: (spec.boots.defense.min + Math.floor(Math.random() * (spec.boots.defense.max - spec.boots.defense.min + 1)))
+                };
+                if (spec.boots.effects) {
+                    newItem.boots.effects = this.generateWearableEffectsFromSpecs(spec.boots.effects);
+                }
+            }
+
+            if (spec.consumable) {
+                newItem.consumable = {
+                    effects: this.generateConsumableEffectsFromSpecs(spec.consumable.effects)
+                };
+            }
+
+            resultItems.push(newItem);
+
+            if (spec.contains) {
+                const containsItems = this.generateItemsFromSpecs(spec.contains);
+                newItem.contains.push(...containsItems);
+            }
+
+        }
+
+        return resultItems;
+    };
+
+    private generateItemFromPopulator = (populator: INodeItemPopulator) => {
+        return [...this.generateItemsFromSpecs([populator])];
+    };
+
+    public generateItemFrom(id: string) {
+        const populator = this.populators.find(p => p.id === id) as INodeItemPopulator;
+        return this.generateItemFromPopulator(populator);
+    }
+
     async generate(): Promise<Array<IWorldNode>> {
 
         const rootNode = this.node(
@@ -570,171 +765,6 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
 
         };
 
-        const generateWearableEffectsFromSpecs = (specs: Array<INodeItemWearableEffectSpec>) => {
-            const resultEffects: Array<{ name: string, type: WorldWearableEffectType, activation: WorldWearableEffectActivation, value: number }> = [];
-            for (const effectSpec of specs) {
-                const effect: any = {
-                    name: attributeChoice(effectSpec.name),
-                    type: attributeChoice(effectSpec.type),
-                    activation: attributeChoice(effectSpec.activation)
-                };
-                if (typeof effectSpec.value === "number") {
-                    effect.value = effectSpec.value;
-                }
-                if (Array.isArray(effectSpec.value)) {
-                    effect.value = effectSpec.value[Math.floor(Math.random() * effectSpec.value.length)];
-                }
-                if (typeof effectSpec.probability === "number") {
-                    const roll = Math.random();
-                    if (roll > effectSpec.probability) {
-                        continue;
-                    }
-                }
-                if (effect.type === "destroy-item") {
-                    effect.value = undefined;
-                }
-                resultEffects.push(effect);
-            }
-            return resultEffects;
-        };
-
-        const generateConsumableEffectsFromSpecs = (specs: Array<INodeItemConsumableEffectSpec>) => {
-            const resultEffects: Array<{ name: string, type: WorldConsumableEffectType, value: number }> = [];
-            for (const effectSpec of specs) {
-                const effect: any = {
-                    name: attributeChoice(effectSpec.name),
-                    type: attributeChoice(effectSpec.type)
-                };
-                if (typeof effectSpec.value === "number") {
-                    effect.value = effectSpec.value;
-                }
-                if (Array.isArray(effectSpec.value)) {
-                    effect.value = effectSpec.value[Math.floor(Math.random() * effectSpec.value.length)];
-                }
-                if (typeof effectSpec.probability === "number") {
-                    const roll = Math.random();
-                    if (roll > effectSpec.probability) {
-                        continue;
-                    }
-                }
-                if (effect.type === "destroy-enemy-item"
-                    || effect.type === "restore-hunger"
-                    || effect.type === "restore-thirst"
-                    || effect.type === "learn-skill") {
-                    effect.value = undefined;
-                }
-                resultEffects.push(effect);
-            }
-            return resultEffects;
-        };
-
-        const generateItemsFromSpecs: (specs: Array<INodeItemSpec | string>) => Array<IWorldItem> = (specs) => {
-            const resultItems: Array<IWorldItem> = [];
-
-            for (const inputSpec of specs) {
-
-                let spec = inputSpec;
-
-                if (typeof inputSpec === "object" && inputSpec.oneOf && inputSpec.oneOf.length > 0) {
-                    spec = inputSpec.oneOf[Math.floor(Math.random() * inputSpec.oneOf.length)] as any;
-                }
-
-                if (typeof spec === "string") {
-                    spec = this.populators.find(p => p.id === spec) as any as INodeItemSpec;
-                }
-
-                if (typeof spec.probability === "number") {
-                    const roll = Math.random();
-                    if (roll > spec.probability) {
-                        continue;
-                    }
-                }
-
-                const newItem = this.item(
-                    attributeChoice(spec.name),
-                    attributeChoice(spec.type),
-                    attributeChoice(spec.tier)
-                );
-
-                if (spec.static) {
-                    newItem.static = true;
-                }
-
-                if (spec.noAi) {
-                    newItem.details = {
-                        description: ""
-                    };
-                }
-
-                if (typeof spec.lootable === "boolean") {
-                    newItem.lootable = spec.lootable;
-                }
-
-                if (spec.weapon) {
-                    newItem.weapon = {
-                        weaponType: attributeChoice(spec.weapon.weaponType),
-                        damage: (spec.weapon.damage.min + Math.floor(Math.random() * (spec.weapon.damage.max - spec.weapon.damage.min + 1)))
-                    };
-                    if (spec.weapon.effects) {
-                        newItem.weapon.effects = generateWearableEffectsFromSpecs(spec.weapon.effects);
-                    }
-                }
-
-                if (spec.armor) {
-                    newItem.armor = {
-                        defense: (spec.armor.defense.min + Math.floor(Math.random() * (spec.armor.defense.max - spec.armor.defense.min + 1)))
-                    };
-                    if (spec.armor.effects) {
-                        newItem.armor.effects = generateWearableEffectsFromSpecs(spec.armor.effects);
-                    }
-                }
-
-                if (spec.wearable) {
-                    newItem.wearable = {
-                        wearableType: attributeChoice(spec.wearable.wearableType),
-                        defense: (spec.wearable.defense.min + Math.floor(Math.random() * (spec.wearable.defense.max - spec.wearable.defense.min + 1)))
-                    };
-                    if (spec.wearable.effects) {
-                        newItem.wearable.effects = generateWearableEffectsFromSpecs(spec.wearable.effects);
-                    }
-                }
-
-                if (spec.helmet) {
-                    newItem.helmet = {
-                        defense: (spec.helmet.defense.min + Math.floor(Math.random() * (spec.helmet.defense.max - spec.helmet.defense.min + 1)))
-                    };
-                    if (spec.helmet.effects) {
-                        newItem.helmet.effects = generateWearableEffectsFromSpecs(spec.helmet.effects);
-                    }
-                }
-
-                if (spec.boots) {
-                    newItem.boots = {
-                        defense: (spec.boots.defense.min + Math.floor(Math.random() * (spec.boots.defense.max - spec.boots.defense.min + 1)))
-                    };
-                    if (spec.boots.effects) {
-                        newItem.boots.effects = generateWearableEffectsFromSpecs(spec.boots.effects);
-                    }
-                }
-
-                if (spec.consumable) {
-                    newItem.consumable = {
-                        effects: generateConsumableEffectsFromSpecs(spec.consumable.effects)
-                    };
-                }
-
-                resultItems.push(newItem);
-
-                if (spec.contains) {
-                    const containsItems = generateItemsFromSpecs(spec.contains);
-                    newItem.contains.push(...containsItems);
-                }
-
-            }
-
-            return resultItems;
-        };
-
         const applyItemPopulator = (opts: { generatedNode: IGeneratedWorldNode, rule: INodePopulatorRule, populator: INodeItemPopulator, key: string }) => {
             const { generatedNode, populator, rule, key } = opts;
             const { node } = generatedNode;
@@ -748,7 +778,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             }
 
             for (let i = 0; i < itemCount; i++) {
-                const generatedItems = generateItemsFromSpecs([populator]);
+                const generatedItems = this.generateItemsFromSpecs([populator]);
                 node.items.push(...generatedItems);
             }
 
@@ -810,7 +840,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
                     };
 
                     if (populator.inventory.items) {
-                        const generatedItems = generateItemsFromSpecs(
+                        const generatedItems = this.generateItemsFromSpecs(
                             populator.inventory.items.map(
                                 itemSpec => typeof itemSpec === "string"
                                     ? this.populators.find(p => p.id === itemSpec)
@@ -824,35 +854,35 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
                 if (populator.gear) {
                     newNpc.gear = {
                         armor: populator.gear.armor
-                            ? generateItemsFromSpecs([
+                            ? this.generateItemsFromSpecs([
                                 typeof populator.gear.armor === "string"
                                     ? this.populators.find(p => p.id === populator.gear.armor) as any
                                     : populator.gear.armor
                             ])[0]
                             : null,
                         helmet: populator.gear.helmet
-                            ? generateItemsFromSpecs([
+                            ? this.generateItemsFromSpecs([
                                 typeof populator.gear.helmet === "string"
                                     ? this.populators.find(p => p.id === populator.gear.helmet) as any
                                     : populator.gear.helmet
                             ])[0]
                             : null,
                         boots: populator.gear.boots
-                            ? generateItemsFromSpecs([
+                            ? this.generateItemsFromSpecs([
                                 typeof populator.gear.boots === "string"
                                     ? this.populators.find(p => p.id === populator.gear.boots) as any
                                     : populator.gear.boots
                             ])[0]
                             : null,
                         weapon: populator.gear.weapon
-                            ? generateItemsFromSpecs([
+                            ? this.generateItemsFromSpecs([
                                 typeof populator.gear.weapon === "string"
                                     ? this.populators.find(p => p.id === populator.gear.weapon) as any
                                     : populator.gear.weapon
                             ])[0]
                             : null,
                         wearable: populator.gear.wearable
-                            ? generateItemsFromSpecs([
+                            ? this.generateItemsFromSpecs([
                                 typeof populator.gear.wearable === "string"
                                     ? this.populators.find(p => p.id === populator.gear.wearable) as any
                                     : populator.gear.wearable
@@ -903,7 +933,21 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
         const findApplicableChildrenRules = (generatedNode: IGeneratedWorldNode) => {
             const applicableChildrenRules: Array<{ generatedNode: IGeneratedWorldNode, rule: INodePopulatorRule, populator: INodePopulator, key: string }> = [];
             for (const rule of this.rules) {
-                const populator = this.populators.find(p => p.id === rule.apply);
+                let populator: any = rule.apply;
+                if (Array.isArray(rule.apply)) {
+                    const randomPopulatorId = rule.apply[Math.floor(Math.random() * rule.apply.length)];
+                    populator = this.populators.find(p => p.id === randomPopulatorId);
+                } else if (typeof rule.apply === "object" && rule.apply.oneOf) {
+                    const randomPopulatorId = rule.apply.oneOf[Math.floor(Math.random() * rule.apply.oneOf.length)];
+                    populator = this.populators.find(p => p.id === randomPopulatorId);
+                }
+                populator = this.populators.find(p => p.id === populator) as INodePopulator;
+                if (!populator) {
+                    const setKey = appliedSetKey(generatedNode.node, rule);
+                    appliedSet.add(setKey);
+                    console.warn(`[WorldGenerator2] Populator not found for rule ${rule.id}: ${JSON.stringify(rule.apply)}`);
+                    continue;
+                }
                 if (populator.populatorType !== "children") {
                     // We only care about children populators for now
                     continue;
@@ -924,7 +968,21 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
         const findApplicableNonChildrenRules = (generatedNode: IGeneratedWorldNode) => {
             const applicableItemRules: Array<{ generatedNode: IGeneratedWorldNode, rule: INodePopulatorRule, populator: INodePopulator, key: string }> = [];
             for (const rule of this.rules) {
-                const populator = this.populators.find(p => p.id === rule.apply);
+                let populator: any = rule.apply;
+                if (Array.isArray(rule.apply)) {
+                    const randomPopulatorId = rule.apply[Math.floor(Math.random() * rule.apply.length)];
+                    populator = this.populators.find(p => p.id === randomPopulatorId);
+                } else if (typeof rule.apply === "object" && rule.apply.oneOf) {
+                    const randomPopulatorId = rule.apply.oneOf[Math.floor(Math.random() * rule.apply.oneOf.length)];
+                    populator = this.populators.find(p => p.id === randomPopulatorId);
+                }
+                populator = this.populators.find(p => p.id === populator) as INodePopulator;
+                if (!populator) {
+                    const setKey = appliedSetKey(generatedNode.node, rule);
+                    appliedSet.add(setKey);
+                    console.warn(`[WorldGenerator2] Populator not found for rule ${rule.id}: ${JSON.stringify(rule.apply)}`);
+                    continue;
+                }
                 if (populator.populatorType === "children") {
                     // We only care about non-children populators for now
                     continue;

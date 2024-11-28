@@ -179,7 +179,13 @@ export function GamePlayer(
         },
         endConversation: () => {
             inConversationWith.current.next(null);
-        }
+        },
+        updateInCombatWith: (npc) => {
+            inCombatWith.current.next(npc);
+        },
+        updateInConversationWith: (npc) => {
+            inConversationWith.current.next(npc);
+        },
     };
 
     const spawnInitialPlayer_Legacy = () => {
@@ -264,72 +270,24 @@ export function GamePlayer(
             let playerWeapon = null;
 
             if (cc.characterClass === "knight") {
-                playerWeapon = world.createItem(
-                    "Rusty Knife",
-                    "weapon",
-                    "common",
-                );
-                playerWeapon.weapon = {
-                    weaponType: "knife",
-                    damage: 1
-                };
+                playerWeapon = world.generateItems("weapon.common.simple-sword")[0];
             } else if (cc.characterClass === "archer") {
-                playerWeapon = world.createItem(
-                    "Old Lame Bow",
-                    "weapon",
-                    "common",
-                );
-                playerWeapon.weapon = {
-                    weaponType: "bow",
-                    damage: 1
-                };
+                playerWeapon = world.generateItems("weapon.common.simple-bow")[0];
             } else if (cc.characterClass === "mage") {
-                playerWeapon = world.createItem(
-                    "Broken Staff",
-                    "weapon",
-                    "common",
-                );
-                playerWeapon.weapon = {
-                    weaponType: "staff",
-                    damage: 1
-                };
+                playerWeapon = world.generateItems("weapon.common.simple-staff")[0];
             }
             contextValue.addItem(playerWeapon);
 
-            const playerArmor = world.createItem(
-                "Peasant's Clothes",
-                "armor",
-                "common"
-            );
-            playerArmor.armor = {
-                defense: 1
-            };
+            const playerArmor = world.generateItems("armor.common.simple-clothing")[0];
 
-            const playerBoots = world.createItem(
-                "Leather Boots",
-                "boots",
-                "common"
-            );
-            playerBoots.boots = {
-                defense: 1
-            };
-
-            const playerNecklace = world.createItem(
-                "Necklace",
-                "wearable",
-                "common"
-            );
-            playerNecklace.wearable = {
-                wearableType: "necklace",
-                defense: 1
-            };
+            const playerBoots = world.generateItems("boots.common.simple-boots")[0];
 
             contextValue.updatePlayerGear({
                 armor: playerArmor,
                 helmet: null,
                 boots: playerBoots,
                 weapon: null,
-                wearable: playerNecklace
+                wearable: null
             });
 
             if (cc.characterClass === "knight") {

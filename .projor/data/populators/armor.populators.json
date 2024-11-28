@@ -67,6 +67,19 @@
         }
     },
     {
+        "id": "armor.rare.priest-robe",
+        "populatorType": "item",
+        "name": "Black Robe of Priest",
+        "tier": "rare",
+        "type": "armor",
+        "armor": {
+            "defense": {
+                "min": 1,
+                "max": 5
+            }
+        }
+    },
+    {
         "id": "armor.animal.wolf-fur",
         "populatorType": "item",
         "name": "Wolf Fur",

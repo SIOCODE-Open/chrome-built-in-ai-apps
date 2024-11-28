@@ -34,6 +34,7 @@ import { HungerThirstTicker } from "./simulation/HungerThirstTicker";
 import { ActionRestProcessor } from "./simulation/ActionRestProcessor";
 import { ActionUseProcessor } from "./simulation/ActionUseProcessor";
 import { HealthTicker } from "./simulation/HealthTicker";
+import { TurnHeadlineWriter } from "../ai/TurnHeadlineWriter";
 
 export function GameSimulation(
     props: {
@@ -139,8 +140,13 @@ export function GameSimulation(
             )
         });
 
+        const headliner = new TurnHeadlineWriter(lm);
+        const headline = await headliner.prompt({
+            narration,
+        });
+
         thisTurn.push(
-            history.endTurn(turnCountRef.current, narration)
+            history.endTurn(turnCountRef.current, narration, headline)
         );
 
         previousTurns.current.push(thisTurn);

@@ -35,6 +35,41 @@
         }
     },
     {
+        "id": "weapon.epic.amazing-sword",
+        "populatorType": "item",
+        "name": [
+            "Powerful Steel Sword",
+            "Blessed Iron Sword"
+        ],
+        "tier": "epic",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "sword",
+            "damage": {
+                "min": 100,
+                "max": 150
+            },
+            "effects": [
+                {
+                    "name": "Superpower",
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "type": [
+                        "heal",
+                        "damage"
+                    ],
+                    "value": [
+                        100,
+                        500,
+                        1000
+                    ]
+                }
+            ]
+        }
+    },
+    {
         "id": "weapon.common.simple-axe",
         "populatorType": "item",
         "name": [
@@ -84,26 +119,7 @@
             "damage": {
                 "min": 5,
                 "max": 15
-            },
-            "effects": [
-                {
-                    "name": "Random Crazy Superpower",
-                    "activation": [
-                        "when-attacking",
-                        "when-defending"
-                    ],
-                    "type": [
-                        "heal",
-                        "damage",
-                        "destroy-item"
-                    ],
-                    "value": [
-                        100,
-                        500,
-                        1000
-                    ]
-                }
-            ]
+            }
         }
     },
     {
@@ -209,6 +225,23 @@
             "damage": {
                 "min": 5,
                 "max": 30
+            }
+        }
+    },
+    {
+        "id": "weapon.rare.nice-staff",
+        "populatorType": "item",
+        "name": [
+            "Nice Staff",
+            "Nice Heavy Staff"
+        ],
+        "tier": "rare",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "staff",
+            "damage": {
+                "min": 30,
+                "max": 70
             }
         }
     },

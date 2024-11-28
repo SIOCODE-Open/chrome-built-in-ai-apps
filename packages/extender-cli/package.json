@@ -1,0 +1,21 @@
+{
+    "name": "@siocode/extender-cli",
+    "description": "CLI for extending this project via AI",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "main": "lib/index.js",
+    "types": "types/index.d.ts",
+    "dependencies": {
+        "chalk": "*",
+        "@inquirer/prompts": "*"
+    },
+    "devDependencies": {
+        "typescript": "*",
+        "@types/node": "*"
+    },
+    "scripts": {
+        "build": "tsc",
+        "start": "node lib/index.js"
+    }
+}

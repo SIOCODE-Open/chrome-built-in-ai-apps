@@ -34,6 +34,10 @@ export function GameWorld(
         )
     );
 
+    const generateItems = (populatorId: string) => {
+        return generator.current.generateItemFrom(populatorId);
+    };
+
     const contextValue: IWorldContext = {
         getAllNodes: () => graphRef.current.value,
         getNodesWithLabel: (label: string) => graphRef.current.value.filter(n => n.labels.includes(label)),
@@ -41,6 +45,7 @@ export function GameWorld(
         nodesGenerated: graphRef.current.asObservable(),
         createItem: generator.current.item.bind(generator.current),
         createNpc: generator.current.npc.bind(generator.current),
+        generateItems,
     };
 
     useEffect(

@@ -1,0 +1,12 @@
+id: GameWorldgenPopulator
+name: Game Worldgen Populator
+description: A populator for the game world generator
+fields:
+  - name: jsonData
+    type: string
+    description: The JSON data of the populator
+    required: true
+  - name: source
+    type: string
+    description: The source of the populator
+    required: true

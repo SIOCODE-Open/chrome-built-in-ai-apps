@@ -853,6 +853,7 @@ export const WORLD_NODE_BUILDING_TYPE = [
     "town-hall",
     "church",
     "farm",
+    "store",
 ];
 
 /** Type of building */
@@ -862,7 +863,8 @@ export type WorldNodeBuildingType =
     | "tavern"
     | "town-hall"
     | "church"
-    | "farm";
+    | "farm"
+    | "store";
 
 /** Descriptions for Node Building Type */
 export const WORLD_NODE_BUILDING_TYPE_DESCRIPTIONS = {
@@ -872,6 +874,7 @@ export const WORLD_NODE_BUILDING_TYPE_DESCRIPTIONS = {
     "town-hall": `The administrative center, and official place of gathering.`,
     church: `A place of worship and spiritual reflection.`,
     farm: `A place where crops are grown and animals are raised.`,
+    store: `A generic or specialized store for buying and selling goods.`,
 };
 
 /** Display values for Node Building Type */
@@ -882,6 +885,7 @@ export const WORLD_NODE_BUILDING_TYPE_DISPLAYS = {
     "town-hall": `Town Hall`,
     church: `Church`,
     farm: `Farm`,
+    store: `Store`,
 };
 /** Type of room */
 export const WORLD_NODE_ROOM_TYPE = [

@@ -1,0 +1,62 @@
+[
+    {
+        "id": "building.church",
+        "populatorType": "children",
+        "name": "Church",
+        "distance": 5,
+        "humidity": [
+            "dry",
+            "normal"
+        ],
+        "temperature": [
+            "mild",
+            "cool",
+            "cold"
+        ],
+        "type": "building",
+        "building": {
+            "buildingType": "church"
+        }
+    },
+    {
+        "id": "npc.church.priest",
+        "populatorType": "npc",
+        "name": "Priest",
+        "health": {
+            "status": "healthy",
+            "points": 100,
+            "max": 100
+        },
+        "race": "human",
+        "stance": "friendly",
+        "gear": {
+            "armor": "armor.rare.priest-robe"
+        },
+        "personality": {
+            "traits": [
+                "kind",
+                "patient",
+                "loyal",
+                "forgiving",
+                "compassionate"
+            ],
+            "background": "priest"
+        },
+        "inventory": {
+            "gold": [
+                0,
+                10,
+                25,
+                50,
+                100
+            ],
+            "items": [
+                {
+                    "oneOf": [
+                        "artifact.religious-book"
+                    ]
+                }
+            ]
+        }
+    }
+]

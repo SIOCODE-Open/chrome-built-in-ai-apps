@@ -422,14 +422,14 @@ export function GameHistory(props: { children?: any }) {
             { notes }
         ),
 
-        endTurn: (turnNumber, notes) => {
+        endTurn: (turnNumber, notes, headline) => {
             const events = [...thisTurnEvents.current];
 
             const endTurnEvent = contextValue.publish(
                 "world",
                 "end-turn",
                 notes,
-                { turnNumber, events, notes }
+                { turnNumber, events, notes, headline }
             );
 
             allTurns.current.push({ events, endTurnEvent });

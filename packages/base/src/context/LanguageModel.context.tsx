@@ -13,7 +13,7 @@ export interface ILanguageModelContext {
             role: "system" | "user" | "assistant";
             content: string;
         }>,
-        opts?: { temperature: number; topK: number; stopSequence?: string; }
+        opts?: { temperature: number; topK: number; stopSequence?: string; maxTokens?: number }
     ): Promise<{
         prompt(nextMessage: string): Promise<string>;
     }>
