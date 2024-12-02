@@ -1,6 +1,7 @@
 import { NameGenerator } from "../../ai/NameGenerator";
-import { INonPlayerCharacter, IWorldEdge, IWorldItem, IWorldNode, WorldNodeLevel } from "../../context/World.context";
-import { WorldConsumableEffectType, WorldItemTier, WorldItemType, WorldNodeAreaType, WorldNodeBuildingType, WorldNodeHumidity, WorldNodeRoomType, WorldNodeSettlementType, WorldNodeStreetType, WorldNodeTemperature, WorldNodeWildernessType, WorldNpcBackground, WorldNpcPersonalityTrait, WorldNpcRace, WorldNpcStance, WorldPlayerHealth, WorldWeaponType, WorldWearableEffectActivation, WorldWearableEffectType, WorldWearableType } from "../../model/world.enums";
+import { ICharacterGear, ICharacterHealth, INonPlayerCharacter, IQuest, IWorldEdge, IWorldItem, IWorldNode, WorldNodeLevel } from "../../context/World.context";
+import { QuestDifficultyCalculator } from "../../model/QuestDifficultyCalculator";
+import { WorldConsumableEffectType, WorldItemTier, WorldItemType, WorldNodeAreaType, WorldNodeBuildingType, WorldNodeHumidity, WorldNodeRoomType, WorldNodeSettlementType, WorldNodeStreetType, WorldNodeTemperature, WorldNodeWildernessType, WorldNpcBackground, WorldNpcPersonalityTrait, WorldNpcQuestDifficulty, WorldNpcQuestType, WorldNpcRace, WorldNpcStance, WorldPlayerHealth, WorldWeaponType, WorldWearableEffectActivation, WorldWearableEffectType, WorldWearableType } from "../../model/world.enums";
 import { shuffleArray } from "../../utils/shuffleArray";
 import { IEdgeFactory } from "../world/api/EdgeFactory";
 import { IItemFactory } from "../world/api/ItemFactory";
@@ -10,89 +11,78 @@ import { INpcFactory } from "../world/api/NpcFactory";
 export type NodePopulatorType =
     | "children"
     | "item"
-    | "npc";
+    | "npc"
+    | "quest";
+
+type OneOfAttr<T> = T | Array<T> | { oneOf: Array<T> };
+type MinMaxAttr = { min: number, max: number };
 
 export interface INodeChildrenPopulator {
     id: string;
     populatorType: "children";
-    type: WorldNodeAreaType | Array<WorldNodeAreaType>;
-    name: string;
+    type: OneOfAttr<WorldNodeAreaType>;
+    name: OneOfAttr<string>;
     building?: {
-        buildingType: WorldNodeBuildingType | Array<WorldNodeBuildingType>;
+        buildingType: OneOfAttr<WorldNodeBuildingType>;
     };
     room?: {
-        roomType: WorldNodeRoomType | Array<WorldNodeRoomType>;
+        roomType: OneOfAttr<WorldNodeRoomType>;
     };
     street?: {
-        streetType: WorldNodeStreetType | Array<WorldNodeStreetType>;
+        streetType: OneOfAttr<WorldNodeStreetType>;
     };
     settlement?: {
-        settlementType: WorldNodeSettlementType | Array<WorldNodeSettlementType>;
+        settlementType: OneOfAttr<WorldNodeSettlementType>;
     };
     wilderness?: {
-        wildernessType: WorldNodeWildernessType | Array<WorldNodeWildernessType>;
+        wildernessType: OneOfAttr<WorldNodeWildernessType>;
     };
-    temperature: "same" | WorldNodeTemperature | Array<WorldNodeTemperature>;
-    humidity: "same" | WorldNodeHumidity | Array<WorldNodeHumidity>;
-    distance: number | Array<number>;
+    temperature: "same" | OneOfAttr<WorldNodeTemperature>;
+    humidity: "same" | OneOfAttr<WorldNodeHumidity>;
+    distance: OneOfAttr<number> | MinMaxAttr;
     labels?: Array<string>;
 }
 
 export type INodeItemWearableEffectSpec = {
-    name: string | Array<string>;
-    type: WorldWearableEffectType | Array<WorldWearableEffectType>;
-    activation: WorldWearableEffectActivation | Array<WorldWearableEffectActivation>;
-    value?: number | Array<number>;
+    name: OneOfAttr<string>;
+    type: OneOfAttr<WorldWearableEffectType>;
+    activation: OneOfAttr<WorldWearableEffectActivation>;
+    value?: OneOfAttr<number> | MinMaxAttr;
     probability?: number;
 }
 
 export type INodeItemConsumableEffectSpec = {
-    name: string | Array<string>;
-    type: WorldConsumableEffectType | Array<WorldConsumableEffectType>;
-    value?: number | Array<number>;
+    name: OneOfAttr<string>;
+    type: OneOfAttr<WorldConsumableEffectType>;
+    value?: OneOfAttr<number> | MinMaxAttr;
     probability?: number;
 }
 
 export interface INodeItemSpec {
-    type: WorldItemType | Array<WorldItemType>;
-    tier: WorldItemTier | Array<WorldItemTier>;
-    name: string | Array<string>;
+    type: OneOfAttr<WorldItemType>;
+    tier: OneOfAttr<WorldItemTier>;
+    name: OneOfAttr<string>;
     noAi?: boolean;
     weapon?: {
-        weaponType: WorldWeaponType | Array<WorldWeaponType>;
-        damage: {
-            min: number;
-            max: number;
-        };
+        weaponType: OneOfAttr<WorldWeaponType>;
+        damage: OneOfAttr<number> | MinMaxAttr;
         effects?: Array<INodeItemWearableEffectSpec>;
     };
     armor?: {
-        defense: {
-            min: number;
-            max: number;
-        };
+        defense: OneOfAttr<number> | MinMaxAttr;
         effects?: Array<INodeItemWearableEffectSpec>;
     };
     wearable?: {
         wearableType: WorldWearableType | Array<WorldWearableType>;
-        defense: {
-            min: number;
-            max: number;
-        };
+        defense: OneOfAttr<number> | MinMaxAttr;
         effects?: Array<INodeItemWearableEffectSpec>;
     };
     helmet?: {
-        defense: {
-            min: number;
-            max: number;
-        };
+        defense: OneOfAttr<number> | MinMaxAttr;
         effects?: Array<INodeItemWearableEffectSpec>;
     };
     boots?: {
-        defense: {
-            min: number;
-            max: number;
-        };
+        defense: OneOfAttr<number> | MinMaxAttr;
         effects?: Array<INodeItemWearableEffectSpec>;
     };
     consumable?: {
@@ -114,16 +104,16 @@ export interface INodeItemPopulator extends INodeItemSpec {
 export interface INodeNpcPopulator {
     id: string;
     populatorType: "npc";
-    name: string | Array<string>;
-    race: WorldNpcRace | Array<WorldNpcRace>;
-    stance: WorldNpcStance | Array<WorldNpcStance>;
+    name: OneOfAttr<string>;
+    race: OneOfAttr<WorldNpcRace>;
+    stance: OneOfAttr<WorldNpcStance>;
     health: {
-        status: WorldPlayerHealth | Array<WorldPlayerHealth>;
-        points: number | Array<number>;
-        max: number | Array<number>;
+        status: OneOfAttr<WorldPlayerHealth>;
+        points: OneOfAttr<number> | MinMaxAttr;
+        max: OneOfAttr<number> | MinMaxAttr;
     }
     inventory?: {
-        gold?: number | Array<number>;
+        gold?: OneOfAttr<number> | MinMaxAttr;
         items?: Array<INodeItemSpec> | Array<string>;
     };
     gear?: {
@@ -135,15 +125,31 @@ export interface INodeNpcPopulator {
     };
     personality?: {
         traits: Array<WorldNpcPersonalityTrait>;
-        background: WorldNpcBackground | Array<WorldNpcBackground>;
+        background: OneOfAttr<WorldNpcBackground>;
     };
     labels?: Array<string>;
+    quests?: Array<string>;
     oneOf?: Array<INodeNpcPopulator> | Array<string>;
+}
+
+export interface IQuestPopulator {
+    id: string;
+    populatorType: "quest";
+    type: OneOfAttr<WorldNpcQuestType>;
+    difficulty: OneOfAttr<WorldNpcQuestDifficulty>;
+    deliver?: {
+        item: OneOfAttr<string>;
+    }
+    reward?: {
+        gold?: OneOfAttr<number> | MinMaxAttr;
+        items?: Array<string>;
+    }
 }
 
 export type INodePopulator = INodeChildrenPopulator
     | INodeItemPopulator
-    | INodeNpcPopulator;
+    | INodeNpcPopulator
+    | IQuestPopulator;
 
 export interface INodeRuleMatcher {
     hasType?: WorldNodeAreaType;
@@ -168,15 +174,9 @@ export interface INodeRuleMatcher {
 
 export interface INodePopulatorRule extends INodeRuleMatcher {
     id: string;
-    apply: string | Array<string> | { oneOf: Array<string> };
-    count: {
-        min: number;
-        max: number;
-    };
-    depth?: {
-        min: number;
-        max: number;
-    };
+    apply: OneOfAttr<string>;
+    count: MinMaxAttr;
+    depth?: MinMaxAttr;
     probability?: number;
 }
 
@@ -192,12 +192,16 @@ const TERMINAL_NODE_TYPES = [
 const MAX_ROUNDS = 10;
 
 function attributeChoice<T>(
-    attr: T | Array<T>
-) {
+    attr: OneOfAttr<T> | MinMaxAttr | T
+): T {
     if (Array.isArray(attr)) {
         return attr[Math.floor(Math.random() * attr.length)];
+    } else if (typeof attr === "object" && "oneOf" in attr && attr.oneOf) {
+        return attr.oneOf[Math.floor(Math.random() * attr.oneOf.length)];
+    } else if (typeof attr === "object" && "min" in attr && "max" in attr) {
+        return ((attr.min as number) + Math.floor(Math.random() * ((attr.max as number) - (attr.min as number) + 1))) as any as T;
     }
-    return attr;
+    return attr as T;
 }
 
 const NPC_KNOWLEDGE_TYPES = ["item", "npc", "location"];
@@ -209,9 +213,236 @@ const NPC_KNOWLEDGE_TYPES = ["item", "npc", "location"];
 
 
 
+const findClosestMatchingNode = (startNode: IWorldNode, pred: (node: IWorldNode) => boolean) => {
+    const visited = new Set<number>();
+    const queue = [startNode];
+    visited.add(startNode.id);
 
+    while (queue.length > 0) {
+        const node = queue.shift()!;
+        if (pred(node)) {
+            return node;
+        }
 
+        for (const edge of node.outEdges) {
+            if (!visited.has(edge.to.id)) {
+                queue.push(edge.to);
+                visited.add(edge.to.id);
+            }
+        }
+    }
 
+    return null;
+}
+
+const allNpcsInVillage = (startNode: IWorldNode) => {
+    const result: Array<INonPlayerCharacter> = [];
+    const resultIds = new Set<number>();
+
+    // First, we find the closest village node
+    const closestVillage = findClosestMatchingNode(startNode, (node) => node.settlement?.settlementType === "village");
+
+    // Visit everything from the closest village
+    const queue = [closestVillage];
+    const visited = new Set<number>([closestVillage.id]);
+
+    while (queue.length > 0) {
+        const node = queue.shift()!;
+
+        for (const npc of node.npcs) {
+            if (!resultIds.has(npc.id)) {
+                result.push(npc);
+                resultIds.add(npc.id);
+            }
+        }
+
+        for (const edge of node.outEdges) {
+
+            if (edge.to.type === "wilderness") {
+                // Don't venture out of the village
+                continue;
+            }
+
+            if (!visited.has(edge.to.id)) {
+                queue.push(edge.to);
+                visited.add(edge.to.id);
+            }
+        }
+    }
+
+    return result;
+};
+
+const allItemsInVillage = (startNode: IWorldNode) => {
+    const result: Array<{ item: IWorldItem, location: IWorldNode }> = [];
+    const resultIds = new Set<number>();
+
+    // First, we find the closest village node
+    const closestVillage = findClosestMatchingNode(startNode, (node) => node.settlement?.settlementType === "village");
+
+    // Visit everything from the closest village
+    const queue = [closestVillage];
+    const visited = new Set<number>([closestVillage.id]);
+
+    while (queue.length > 0) {
+        const node = queue.shift()!;
+
+        for (const item of node.items) {
+            if (!resultIds.has(item.id)) {
+                result.push({ item, location: node });
+                resultIds.add(item.id);
+            }
+        }
+
+        for (const edge of node.outEdges) {
+
+            if (edge.to.type === "wilderness") {
+                // Don't venture out of the village
+                continue;
+            }
+
+            if (!visited.has(edge.to.id)) {
+                queue.push(edge.to);
+                visited.add(edge.to.id);
+            }
+        }
+    }
+
+    return result;
+};
+
+const allLocationsInVillage = (startNode: IWorldNode) => {
+    const result: Array<IWorldNode> = [];
+    const resultIds = new Set<number>();
+
+    // First, we find the closest village node
+    const closestVillage = findClosestMatchingNode(startNode, (node) => node.settlement?.settlementType === "village");
+
+    // Visit everything from the closest village
+    const queue = [closestVillage];
+    const visited = new Set<number>([closestVillage.id]);
+
+    while (queue.length > 0) {
+        const node = queue.shift()!;
+
+        if (!resultIds.has(node.id)) {
+            result.push(node);
+            resultIds.add(node.id);
+        }
+
+        for (const edge of node.outEdges) {
+
+            if (edge.to.type === "wilderness") {
+                // Don't venture out of the village
+                continue;
+            }
+
+            if (!visited.has(edge.to.id)) {
+                queue.push(edge.to);
+                visited.add(edge.to.id);
+            }
+        }
+    }
+
+    return result;
+};
+
+const allNpcsInRadius = (startNode: IWorldNode, radius: number) => {
+    const result: Array<INonPlayerCharacter> = [];
+    const resultIds = new Set<number>();
+
+    const queue = [{ node: startNode, distance: 0 }];
+    const visited = new Set<number>([startNode.id]);
+
+    while (queue.length > 0) {
+        const { node, distance } = queue.shift()!;
+
+        for (const npc of node.npcs) {
+            if (!resultIds.has(npc.id)) {
+                result.push(npc);
+                resultIds.add(npc.id);
+            }
+        }
+
+        for (const edge of node.outEdges) {
+
+            if (distance + edge.distance > radius) {
+                continue;
+            }
+
+            if (!visited.has(edge.to.id)) {
+                queue.push({ node: edge.to, distance: distance + edge.distance });
+                visited.add(edge.to.id);
+            }
+        }
+    }
+
+    return result;
+};
+
+const allItemsInRadius = (startNode: IWorldNode, radius: number) => {
+    const result: Array<{ item: IWorldItem, location: IWorldNode }> = [];
+    const resultIds = new Set<number>();
+
+    const queue = [{ node: startNode, distance: 0 }];
+    const visited = new Set<number>([startNode.id]);
+
+    while (queue.length > 0) {
+        const { node, distance } = queue.shift()!;
+
+        for (const item of node.items) {
+            if (!resultIds.has(item.id)) {
+                result.push({ item, location: node });
+                resultIds.add(item.id);
+            }
+        }
+
+        for (const edge of node.outEdges) {
+
+            if (distance + edge.distance > radius) {
+                continue;
+            }
+
+            if (!visited.has(edge.to.id)) {
+                queue.push({ node: edge.to, distance: distance + edge.distance });
+                visited.add(edge.to.id);
+            }
+        }
+    }
+
+    return result;
+};
+
+const allLocationsInRadius = (startNode: IWorldNode, radius: number) => {
+    const result: Array<IWorldNode> = [];
+    const resultIds = new Set<number>();
+
+    const queue = [{ node: startNode, distance: 0 }];
+    const visited = new Set<number>([startNode.id]);
+
+    while (queue.length > 0) {
+        const { node, distance } = queue.shift()!;
+
+        if (!resultIds.has(node.id)) {
+            result.push(node);
+            resultIds.add(node.id);
+        }
+
+        for (const edge of node.outEdges) {
+
+            if (distance + edge.distance > radius) {
+                continue;
+            }
+
+            if (!visited.has(edge.to.id)) {
+                queue.push({ node: edge.to, distance: distance + edge.distance });
+                visited.add(edge.to.id);
+            }
+        }
+    }
+
+    return result;
+};
 
 export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory, INpcFactory {
 
@@ -220,6 +451,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
     private npcIdCounter: number = 0;
     private nodeIdCounter: number = 0;
     private edgeIdCounter: number = 0;
+    private questIdCounter: number = 0;
 
     constructor(
         private populators: Array<INodePopulator>,
@@ -294,6 +526,17 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             destroyed: false,
             static: false,
             lootable: true,
+            tradeValue: tier === "garbage"
+                ? 0
+                : tier === "common"
+                    ? (1 + Math.floor(10 * Math.random()))
+                    : tier === "rare"
+                        ? (10 + Math.floor(100 * Math.random()))
+                        : tier === "epic"
+                            ? (100 + Math.floor(1000 * Math.random()))
+                            : tier === "legendary"
+                                ? (1000 + Math.floor(10000 * Math.random()))
+                                : 1
         };
     }
 
@@ -325,7 +568,11 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
                 traits: [],
                 background: "peasant"
             },
-            knowledge: []
+            knowledge: [],
+            activeQuest: null,
+            nextQuest: null,
+            possibleQuests: [],
+            itemValueOpinions: {},
         };
     }
 
@@ -413,6 +660,16 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
 
     private postProcessNode(node: IWorldNode) {
 
+        const villageNpcs = allNpcsInVillage(node);
+        const closebyItems = allItemsInRadius(node, 2)
+            .filter(item => item.item.tier !== "common" && item.item.tier !== "garbage");
+        const closebyLocations = allLocationsInRadius(node, 2);
+        const allNpcsWithin50 = allNpcsInRadius(node, 50)
+            .filter(npc => npc.stance === "friendly");
+        const allNpcsWithin150 = allNpcsInRadius(node, 150)
+            .filter(npc => npc.stance === "friendly");
+        const allLocationsWithin150 = allLocationsInRadius(node, 150);
+
         for (const npc of node.npcs) {
 
             if (npc.stance !== "friendly") {
@@ -420,51 +677,93 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             }
 
             npc.knowledge = [];
-            const npcKnowledgeNpcsSet = new Set<number>();
-            const npcKnowledgeItemsSet = new Set<number>();
-            const npcKnowledgeLocationsSet = new Set<number>();
 
             // Generate knowledge for the NPC
-            const numKnowledge = 5;
 
-            for (let i = 0; i < numKnowledge; i++) {
+            // New knowledge works like this:
+            // Everyone has knowledge of every NPC within their village
+            // Everyone has knowledge of items within a range of 10
+            // Everyone has knowledge of locations within a range of 10
+            // Everyone has knowledge of max. 10 random NPCs within a range of 50
+            // Everyone has knowledge of max. 3 random NPCs within a range of 150
+            // Everyone has knowledge of max. 10 random wilderness/building locations within a range of 150
 
-                const knowledgeType = NPC_KNOWLEDGE_TYPES[Math.floor(Math.random() * NPC_KNOWLEDGE_TYPES.length)];
+            // Everyone has knowledge of the place they are in
+            npc.knowledge.push({
+                location: node,
+                distance: 0
+            });
 
-                if (knowledgeType === "item") {
-                    let { item, location } = this.randomItemInRadius(node, 12);
-                    while (!item || npcKnowledgeItemsSet.has(item.id)) {
-                        ({ item, location } = this.randomItemInRadius(node, 12));
-                    }
+            // Everyone has knowledge of 10% of the NPCs in their village
+            for (const villageNpc of shuffleArray(villageNpcs).slice(0, Math.ceil(villageNpcs.length * 0.1))) {
+                if (!npc.knowledge.some(k => k.npc?.id === villageNpc.id)) {
+                    npc.knowledge.push({
+                        npc: villageNpc,
+                        npcLocation: villageNpc.location,
+                        distance: this.distanceTo(node, villageNpc.location)
+                    });
+                }
+            }
+
+            // Everyone has knowledge of items within a range of 2
+            for (const itemAndLoc of closebyItems) {
+                const { item, location } = itemAndLoc;
+                if (!npc.knowledge.some(k => k.item?.id === item.id)) {
                     npc.knowledge.push({
                         item,
                         itemLocation: location,
                         distance: this.distanceTo(node, location)
                     });
-                    npcKnowledgeItemsSet.add(item.id);
-                } else if (knowledgeType === "npc") {
-                    let n = this.randomNpcInRadius(node, 12);
-                    while (!n || npcKnowledgeNpcsSet.has(n.id)) {
-                        n = this.randomNpcInRadius(node, 12);
-                    }
+                }
+            }
+
+            // Everyone has knowledge of locations within a range of 2
+            for (const location of closebyLocations) {
+                if (!npc.knowledge.some(k => k.location?.id === location.id)) {
+                    npc.knowledge.push({
+                        location,
+                        distance: this.distanceTo(node, location)
+                    });
+                }
+            }
+
+            // Everyone has knowledge of max. 5 random NPCs within a range of 50
+            const random10Npcs = shuffleArray(allNpcsWithin50).slice(0, 3);
+            for (const n of random10Npcs) {
+                if (!npc.knowledge.some(k => k.npc?.id === n.id)) {
                     npc.knowledge.push({
                         npc: n,
                         npcLocation: n.location,
                         distance: this.distanceTo(node, n.location)
                     });
-                    npcKnowledgeNpcsSet.add(n.id);
-                } else if (knowledgeType === "location") {
-                    let location = this.randomLocationInRadius(node, 12);
-                    while (npcKnowledgeLocationsSet.has(location.id)) {
-                        location = this.randomLocationInRadius(node, 12);
-                    }
-                    npc.knowledge.push({
-                        location,
-                        distance: this.distanceTo(node, location)
-                    });
-                    npcKnowledgeLocationsSet.add(location.id);
                 }
+            }
 
+            // Everyone has knowledge of max. 5 random NPCs within a range of 150
+            const random3Npcs = shuffleArray(allNpcsWithin150).slice(0, 3);
+            for (const n of random3Npcs) {
+                if (!npc.knowledge.some(k => k.npc?.id === n.id)) {
+                    npc.knowledge.push({
+                        npc: n,
+                        npcLocation: n.location,
+                        distance: this.distanceTo(node, n.location)
+                    });
+                }
+            }
+
+            // Everyone has knowledge of max. 5 random wilderness/building locations within a range of 150
+            const random10Locations = shuffleArray(
+                allLocationsWithin150.filter(
+                    loc => loc.type === "wilderness" || loc.type === "building"
+                )
+            ).slice(0, 3);
+            for (const loc of random10Locations) {
+                if (!npc.knowledge.some(k => k.location?.id === loc.id)) {
+                    npc.knowledge.push({
+                        location: loc,
+                        distance: this.distanceTo(node, loc)
+                    });
+                }
             }
 
         }
@@ -608,7 +907,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             if (spec.weapon) {
                 newItem.weapon = {
                     weaponType: attributeChoice(spec.weapon.weaponType),
-                    damage: (spec.weapon.damage.min + Math.floor(Math.random() * (spec.weapon.damage.max - spec.weapon.damage.min + 1)))
+                    damage: attributeChoice(spec.weapon.damage)
                 };
                 if (spec.weapon.effects) {
                     newItem.weapon.effects = this.generateWearableEffectsFromSpecs(spec.weapon.effects);
@@ -617,7 +916,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
 
             if (spec.armor) {
                 newItem.armor = {
-                    defense: (spec.armor.defense.min + Math.floor(Math.random() * (spec.armor.defense.max - spec.armor.defense.min + 1)))
+                    defense: attributeChoice(spec.armor.defense)
                 };
                 if (spec.armor.effects) {
                     newItem.armor.effects = this.generateWearableEffectsFromSpecs(spec.armor.effects);
@@ -627,7 +926,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             if (spec.wearable) {
                 newItem.wearable = {
                     wearableType: attributeChoice(spec.wearable.wearableType),
-                    defense: (spec.wearable.defense.min + Math.floor(Math.random() * (spec.wearable.defense.max - spec.wearable.defense.min + 1)))
+                    defense: attributeChoice(spec.wearable.defense)
                 };
                 if (spec.wearable.effects) {
                     newItem.wearable.effects = this.generateWearableEffectsFromSpecs(spec.wearable.effects);
@@ -636,7 +935,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
 
             if (spec.helmet) {
                 newItem.helmet = {
-                    defense: (spec.helmet.defense.min + Math.floor(Math.random() * (spec.helmet.defense.max - spec.helmet.defense.min + 1)))
+                    defense: attributeChoice(spec.helmet.defense)
                 };
                 if (spec.helmet.effects) {
                     newItem.helmet.effects = this.generateWearableEffectsFromSpecs(spec.helmet.effects);
@@ -645,7 +944,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
 
             if (spec.boots) {
                 newItem.boots = {
-                    defense: (spec.boots.defense.min + Math.floor(Math.random() * (spec.boots.defense.max - spec.boots.defense.min + 1)))
+                    defense: attributeChoice(spec.boots.defense)
                 };
                 if (spec.boots.effects) {
                     newItem.boots.effects = this.generateWearableEffectsFromSpecs(spec.boots.effects);
@@ -677,6 +976,76 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
     public generateItemFrom(id: string) {
         const populator = this.populators.find(p => p.id === id) as INodeItemPopulator;
         return this.generateItemFromPopulator(populator);
+    }
+
+    public generateQuestFor(
+        playerGear: ICharacterGear,
+        playerHealth: ICharacterHealth,
+        playerLocation: IWorldNode,
+        npc: INonPlayerCharacter
+    ) {
+
+        const questPopulatorId = npc.possibleQuests[Math.floor(Math.random() * npc.possibleQuests.length)];
+        const populator = this.populators.find(p => p.id === questPopulatorId) as IQuestPopulator;
+
+        const result: IQuest = {
+            id: this.questIdCounter++,
+            type: attributeChoice(populator.type),
+            difficulty: "impossible",
+        };
+
+        if (result.type === "deliver") {
+
+            const chosenItemPopulatorId = attributeChoice(populator.deliver!.item);
+            const chosenItemPopulator = this.populators.find(p => p.id === chosenItemPopulatorId) as INodeItemPopulator;
+            const item = this.generateItemFromPopulator(chosenItemPopulator)[0];
+            const knownNpcs = npc.knowledge.filter(k => !!k.npc).map(k => k.npc!);
+
+            result.deliver = {
+                item,
+                recipient: knownNpcs[Math.floor(Math.random() * knownNpcs.length)]
+            };
+
+        } else if (result.type === "talk-to") {
+
+            const knownNpcs = npc.knowledge.filter(k => !!k.npc).map(k => k.npc!);
+
+            result.talkTo = {
+                npc: knownNpcs[Math.floor(Math.random() * knownNpcs.length)],
+                didTalk: false
+            };
+
+        } else if (result.type === "find-location") {
+
+            const knownLocations = npc.knowledge.filter(k => !!k.location).map(k => k.location!);
+
+            result.findLocation = {
+                location: knownLocations[Math.floor(Math.random() * knownLocations.length)],
+                didVisit: false
+            };
+
+        } else if (result.type === "kill") {
+
+            const allEnemyWithin50 = allNpcsInRadius(playerLocation, 50)
+                .filter(n => n.stance === "hostile");
+
+            result.kill = {
+                npc: allEnemyWithin50[Math.floor(Math.random() * allEnemyWithin50.length)],
+                didKill: false
+            };
+
+        }
+
+        result.difficulty = new QuestDifficultyCalculator().calculate(
+            {
+                gear: playerGear,
+                health: playerHealth,
+                location: playerLocation,
+            },
+            result
+        );
+
+        return result;
     }
 
     async generate(): Promise<Array<IWorldNode>> {
@@ -719,7 +1088,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             for (let i = 0; i < childCount; i++) {
 
                 const newNode = this.node(
-                    populator.name,
+                    attributeChoice(populator.name),
                     attributeChoice(populator.type),
                     {
                         temperature: populator.temperature === "same"
@@ -896,6 +1265,16 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
                         traits: shuffleArray(populator.personality.traits).slice(0, 3),
                         background: attributeChoice(populator.personality.background)
                     };
+                }
+
+                if (populator.labels) {
+                    newNpc.labels.push(...populator.labels);
+                }
+
+                if (populator.quests) {
+                    newNpc.possibleQuests.push(
+                        ...populator.quests
+                    );
                 }
 
                 node.npcs.push(newNpc);

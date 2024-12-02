@@ -777,17 +777,24 @@ async function mainLoopTick(password: string) {
         password,
         model: "gemini-1.5-flash",
     });
-    const parsedResponse = parseResponseText(machineResponse);
 
-    const parsedResponseDebugPath = path.resolve(
-        process.cwd(),
-        "PARSED_RESPONSE_DEBUG.txt"
-    );
-    await writeFile(parsedResponseDebugPath, JSON.stringify(parsedResponse, null, 2), "utf-8");
-    print("Wrote parsed response debug to", chalk.bold(parsedResponseDebugPath));
-    displayCommand(parsedResponse);
-    applyCommand(parsedResponse);
-    checkProjectIntegrity();
+    try {
+        const parsedResponse = parseResponseText(machineResponse);
+
+        const parsedResponseDebugPath = path.resolve(
+            process.cwd(),
+            "PARSED_RESPONSE_DEBUG.txt"
+        );
+        await writeFile(parsedResponseDebugPath, JSON.stringify(parsedResponse, null, 2), "utf-8");
+        print("Wrote parsed response debug to", chalk.bold(parsedResponseDebugPath));
+        displayCommand(parsedResponse);
+        applyCommand(parsedResponse);
+        checkProjectIntegrity();
+    } catch (e: any) {
+        print(chalk.red("Failed to parse response. Reloading project."));
+        await readProject();
+        checkProjectIntegrity();
+    }
 
     return true;
 }

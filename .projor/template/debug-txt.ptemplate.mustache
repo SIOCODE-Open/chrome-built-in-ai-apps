@@ -118,6 +118,87 @@ export interface IKnowledge {
   distance?: number;
 }
 
+export interface IWorldNodeMatcher {
+  node?: IWorldNode;
+  type?: WorldNodeAreaType;
+  wilderness?: { wildernessType: WorldNodeWildernessType };
+  settlement?: { settlementType: WorldNodeSettlementType };
+  building?: { buildingType: WorldNodeBuildingType };
+  room?: { roomType: WorldNodeRoomType };
+  street?: { streetType: WorldNodeStreetType };
+  labels?: Array<string>;
+}
+
+export interface IWorldItemMatcher {
+  item?: IWorldItem;
+  type?: WorldItemType;
+  tier?: WorldItemTier;
+  weapon?: { weaponType: WorldWeaponType };
+  wearable?: { wearableType: WorldWearableType };
+  labels?: Array<string>;
+}
+
+export interface INonPlayerCharacterMatcher {
+  npc?: INonPlayerCharacter;
+  race?: WorldNpcRace;
+  stance?: WorldNpcStance;
+  labels?: Array<string>;
+  personality?: {
+      traits?: Array<WorldNpcPersonalityTrait>;
+      background?: WorldNpcBackground;
+  }
+}
+
+export interface IDeliverQuestCharacteristics {
+  item: IWorldItem;
+  recipient: INonPlayerCharacter;
+}
+
+export interface ICollectQuestCharacteristics {
+  items: Array<IWorldItemMatcher>;
+}
+
+export interface IFindLocationQuestCharacteristics {
+  location: IWorldNode;
+}
+
+export interface ITalkToQuestCharacteristics {
+  npc: INonPlayerCharacter;
+}
+
+export interface IKillQuestCharacteristics {
+  npc: INonPlayerCharacter;
+}
+
+export interface IQuest {
+  type: WorldNpcQuestType;
+  deliver?: IDeliverQuestCharacteristics;
+  collect?: ICollectQuestCharacteristics;
+  findLocation?: IFindLocationQuestCharacteristics;
+  talkTo?: ITalkToQuestCharacteristics;
+  kill?: IKillQuestCharacteristics;
+}
+
+export interface IPossibleQuest {
+  type: WorldNpcQuestType;
+  deliver?: {
+      item: IWorldItemMatcher;
+      recipient: INonPlayerCharacterMatcher;
+  }
+  collect?: {
+      items: Array<IWorldItemMatcher>;
+  }
+  findLocation?: {
+      location: IWorldNodeMatcher;
+  }
+  talkTo?: {
+      npc: INonPlayerCharacterMatcher;
+  }
+  kill?: {
+      npc: INonPlayerCharacterMatcher;
+  }
+}
+
 export interface INonPlayerCharacter {
   id: number;
   name: string;
@@ -130,6 +211,8 @@ export interface INonPlayerCharacter {
   gear?: ICharacterGear;
   personality?: INonPlayerCharacterPersonality;
   knowledge?: Array<IKnowledge>;
+  activeQuests?: Array<IQuest>;
+  possibleQuests?: Array<IPossibleQuest>;
 }
 
 export interface IWorldHierarchyNode {

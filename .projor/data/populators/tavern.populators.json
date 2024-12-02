@@ -90,15 +90,7 @@
             "background": "innkeeper"
         },
         "quests": [
-            {
-                "type": "deliver",
-                "cargo": {
-                    "oneOf": [
-                        "food.simple-food",
-                        "drink.simple-drink"
-                    ]
-                }
-            }
+            "quest.talk-to"
         ]
     },
     {

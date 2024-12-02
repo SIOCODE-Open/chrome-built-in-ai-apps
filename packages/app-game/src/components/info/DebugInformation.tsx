@@ -15,6 +15,9 @@ import * as worldenums from "../../model/world.enums";
 import { LocationTooltip } from "../tooltips/LocationTooltip";
 import { CardInfoTable } from "../card/CardInfoTable";
 import { useGameSimulation } from "../../context/GameSimulation.context";
+import { Icon } from "@iconify/react";
+import { BuiltinPopulators } from "../world2/BuiltinPopulators";
+import { populateItem } from "../../model/GamePopulator";
 
 function DebugTeleport(
     props: any
@@ -203,9 +206,74 @@ function DebugTeleport(
         {roomTypeFilter}
         {streetTypeFilter}
         {labelFilter}
+        <button onClick={() => {
+            const result = walkNodes(player.getPlayerLocation(), filterNode);
+            setFilterResult(result);
+        }} className="bg-neutral-500 p-2 rounded-full text-xs font-bold text-white">Filter</button>
         <CardInfoTable value={resultTable} tooltips={resultTooltips} />
     </>
 
+}
+
+function ItemSpawner(
+    props: any
+) {
+
+    const [populatorId, setPopulatorId] = useState("");
+
+    const availablePopulatorIds = BuiltinPopulators.filter(populator => populator.populatorType === "item").map(populator => populator.id);
+
+    const player = usePlayer();
+    const world = useWorld();
+    const actions = usePlayerActions();
+    const history = useHistory();
+    const lm = useLanguageModel();
+    const commander = useCommand();
+
+    const selectCn = classNames(
+        "w-full rounded-full px-2 py-1 text-sm border border-neutral-300 text-black",
+        "outline-none ring-none focus:outline-none focus:ring-none active:outline-none active:ring-none"
+    );
+
+    const inputCn = classNames(
+        "w-full rounded-full px-2 py-1 text-sm border border-neutral-300 text-black",
+        "outline-none ring-none focus:outline-none focus:ring-none active:outline-none active:ring-none"
+    );
+
+    const populatorSelect = <select value={populatorId} onChange={e => setPopulatorId(e.target.value)} className={selectCn}>
+        <option value="">Populator ...</option>
+        {
+            availablePopulatorIds.map(
+                (populatorId, index) => <option key={index} value={populatorId}>{populatorId}</option>
+            )
+        }
+    </select>;
+
+    const onSpawnItem = async (populatorId: string) => {
+        const generatedItems = world.generateItems(populatorId);
+        const loc = player.getPlayerLocation();
+        for (const item of generatedItems) {
+            await populateItem(lm, item);
+            loc.items.push(item);
+        }
+        player.updatePlayerLocation(loc);
+    };
+
+    const onGiveItem = async (populatorId: string) => {
+        const generatedItems = world.generateItems(populatorId);
+        const loc = player.getPlayerLocation();
+        for (const item of generatedItems) {
+            await populateItem(lm, item);
+            player.addItem(item);
+        }
+        player.updatePlayerLocation(loc);
+    };
+
+    return <>
+        {populatorSelect}
+        <button className="bg-neutral-500 p-2 rounded-full text-xs font-bold text-white" onClick={() => onSpawnItem(populatorId)}>Spawn</button>
+        <button className="bg-neutral-500 p-2 rounded-full text-xs font-bold text-white" onClick={() => onGiveItem(populatorId)}>Give</button>
+    </>;
 }
 
 export function DebugInformation(props: any) {
@@ -219,9 +287,18 @@ export function DebugInformation(props: any) {
 
     return <>
         <Card>
-            <CardTitle>Debug</CardTitle>
+            <CardTitle>
+                <Icon icon="mdi:bug" /> Teleport (DEBUG)
+            </CardTitle>
 
             <DebugTeleport />
+        </Card>
+        <Card>
+            <CardTitle>
+                <Icon icon="mdi:bug" /> Item Spawner (DEBUG)
+            </CardTitle>
+
+            <ItemSpawner />
         </Card>
     </>;
 }

@@ -7,6 +7,7 @@ import { ItemDetailGenerator } from "../../ai/ItemDetailGenerator";
 import { WorldNodeDetailGenerator } from "../../ai/WorldNodeDetailGenerator";
 import { useLanguageModel } from "@siocode/base";
 import { WorldNodeDetailGenerator2 } from "../../ai/WorldNodeDetailGenerator2";
+import { populateItem, populateNode, populateNpc } from "../../model/GamePopulator";
 
 export function ArriveProcessor(props: any) {
     const player = usePlayer();
@@ -14,55 +15,6 @@ export function ArriveProcessor(props: any) {
     const history = useHistory();
     const sim = useGameSimulation();
     const lm = useLanguageModel();
-
-    const populateItem = async (item: IWorldItem) => {
-        const gen = new ItemDetailGenerator(lm);
-        await gen.generate(item);
-    };
-
-    const populateNode = async (node: IWorldNode) => {
-        const gen = new WorldNodeDetailGenerator2(lm);
-        await gen.generate(node);
-    };
-
-    const populateNpc = async (npc: INonPlayerCharacter) => {
-        if (npc.gear) {
-            if (npc.gear.armor) {
-                await populateItem(npc.gear.armor);
-            }
-            if (npc.gear.boots) {
-                await populateItem(npc.gear.boots);
-            }
-            if (npc.gear.helmet) {
-                await populateItem(npc.gear.helmet);
-            }
-            if (npc.gear.weapon) {
-                await populateItem(npc.gear.weapon);
-            }
-            if (npc.gear.wearable) {
-                await populateItem(npc.gear.wearable);
-            }
-        }
-        if (npc.inventory) {
-            for (const item of npc.inventory.items) {
-                await populateItem(item);
-            }
-        }
-        if (npc.knowledge) {
-            for (const k of npc.knowledge) {
-                if (k.item) {
-                    await populateItem(k.item);
-                    await populateNode(k.itemLocation);
-                }
-                if (k.location) {
-                    await populateNode(k.location);
-                }
-                if (k.npc) {
-                    await populateNode(k.npcLocation);
-                }
-            }
-        }
-    };
 
     const processEvent: ((ev: IGameEvent) => Promise<Array<IGameEvent>>) = async (
         ev: IGameEvent
@@ -77,20 +29,20 @@ export function ArriveProcessor(props: any) {
 
         const currentLocation = player.getPlayerLocation();
 
-        await populateNode(currentLocation);
+        await populateNode(lm, currentLocation);
         for (const item of currentLocation.items) {
-            await populateItem(item);
+            await populateItem(lm, item);
             if (item.contains && item.contains.length > 0) {
                 for (const containedItem of item.contains) {
-                    await populateItem(containedItem);
+                    await populateItem(lm, containedItem);
                 }
             }
         }
         for (const npc of currentLocation.npcs) {
-            await populateNpc(npc);
+            await populateNpc(lm, npc);
         }
         for (const edge of currentLocation.outEdges) {
-            await populateNode(edge.to);
+            await populateNode(lm, edge.to);
         }
 
         // Update the player location
@@ -109,6 +61,19 @@ export function ArriveProcessor(props: any) {
                 player.changeSituation("combat");
                 history.advanceTime(15);
                 break;
+            }
+        }
+
+        // Check if we have any active quests to reach this place
+        const activeQuests = player.getActiveQuests();
+        for (const quest of activeQuests) {
+            if (quest.type === "find-location" && quest.findLocation!.location.id === currentLocation.id) {
+                quest.findLocation!.didVisit = true;
+                R.push(
+                    history.noop(
+                        "You have reached the location your quest required you to reach."
+                    )
+                );
             }
         }
 

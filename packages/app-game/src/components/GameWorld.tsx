@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { IWorldContext, IWorldEdge, IWorldNode, WorldProvider } from "../context/World.context"
+import { ICharacterGear, ICharacterHealth, INonPlayerCharacter, IPossibleQuest, IQuest, IWorldContext, IWorldEdge, IWorldNode, WorldProvider } from "../context/World.context"
 import { BehaviorSubject, map } from "rxjs";
 import { WorldGenerator } from "./world/WorldGenerator";
 import { useLanguageModel } from "@siocode/base";
@@ -38,6 +38,15 @@ export function GameWorld(
         return generator.current.generateItemFrom(populatorId);
     };
 
+    const generateQuestFor = (player: { gear: ICharacterGear; health: ICharacterHealth; location: IWorldNode }, npc: INonPlayerCharacter): IQuest => {
+        return generator.current.generateQuestFor(
+            player.gear,
+            player.health,
+            player.location,
+            npc
+        );
+    }
+
     const contextValue: IWorldContext = {
         getAllNodes: () => graphRef.current.value,
         getNodesWithLabel: (label: string) => graphRef.current.value.filter(n => n.labels.includes(label)),
@@ -46,6 +55,7 @@ export function GameWorld(
         createItem: generator.current.item.bind(generator.current),
         createNpc: generator.current.npc.bind(generator.current),
         generateItems,
+        generateQuestFor,
     };
 
     useEffect(

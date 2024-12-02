@@ -1,5 +1,5 @@
 import { IConsumableItemEffect, IWearableItemEffect, IWorldItem } from "../../context/World.context";
-import { WORLD_WEAPON_TYPE_DISPLAYS, WORLD_WEARABLE_EFFECT_ACTIVATION_DISPLAYS, WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS, WORLD_WEARABLE_TYPE_DISPLAYS, WorldItemTier, WorldItemType, WorldWeaponType, WorldWearableType } from "../../model/world.enums";
+import { WORLD_CONSUMABLE_EFFECT_TYPE_DESCRIPTIONS, WORLD_WEAPON_TYPE_DISPLAYS, WORLD_WEARABLE_EFFECT_ACTIVATION_DISPLAYS, WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS, WORLD_WEARABLE_TYPE_DISPLAYS, WorldItemTier, WorldItemType, WorldWeaponType, WorldWearableType } from "../../model/world.enums";
 import { CardInfoTable } from "../card/CardInfoTable";
 import { TooltipText } from "../TooltipText";
 
@@ -84,12 +84,12 @@ export function ItemTooltip(
 
     const wEffect = (eff: IWearableItemEffect) => {
         return <span className="text-xs font-normal italic text-left">
-            {eff.value && <span className="font-bold">[{eff.value}]</span>} <span className="font-bold">{WORLD_WEARABLE_EFFECT_ACTIVATION_DISPLAYS[eff.activation]}</span> {WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS[eff.type]}
+            {eff.value && <span className="font-bold">[{eff.value}]</span>} {eff.name} - <span className="font-bold">{WORLD_WEARABLE_EFFECT_ACTIVATION_DISPLAYS[eff.activation]}</span> {WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS[eff.type]}
         </span>;
     };
     const cEffect = (eff: IConsumableItemEffect) => {
         return <span className="text-xs font-normal italic text-left">
-            {eff.value && <span className="font-bold">[{eff.value}]</span>} {WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS[eff.type]}
+            {eff.value && <span className="font-bold">[{eff.value}]</span>} {eff.name} - {WORLD_CONSUMABLE_EFFECT_TYPE_DESCRIPTIONS[eff.type]}
         </span>;
     };
 

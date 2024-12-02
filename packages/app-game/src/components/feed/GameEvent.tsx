@@ -9,10 +9,14 @@ import { useWorld } from "../../context/World.context";
 import { Icon } from "@iconify/react";
 import { TooltipText } from "../TooltipText";
 import { ItemTooltip } from "../tooltips/ItemTooltip";
-import { WORLD_ITEM_TIER_DISPLAYS, WORLD_ITEM_TYPE_DISPLAYS, WORLD_NODE_AREA_TYPE, WORLD_NPC_RACE_DISPLAYS, WORLD_NPC_STANCE_DISPLAYS, WORLD_PLAYER_CRAFTING_TYPE_DESCRIPTIONS, WORLD_PLAYER_CRAFTING_TYPE_DISPLAYS, WORLD_PLAYER_EQUIP_SLOT_DISPLAYS, WORLD_PLAYER_SKILL_DISPLAYS } from "../../model/world.enums";
+import { WORLD_ITEM_TIER_DISPLAYS, WORLD_ITEM_TYPE_DISPLAYS, WORLD_NODE_AREA_TYPE, WORLD_NPC_QUEST_DIFFICULTY_DESCRIPTIONS, WORLD_NPC_QUEST_DIFFICULTY_DISPLAYS, WORLD_NPC_QUEST_TYPE_DESCRIPTIONS, WORLD_NPC_QUEST_TYPE_DISPLAYS, WORLD_NPC_RACE_DISPLAYS, WORLD_NPC_STANCE_DISPLAYS, WORLD_PLAYER_CRAFTING_TYPE_DESCRIPTIONS, WORLD_PLAYER_CRAFTING_TYPE_DISPLAYS, WORLD_PLAYER_EQUIP_SLOT_DISPLAYS, WORLD_PLAYER_SKILL_DISPLAYS } from "../../model/world.enums";
 import { LocationTooltip } from "../tooltips/LocationTooltip";
 import { useNarration } from "../../context/Narration.context";
 import { NpcTooltip } from "../tooltips/NpcTooltip";
+import { ActionText } from "../ActionText";
+import { ItemActions } from "../actions/ItemActions";
+import { NpcActions } from "../actions/NpcActions";
+import { LocationActions } from "../actions/LocationActions";
 
 export function eventToJsonData(event: IGameEvent) {
     const D = event.details;
@@ -130,6 +134,128 @@ export function eventToJsonData(event: IGameEvent) {
                 tier: item.tier
             })
         ) : undefined,
+        quest: D.quest ? {
+            type: D.quest.type,
+            difficulty: D.quest.difficulty,
+            narration: D.quest.narration,
+            deliver: D.quest.deliver ? {
+                item: {
+                    id: D.quest.deliver.item.id,
+                    name: D.quest.deliver.item.name,
+                    type: D.quest.deliver.item.type,
+                    tier: D.quest.deliver.item.tier
+                },
+                recipient: {
+                    id: D.quest.deliver.recipient.id,
+                    name: D.quest.deliver.recipient.name,
+                    race: D.quest.deliver.recipient.race
+                },
+                location: {
+                    id: D.quest.deliver.recipient.location.id,
+                    name: D.quest.deliver.recipient.location.name,
+                    temperature: D.quest.deliver.recipient.location.temperature,
+                    humidity: D.quest.deliver.recipient.location.humidity,
+                    type: D.quest.deliver.recipient.location.type,
+                    building: D.quest.deliver.recipient.location.building ? {
+                        buildingType: D.quest.deliver.recipient.location.building.buildingType
+                    } : undefined,
+                    room: D.quest.deliver.recipient.location.room ? {
+                        roomType: D.quest.deliver.recipient.location.room.roomType
+                    } : undefined,
+                    street: D.quest.deliver.recipient.location.street ? {
+                        streetType: D.quest.deliver.recipient.location.street.streetType
+                    } : undefined,
+                    settlement: D.quest.deliver.recipient.location.settlement ? {
+                        settlementType: D.quest.deliver.recipient.location.settlement.settlementType
+                    } : undefined,
+                    wilderness: D.quest.deliver.recipient.location.wilderness ? {
+                        wildernessType: D.quest.deliver.recipient.location.wilderness.wildernessType
+                    } : undefined,
+                }
+            } : undefined,
+            talkTo: D.quest.talkTo ? {
+                npc: {
+                    id: D.quest.talkTo.npc.id,
+                    name: D.quest.talkTo.npc.name,
+                    race: D.quest.talkTo.npc.race,
+                },
+                location: {
+                    id: D.quest.talkTo.npc.location.id,
+                    name: D.quest.talkTo.npc.location.name,
+                    temperature: D.quest.talkTo.npc.location.temperature,
+                    humidity: D.quest.talkTo.npc.location.humidity,
+                    type: D.quest.talkTo.npc.location.type,
+                    building: D.quest.talkTo.npc.location.building ? {
+                        buildingType: D.quest.talkTo.npc.location.building.buildingType
+                    } : undefined,
+                    room: D.quest.talkTo.npc.location.room ? {
+                        roomType: D.quest.talkTo.npc.location.room.roomType
+                    } : undefined,
+                    street: D.quest.talkTo.npc.location.street ? {
+                        streetType: D.quest.talkTo.npc.location.street.streetType
+                    } : undefined,
+                    settlement: D.quest.talkTo.npc.location.settlement ? {
+                        settlementType: D.quest.talkTo.npc.location.settlement.settlementType
+                    } : undefined,
+                    wilderness: D.quest.talkTo.npc.location.wilderness ? {
+                        wildernessType: D.quest.talkTo.npc.location.wilderness.wildernessType
+                    } : undefined,
+                }
+            } : undefined,
+            findLocation: D.quest.findLocation ? {
+                location: {
+                    id: D.quest.findLocation.location.id,
+                    name: D.quest.findLocation.location.name,
+                    temperature: D.quest.findLocation.location.temperature,
+                    humidity: D.quest.findLocation.location.humidity,
+                    type: D.quest.findLocation.location.type,
+                    building: D.quest.findLocation.location.building ? {
+                        buildingType: D.quest.findLocation.location.building.buildingType
+                    } : undefined,
+                    room: D.quest.findLocation.location.room ? {
+                        roomType: D.quest.findLocation.location.room.roomType
+                    } : undefined,
+                    street: D.quest.findLocation.location.street ? {
+                        streetType: D.quest.findLocation.location.street.streetType
+                    } : undefined,
+                    settlement: D.quest.findLocation.location.settlement ? {
+                        settlementType: D.quest.findLocation.location.settlement.settlementType
+                    } : undefined,
+                    wilderness: D.quest.findLocation.location.wilderness ? {
+                        wildernessType: D.quest.findLocation.location.wilderness.wildernessType
+                    } : undefined,
+                }
+            } : undefined,
+            kill: D.quest.kill ? {
+                npc: {
+                    id: D.quest.kill.npc.id,
+                    name: D.quest.kill.npc.name,
+                    race: D.quest.kill.npc.race,
+                },
+                location: {
+                    id: D.quest.kill.npc.location.id,
+                    name: D.quest.kill.npc.location.name,
+                    temperature: D.quest.kill.npc.location.temperature,
+                    humidity: D.quest.kill.npc.location.humidity,
+                    type: D.quest.kill.npc.location.type,
+                    building: D.quest.kill.npc.location.building ? {
+                        buildingType: D.quest.kill.npc.location.building.buildingType
+                    } : undefined,
+                    room: D.quest.kill.npc.location.room ? {
+                        roomType: D.quest.kill.npc.location.room.roomType
+                    } : undefined,
+                    street: D.quest.kill.npc.location.street ? {
+                        streetType: D.quest.kill.npc.location.street.streetType
+                    } : undefined,
+                    settlement: D.quest.kill.npc.location.settlement ? {
+                        settlementType: D.quest.kill.npc.location.settlement.settlementType
+                    } : undefined,
+                    wilderness: D.quest.kill.npc.location.wilderness ? {
+                        wildernessType: D.quest.kill.npc.location.wilderness.wildernessType
+                    } : undefined,
+                }
+            } : undefined,
+        } : undefined,
     }
 }
 
@@ -154,147 +280,172 @@ export function GameEvent(
             : props.value.origin === "player"
                 ? "mdi:account-star"
                 : "mdi:globe";
+    // Define the helper functions
+
+    function extraItem(item, label = 'Item') {
+        return (
+
+            <TooltipText tooltip={<ItemTooltip value={item} />}>
+                <div className="relative shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
+                    <span className="absolute top-2 left-2 text-xs text-neutral-500">{label}</span>
+                    <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
+                        {WORLD_ITEM_TIER_DISPLAYS[item.tier]}
+                    </span>
+                    <span className="absolute top-2 right-2 text-xs text-neutral-500">
+                        {WORLD_ITEM_TYPE_DISPLAYS[item.type]}
+                    </span>
+                    <span className="text-xs text-center font-bold">{item.name}</span>
+                </div>
+            </TooltipText>
+
+        );
+    }
+
+    function extraNpc(npc, label = 'NPC') {
+        return (
+
+            <ActionText actions={<NpcActions value={npc} talk attack navigate />} >
+                <TooltipText tooltip={<NpcTooltip value={npc} />}>
+                    <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
+                        <span className="absolute top-2 left-2 text-xs text-neutral-500">{label}</span>
+                        <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
+                            {WORLD_NPC_RACE_DISPLAYS[npc.race]}
+                        </span>
+                        <span className="absolute top-2 right-2 text-xs text-neutral-500">
+                            {WORLD_NPC_STANCE_DISPLAYS[npc.stance]}
+                        </span>
+                        <span className="text-xs text-center font-bold">{npc.name}</span>
+                    </div>
+                </TooltipText>
+            </ActionText>
+
+        );
+    }
+
+    function extraLocation(location, label = 'Location') {
+        return (
+
+            <ActionText actions={<LocationActions value={location} navigate={true} />} >
+                <TooltipText tooltip={<LocationTooltip value={location} />}>
+                    <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
+                        <span className="absolute top-2 left-2 text-xs text-neutral-500">{label}</span>
+                        <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
+                            {WORLD_NODE_AREA_TYPE[location.type]}
+                        </span>
+                        <span className="text-xs text-center font-bold">{location.name}</span>
+                    </div>
+                </TooltipText>
+            </ActionText>
+
+        );
+    }
+
+    function extraQuestType(type) {
+        return (
+            <TooltipText tooltip={<span className="text-xs italic">{WORLD_NPC_QUEST_TYPE_DESCRIPTIONS[type]}</span>}>
+                <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
+                    <span className="absolute top-2 left-2 text-xs text-neutral-500">Type</span>
+                    <span className="text-xs text-center font-bold">{WORLD_NPC_QUEST_TYPE_DISPLAYS[type]}</span>
+                </div>
+            </TooltipText>
+        );
+    }
+
+    function extraQuestDifficulty(difficulty) {
+        return (
+            <TooltipText tooltip={<span className="text-xs italic">{WORLD_NPC_QUEST_DIFFICULTY_DESCRIPTIONS[difficulty]}</span>}>
+                <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
+                    <span className="absolute top-2 left-2 text-xs text-neutral-500">Difficulty</span>
+                    <span className="text-xs text-center font-bold">{WORLD_NPC_QUEST_DIFFICULTY_DISPLAYS[difficulty]}</span>
+                </div>
+            </TooltipText>
+        );
+    }
+
+    function extraCraftingType(craftingType) {
+        return (
+            <TooltipText tooltip={<span className="text-xs font-normal italic text-left">{WORLD_PLAYER_CRAFTING_TYPE_DESCRIPTIONS[craftingType]}</span>}>
+                <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
+                    <span className="absolute top-2 left-2 text-xs text-neutral-500">Crafting Type</span>
+                    <span className="text-xs text-center font-bold">{WORLD_PLAYER_CRAFTING_TYPE_DISPLAYS[craftingType]}</span>
+                </div>
+            </TooltipText>
+        );
+    }
+
+    // Refactored code using the helper functions
 
     if (props.value.details) {
-
         const D = props.value.details;
 
         if (D.item) {
-            extras.push(
-                <TooltipText tooltip={<ItemTooltip value={D.item} />}>
-                    <div className="relative shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
-                        <span className="absolute top-2 left-2 text-xs text-neutral-500">Item</span>
-                        <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
-                            {WORLD_ITEM_TIER_DISPLAYS[D.item.tier]}
-                        </span>
-                        <span className="absolute top-2 right-2 text-xs text-neutral-500">
-                            {WORLD_ITEM_TYPE_DISPLAYS[D.item.type]}
-                        </span>
-                        <span className="text-xs text-center font-bold">{D.item.name}</span>
-                    </div>
-                </TooltipText>
-            );
+            extras.push(extraItem(D.item, 'Item'));
         }
 
         if (D.location) {
-            extras.push(
-                <TooltipText tooltip={<LocationTooltip value={D.location} />}>
-                    <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
-                        <span className="absolute top-2 left-2 text-xs text-neutral-500">Location</span>
-                        <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
-                            {WORLD_NODE_AREA_TYPE[D.location.type]}
-                        </span>
-                        <span className="text-xs text-center font-bold">{D.location.name}</span>
-                    </div>
-                </TooltipText>
-            );
+            extras.push(extraLocation(D.location));
         }
 
         if (D.from) {
-            extras.push(
-                <TooltipText tooltip={<LocationTooltip value={D.from} />}>
-                    <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
-                        <span className="absolute top-2 left-2 text-xs text-neutral-500">From</span>
-                        <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
-                            {WORLD_NODE_AREA_TYPE[D.from.type]}
-                        </span>
-                        <span className="text-xs text-center font-bold">{D.from.name}</span>
-                    </div>
-                </TooltipText>
-            );
+            extras.push(extraLocation(D.from, 'From'));
         }
 
         if (D.to) {
-            extras.push(
-                <TooltipText tooltip={<LocationTooltip value={D.to} />}>
-                    <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
-                        <span className="absolute top-2 left-2 text-xs text-neutral-500">To</span>
-                        <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
-                            {WORLD_NODE_AREA_TYPE[D.to.type]}
-                        </span>
-                        <span className="text-xs text-center font-bold">{D.to.name}</span>
-                    </div>
-                </TooltipText>
-            );
+            extras.push(extraLocation(D.to, 'To'));
         }
 
         if (D.npc) {
-            extras.push(
-                <TooltipText tooltip={<NpcTooltip value={D.npc} />}>
-                    <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
-                        <span className="absolute top-2 left-2 text-xs text-neutral-500">NPC</span>
-                        <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
-                            {WORLD_NPC_STANCE_DISPLAYS[D.npc.stance]}
-                        </span>
-                        <span className="absolute top-2 right-2 text-xs text-neutral-500">
-                            {WORLD_NPC_RACE_DISPLAYS[D.npc.race]}
-                        </span>
-                        <span className="text-xs text-center font-bold">{D.npc.name}</span>
-                    </div>
-                </TooltipText>
-            );
+            extras.push(extraNpc(D.npc, 'NPC'));
         }
 
         if (D.craftingType) {
-            extras.push(
-                <TooltipText tooltip={<span className="text-xs font-normal italic text-left">{WORLD_PLAYER_CRAFTING_TYPE_DESCRIPTIONS[D.craftingType]}</span>}>
-                    <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
-                        <span className="absolute top-2 left-2 text-xs text-neutral-500">Crafting Type</span>
-                        <span className="text-xs text-center font-bold">{WORLD_PLAYER_CRAFTING_TYPE_DISPLAYS[D.craftingType]}</span>
-                    </div>
-                </TooltipText>
-            );
+            extras.push(extraCraftingType(D.craftingType));
         }
 
         if (D.ingredients) {
-            D.ingredients.forEach(
-                (item: any) => {
-                    extras.push(
-                        <TooltipText tooltip={<ItemTooltip value={item} />}>
-                            <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
-                                <span className="absolute top-2 left-2 text-xs text-neutral-500">Ingredient</span>
-                                <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
-                                    {WORLD_ITEM_TIER_DISPLAYS[item.tier]}
-                                </span>
-                                <span className="absolute top-2 right-2 text-xs text-neutral-500">
-                                    {WORLD_ITEM_TYPE_DISPLAYS[item.type]}
-                                </span>
-                                <span className="text-xs text-center font-bold">{item.name}</span>
-                            </div>
-                        </TooltipText>
-                    );
-                }
-            );
+            D.ingredients.forEach((item) => {
+                extras.push(extraItem(item, 'Ingredient'));
+            });
         }
 
         if (D.tools) {
-            D.tools.forEach(
-                (item: any) => {
-                    extras.push(
-                        <TooltipText tooltip={<ItemTooltip value={item} />}>
-                            <div className="shadow-md w-32 h-32 rounded-xl border border-neutral-300 dark:border-neutral-700 flex flex-col justify-center items-center gap-2">
-                                <span className="absolute top-2 left-2 text-xs text-neutral-500">Tool</span>
-                                <span className="absolute bottom-2 left-2 text-xs text-neutral-500">
-                                    {WORLD_ITEM_TIER_DISPLAYS[item.tier]}
-                                </span>
-                                <span className="absolute top-2 right-2 text-xs text-neutral-500">
-                                    {WORLD_ITEM_TYPE_DISPLAYS[item.type]}
-                                </span>
-                                <span className="text-xs text-center font-bold">{item.name}</span>
-                            </div>
-                        </TooltipText>
-                    );
-                }
-            );
+            D.tools.forEach((item) => {
+                extras.push(extraItem(item, 'Tool'));
+            });
         }
 
-    }
+        if (D.quest) {
+            extras.push(extraQuestType(D.quest.type));
+            extras.push(extraQuestDifficulty(D.quest.difficulty));
 
-    const debugCopyJson = () => {
-        const D = props.value.details;
-        const jsonData = JSON.stringify(eventToJsonData(props.value));
-        navigator.clipboard.writeText(jsonData);
-    };
+            if (D.quest.deliver) {
+                // Item
+                extras.push(extraItem(D.quest.deliver.item, 'Item'));
+
+                // Recipient
+                extras.push(extraNpc(D.quest.deliver.recipient, 'Recipient'));
+
+                // Location
+                extras.push(extraLocation(D.quest.deliver.recipient.location));
+            }
+
+            if (D.quest.talkTo) {
+                // NPC
+                extras.push(extraNpc(D.quest.talkTo.npc));
+
+                // Location
+                extras.push(extraLocation(D.quest.talkTo.npc.location));
+            }
+
+            if (D.quest.kill) {
+                // NPC
+                extras.push(extraNpc(D.quest.kill.npc));
+
+                // Location
+                extras.push(extraLocation(D.quest.kill.npc.location));
+            }
+        }
+    }
 
     return <>
         <Card>
@@ -320,9 +471,6 @@ export function GameEvent(
                     {extras}
                 </div>
             }
-            <button onClick={debugCopyJson} className="text-xs text-neutral-500 hover:text-neutral-700 active:text-neutral-400">
-                Copy JSON
-            </button>
         </Card>
     </>;
 }

@@ -7,6 +7,7 @@ import { ItemDetailGenerator } from "../../ai/ItemDetailGenerator";
 import { WorldNodeDetailGenerator } from "../../ai/WorldNodeDetailGenerator";
 import { useLanguageModel } from "@siocode/base";
 import { WorldNodeDetailGenerator2 } from "../../ai/WorldNodeDetailGenerator2";
+import { populateItem, populateNode } from "../../model/GamePopulator";
 
 export function WakeUpProcessor(props: any) {
     const player = usePlayer();
@@ -14,16 +15,6 @@ export function WakeUpProcessor(props: any) {
     const history = useHistory();
     const sim = useGameSimulation();
     const lm = useLanguageModel();
-
-    const populateItem = async (item: IWorldItem) => {
-        const gen = new ItemDetailGenerator(lm);
-        await gen.generate(item);
-    };
-
-    const populateNode = async (node: IWorldNode) => {
-        const gen = new WorldNodeDetailGenerator2(lm);
-        await gen.generate(node);
-    };
 
     const processEvent: ((ev: IGameEvent) => Promise<Array<IGameEvent>>) = async (
         ev: IGameEvent
@@ -40,35 +31,35 @@ export function WakeUpProcessor(props: any) {
         const currentInventory = player.getPlayerInventory();
         const currentGear = player.getPlayerGear();
 
-        await populateNode(currentLocation);
+        await populateNode(lm, currentLocation);
         for (const item of currentLocation.items) {
-            await populateItem(item);
+            await populateItem(lm, item);
             if (item.contains && item.contains.length > 0) {
                 for (const containedItem of item.contains) {
-                    await populateItem(containedItem);
+                    await populateItem(lm, containedItem);
                 }
             }
         }
         for (const edge of currentLocation.outEdges) {
-            await populateNode(edge.to);
+            await populateNode(lm, edge.to);
         }
         for (const item of currentInventory.items) {
-            await populateItem(item);
+            await populateItem(lm, item);
         }
         if (currentGear.weapon) {
-            await populateItem(currentGear.weapon);
+            await populateItem(lm, currentGear.weapon);
         }
         if (currentGear.armor) {
-            await populateItem(currentGear.armor);
+            await populateItem(lm, currentGear.armor);
         }
         if (currentGear.helmet) {
-            await populateItem(currentGear.helmet);
+            await populateItem(lm, currentGear.helmet);
         }
         if (currentGear.boots) {
-            await populateItem(currentGear.boots);
+            await populateItem(lm, currentGear.boots);
         }
         if (currentGear.wearable) {
-            await populateItem(currentGear.wearable);
+            await populateItem(lm, currentGear.wearable);
         }
 
         // Advance the time

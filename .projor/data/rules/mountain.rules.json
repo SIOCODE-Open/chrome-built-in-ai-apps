@@ -87,5 +87,18 @@
         "wilderness": {
             "hasWildernessType": "cave"
         }
+    },
+    {
+        "id": "mountain-crude-rocks",
+        "apply": "material.crude-rock",
+        "count": {
+            "min": 1,
+            "max": 3
+        },
+        "probability": 0.5,
+        "hasType": "wilderness",
+        "wilderness": {
+            "hasWildernessType": "mountain"
+        }
     }
 ]

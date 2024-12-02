@@ -15,7 +15,7 @@ export interface IAskResponse {
     message: string;
 }
 
-const SYSTEM_PROMPT = `You must act like the character that is described by the user. They are asking your character a simple question, and you must answer based on your knowledge to the answer. On the first line, say 'My response is: POSITIVE|NEGATIVE'. Reply POSITIVE, if your character has relevant knowledge. Reply NEGATIVE, if your character does not know anything of the player's interests. On the second line, you must list all locations, items or characters you reference from your knowledge. Use their ids, and format this line as 'I mention: location|npc|item::ID', separate each entry by commas. On the third and final line, write 'I answer: ' and the answer that your character speaks out loud. Pay close attention to character traits, and give a realistic answer. We are in a medieval and fantasy world. Before your answer lines, write 'I will now respond to this situation.'.`;
+const SYSTEM_PROMPT = `You must act like the character that is described by the user. They are asking your character a simple question, and you must answer based on your knowledge to the answer. We are in a medieval and fantasy world. Act according to the character. You must start your answer with "I answer the following: " and then write your answer.`;
 
 const EXAMPLES = [
     {
@@ -179,10 +179,10 @@ export class NpcAskResponder implements IAITask<IAskRequest, IAskResponse> {
                 role: "system",
                 content: SYSTEM_PROMPT
             },
-            ...shuffleArray(EXAMPLES).slice(-3).map(
+            ...shuffleArray(EXAMPLES).slice(0, 2).map(
                 (ex) => ([
                     { role: "user", content: `${ex.npcDisplay}\n\nThe player asked the following: ${ex.userQuestion}` },
-                    { role: "assistant", content: `I will now respond to this situation.\nMy response is: ${ex.answer.type.toUpperCase()}\nI mention: ${ex.answer.mentions.map(m => `${m.type}::${m.id}`).join(', ')}${ex.answer.mentions.length === 0 ? 'nothing' : ''}\nI answer: ${ex.answer.message}` }
+                    { role: "assistant", content: `I answer the following: ${ex.answer.message}` }
                 ])
             ).flat()
         ] as any;
@@ -203,68 +203,59 @@ export class NpcAskResponder implements IAITask<IAskRequest, IAskResponse> {
                 const llm = await this.lm.create(inPrompt.messages);
                 let responseText = await llm.prompt(inPrompt.nextMessage);
 
-                let responseLines = responseText.split('\n').map(l => l.trim());
+                let responseLines = responseText.trim().split('\n').map(l => l.trim());
 
-                const invalidSyntaxMessage = {
-                    type: 'negative',
-                    mentions: [],
-                    message: `I'm sorry, my brain is a bit malfunctioning right now.`
-                } as IAskResponse;
+                let firstLine = responseLines.shift();
 
-                if (responseLines.length < 4) {
-                    // return invalidSyntaxMessage;
-                    continue;
+                if (firstLine.startsWith("I answer the following: ")) {
+                    firstLine = firstLine.substring("I answer the following: ".length);
                 }
 
-                if (!responseLines[0].startsWith('I will now respond to this situation.')) {
-                    console.warn("[NpcAskResponder] Invalid syntax: does not start with 'I will now respond to this situation.'");
-                    // return invalidSyntaxMessage;
-                    continue;
+                const extractedMentions = [];
+                const searchText = firstLine.toLowerCase()
+                    .replace(/[^a-z0-9 ]/g, '');
+
+                for (const knowledge of input.npc.knowledge) {
+                    let findTexts = [];
+
+                    if (knowledge.location) {
+                        findTexts = [
+                            knowledge.location.name.toLowerCase()
+                                .replace(/[^a-z0-9 ]/g, '')
+                        ];
+                    }
+                    if (knowledge.npc) {
+                        findTexts = [
+                            knowledge.npc.name.toLowerCase()
+                                .replace(/[^a-z0-9 ]/g, ''),
+                            ...knowledge.npc.name.split(' ').filter(part => part.length > 3)
+                                .map(part => part.toLowerCase())
+                        ];
+                    }
+                    if (knowledge.item) {
+                        findTexts = [
+                            knowledge.item.name.toLowerCase()
+                                .replace(/[^a-z0-9 ]/g, '')
+                        ];
+                    }
+
+                    if (findTexts.some(t => searchText.includes(t))) {
+                        if (knowledge.location) {
+                            extractedMentions.push({ type: 'location', id: knowledge.location.id });
+                        }
+                        if (knowledge.npc) {
+                            extractedMentions.push({ type: 'npc', id: knowledge.npc.id });
+                        }
+                        if (knowledge.item) {
+                            extractedMentions.push({ type: 'item', id: knowledge.item.id });
+                        }
+                    }
                 }
-
-                responseLines = responseLines.slice(1);
-
-                if (!responseLines[0].startsWith('My response is:')) {
-                    console.warn("[NpcAskResponder] Invalid syntax: does not start with 'My response is:'");
-                    // return invalidSyntaxMessage;
-                    continue;
-                }
-
-                if (!responseLines[1].startsWith('I mention:')) {
-                    console.warn("[NpcAskResponder] Invalid syntax: does not start with 'I mention:'");
-                    // return invalidSyntaxMessage;
-                    continue;
-                }
-
-                if (!responseLines[2].startsWith('I answer:')) {
-                    console.warn("[NpcAskResponder] Invalid syntax: does not start with 'I answer:'");
-                    // return invalidSyntaxMessage;
-                    continue;
-                }
-
-                const responseParsed = responseLines[0].substring('My response is:'.length).trim().toLowerCase();
-                if (responseParsed !== 'positive' && responseParsed !== 'negative') {
-                    console.warn("[NpcAskResponder] Invalid syntax: response is not 'positive' or 'negative'");
-                    // return invalidSyntaxMessage;
-                    continue;
-                }
-
-                const mentionsParsed = responseLines[1].substring('I mention:'.length).trim();
-                const mentions = mentionsParsed === 'nothing' ? [] : mentionsParsed.split(',').filter(
-                    m => m.indexOf('::') !== -1
-                ).map(m => {
-                    const [type, id] = m.split('::');
-                    return { type: type.trim() as 'location' | 'npc' | 'item', id: parseInt(id.trim()) };
-                });
-
-                const message = responseLines[2].substring('I answer:'.length).trim();
-
-                console.log("[NpcAskResponder] Response parsed:", responseParsed, mentions, message);
 
                 return {
-                    type: responseParsed as 'positive' | 'negative',
-                    mentions,
-                    message
+                    type: 'positive',
+                    mentions: extractedMentions,
+                    message: firstLine
                 };
 
             } catch (err) {

@@ -24,6 +24,7 @@ export function CharacterCreationScreen(
 
     const rootDivCn = classNames(
         "flex flex-col gap-2 w-screen h-screen justify-center items-center",
+        "bg-white dark:bg-neutral-900 text-black dark:text-white",
         "overflow-hidden"
     );
 
@@ -68,12 +69,12 @@ export function CharacterCreationScreen(
             <input type="text"
                 value={newCharacterName}
                 onChange={e => setNewCharacterName(e.target.value)}
-                className="w-full p-2 border border-neutral-300 rounded-full" />
+                className="appearance-none w-full p-2 border border-neutral-300 rounded-full bg-transparent" />
 
             <div className="h-full flex flex-row justify-start items-center text-sm text-neutral-500 italic">Class</div>
             <select value={newCharacterClass}
                 onChange={e => setNewCharacterClass(e.target.value)}
-                className="w-full p-2 border border-neutral-300 rounded-full">
+                className="appearance-none w-full p-2 border border-neutral-300 rounded-full bg-transparent">
                 {
                     WORLD_PLAYER_CLASS.map(
                         c => <option key={c} value={c}>

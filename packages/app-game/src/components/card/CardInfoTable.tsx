@@ -17,7 +17,7 @@ export function CardInfoTable(
                                     {key}
                                 </TooltipText>
                             </div>
-                            <div className="text-sm font-bold text-right text-black">{props.value[key]}</div>
+                            <div className="text-sm font-bold text-right text-black dark:text-white">{props.value[key]}</div>
                         </div>
                     )
                 )

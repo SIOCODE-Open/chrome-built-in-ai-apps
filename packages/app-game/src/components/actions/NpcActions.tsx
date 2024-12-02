@@ -3,16 +3,19 @@ import { EquipActionSlot, usePlayerActions } from "../../context/PlayerActions.c
 import { INonPlayerCharacter, IWorldItem } from "../../context/World.context";
 import { Icon } from "@iconify/react";
 import { aiDisplayNpc } from "../../ai/display";
+import { usePlayer } from "../../context/Player.context";
 
 export function NpcActions(
     props: {
         value: INonPlayerCharacter;
         talk?: boolean;
         attack?: boolean;
+        navigate?: boolean;
     }
 ) {
 
     const actions = usePlayerActions();
+    const player = usePlayer();
 
     const onTalk = () => {
         // TODO
@@ -21,6 +24,9 @@ export function NpcActions(
     const onAttack = () => {
         // TODO
         actions.attack(props.value);
+    };
+    const onNavigateTo = () => {
+        player.startNavigation(props.value.location);
     };
 
     const onDebug = () => {
@@ -43,6 +49,11 @@ export function NpcActions(
             {
                 props.attack && <button className={buttonCn} onClick={onAttack}>
                     <Icon icon="mdi:sword" />
+                </button>
+            }
+            {
+                props.navigate && <button className={buttonCn} onClick={onNavigateTo}>
+                    <Icon icon="mdi:map-marker" />
                 </button>
             }
         </div>

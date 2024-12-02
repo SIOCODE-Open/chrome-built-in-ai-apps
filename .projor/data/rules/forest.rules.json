@@ -106,5 +106,31 @@
         "wilderness": {
             "hasWildernessType": "desert"
         }
+    },
+    {
+        "id": "forest-herbs",
+        "apply": "item.swamp.swamp-herb",
+        "count": {
+            "min": 1,
+            "max": 2
+        },
+        "probability": 0.25,
+        "hasType": "wilderness",
+        "wilderness": {
+            "hasWildernessType": "forest"
+        }
+    },
+    {
+        "id": "forest-wood",
+        "apply": "material.wood",
+        "count": {
+            "min": 1,
+            "max": 2
+        },
+        "probability": 0.5,
+        "hasType": "wilderness",
+        "wilderness": {
+            "hasWildernessType": "forest"
+        }
     }
 ]

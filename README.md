@@ -1,13 +1,42 @@
-# Chrome Built-in AI Apps
+# 🍻 The Crooked Tankard
 
-_This is a working progress repository, and documentation is also not complete yet._
+The Crooked Tankard is a _text-based role playing game_. It is powered by _web technologies_, specifically _built-in AI_ and _React_. The AI generates narration, items, and many more to create _infinite replayability_ and a _vast random world_.
 
-This repository contains source code for our [Google Chrome Built-in AI Challenge](https://googlechromeai.devpost.com/?ref_feature=challenge&ref_medium=discover) hackathon entry.
+▶️ [Watch our video of the game](https://siocode.hu)
 
-We have created two applications, that use the [`window.ai.languageModel`](https://github.com/explainers-by-googlers/prompt-api) capabilities.
+🎮 [Play it here](https://crooked-tankard.siocode.hu)
 
-* [Brainstormer](packages/app-brainstorm/package.json) was our first try at using the API. It is a note pad, with a split-screen layout. When you type in the left side, and start the brainstorming process, the AI will continously offer suggestions for tasks to perform on your input. You can run any of these tasks to get some new text. It is probably not the best application, but this was our first try at using the new APIs.
-* [The Crooked Tankard](packages/app-game/package.json) is a text-based adventure game, and we have spent _most of our time_ working on this game. The AI is used in many ways to generate content and narration for the game. We have also implemented command parsing, which although possible was later replaced with user interface elements for controlling the game.
+📖 [Learn about the game](./docs/USERGUIDE.md)
+
+📖 [See how the game works](./docs/INTERNALS.md)
+
+📖 [Read about our experience on making the game](./docs/MAKINGOF.md)
+
+## Building
+
+To build the project, you need to have [Node.js](https://nodejs.org) installed.
+
+The project is an _NPM mono-repo_, and it contains two single page application projects: [`app-brainstorm`](./packages/app-brainstorm/package.json) and [`app-game`](./packages/app-game/package.json). **We only care about the `app-game` project, and `app-brainstorm` will be removed in the future.**
+
+We use **NPM** to manage the dependencies of the project. Run the following commands to install the dependencies of the project.
+
+```bash
+npm install
+```
+
+After the dependencies are installed, you can build the project by running the following command.
+
+```bash
+npm run build:game
+```
+
+To serve the game locally on port `3200`, you can run the following command.
+
+```bash
+npm run serve:game
+```
+
+After that, open [http://localhost:3200](http://localhost:3200) in your browser to play the game.
 
 # Licenses
 

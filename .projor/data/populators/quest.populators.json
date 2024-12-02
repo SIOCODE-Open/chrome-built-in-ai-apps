@@ -1,0 +1,55 @@
+[
+    {
+        "id": "quest.deliver.easy",
+        "populatorType": "quest",
+        "type": "deliver",
+        "difficulty": "easy",
+        "deliver": {
+            "item": [
+                "artifact.letter",
+                "food.simple-food",
+                "drink.simple-drink"
+            ]
+        }
+    },
+    {
+        "id": "quest.deliver.food",
+        "populatorType": "quest",
+        "type": "deliver",
+        "difficulty": "easy",
+        "deliver": {
+            "item": [
+                "food.simple-food"
+            ]
+        }
+    },
+    {
+        "id": "quest.deliver.drink",
+        "populatorType": "quest",
+        "type": "deliver",
+        "difficulty": "easy",
+        "deliver": {
+            "item": [
+                "drink.simple-drink"
+            ]
+        }
+    },
+    {
+        "id": "quest.talk-to",
+        "populatorType": "quest",
+        "type": "talk-to",
+        "difficulty": "easy"
+    },
+    {
+        "id": "quest.find-location",
+        "populatorType": "quest",
+        "type": "find-location",
+        "difficulty": "easy"
+    },
+    {
+        "id": "quest.kill",
+        "populatorType": "quest",
+        "type": "kill",
+        "difficulty": "easy"
+    }
+]

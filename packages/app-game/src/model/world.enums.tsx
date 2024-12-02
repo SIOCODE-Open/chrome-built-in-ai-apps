@@ -664,6 +664,96 @@ export const WORLD_NPC_ACTION_DISPLAYS = {
     talk: `Talk`,
     attack: `Attack`,
 };
+/** The type of quest that a non-player character can offer */
+export const WORLD_NPC_QUEST_TYPE = [
+    "deliver",
+    "find-location",
+    "talk-to",
+    "kill",
+];
+
+/** The type of quest that a non-player character can offer */
+export type WorldNpcQuestType =
+    | "deliver"
+    | "find-location"
+    | "talk-to"
+    | "kill";
+
+/** Descriptions for Npc Quest Type */
+export const WORLD_NPC_QUEST_TYPE_DESCRIPTIONS = {
+    deliver: `Someone gives you an item, that you must deliver to a specific person.`,
+    "find-location": `Someone asks you to reach a specific location, and tell them what you find there.`,
+    "talk-to": `Someone asks you to find a specific person and tell them a secret.`,
+    kill: `Someone asks you to kill a specific person or animal.`,
+};
+
+/** Display values for Npc Quest Type */
+export const WORLD_NPC_QUEST_TYPE_DISPLAYS = {
+    deliver: `Deliver`,
+    "find-location": `Find Location`,
+    "talk-to": `Talk To`,
+    kill: `Kill`,
+};
+/** The difficulty of a quest offered by a non-player character */
+export const WORLD_NPC_QUEST_DIFFICULTY = [
+    "easy",
+    "challenging",
+    "hard",
+    "impossible",
+];
+
+/** The difficulty of a quest offered by a non-player character */
+export type WorldNpcQuestDifficulty =
+    | "easy"
+    | "challenging"
+    | "hard"
+    | "impossible";
+
+/** Descriptions for Npc Quest Difficulty */
+export const WORLD_NPC_QUEST_DIFFICULTY_DESCRIPTIONS = {
+    easy: `You can easily survive and finish this quest.`,
+    challenging: `This quest offers some challenge, but you can still finish it if you are careful.`,
+    hard: `This quest is hard, you will probably not survive it.`,
+    impossible: `This quest is impossible to finish. You will die.`,
+};
+
+/** Display values for Npc Quest Difficulty */
+export const WORLD_NPC_QUEST_DIFFICULTY_DISPLAYS = {
+    easy: `Easy`,
+    challenging: `Challenging`,
+    hard: `Hard`,
+    impossible: `Impossible`,
+};
+/** The opinion of a non-player character on a trade offer */
+export const WORLD_NPC_TRADE_OPINION = [
+    "insulting",
+    "bad",
+    "acceptable",
+    "no-brainer",
+];
+
+/** The opinion of a non-player character on a trade offer */
+export type WorldNpcTradeOpinion =
+    | "insulting"
+    | "bad"
+    | "acceptable"
+    | "no-brainer";
+
+/** Descriptions for Npc Trade Opinion */
+export const WORLD_NPC_TRADE_OPINION_DESCRIPTIONS = {
+    insulting: `The offer is so bad that it is insulting.`,
+    bad: `The offer is bad, and should not be accepted.`,
+    acceptable: `The offer is acceptable, and can be accepted.`,
+    "no-brainer": `The offer is so good that it is a no-brainer to accept.`,
+};
+
+/** Display values for Npc Trade Opinion */
+export const WORLD_NPC_TRADE_OPINION_DISPLAYS = {
+    insulting: `Insulting`,
+    bad: `Bad`,
+    acceptable: `Acceptable`,
+    "no-brainer": `No Brainer`,
+};
 /** The temperature of a world node */
 export const WORLD_NODE_TEMPERATURE = [
     "freezing",
@@ -848,8 +938,6 @@ export const WORLD_NODE_STREET_TYPE_DISPLAYS = {
 /** Type of building */
 export const WORLD_NODE_BUILDING_TYPE = [
     "house",
-    "blacksmith",
-    "tavern",
     "town-hall",
     "church",
     "farm",
@@ -861,8 +949,6 @@ export const WORLD_NODE_BUILDING_TYPE = [
 /** Type of building */
 export type WorldNodeBuildingType =
     | "house"
-    | "blacksmith"
-    | "tavern"
     | "town-hall"
     | "church"
     | "farm"
@@ -873,8 +959,6 @@ export type WorldNodeBuildingType =
 /** Descriptions for Node Building Type */
 export const WORLD_NODE_BUILDING_TYPE_DESCRIPTIONS = {
     house: `House of a family or individual.`,
-    blacksmith: `A workshop where metal is forged and crafted.`,
-    tavern: `A place to eat, drink, and socialize with other travelers.`,
     "town-hall": `The administrative center, and official place of gathering.`,
     church: `A place of worship and spiritual reflection.`,
     farm: `A place where crops are grown and animals are raised.`,
@@ -886,8 +970,6 @@ export const WORLD_NODE_BUILDING_TYPE_DESCRIPTIONS = {
 /** Display values for Node Building Type */
 export const WORLD_NODE_BUILDING_TYPE_DISPLAYS = {
     house: `House`,
-    blacksmith: `Blacksmith`,
-    tavern: `Tavern`,
     "town-hall": `Town Hall`,
     church: `Church`,
     farm: `Farm`,
@@ -1415,6 +1497,9 @@ export const WORLD_HISTORY_HAPPENING = [
     "action-unpack",
     "action-craft",
     "action-trade",
+    "action-begin-quest",
+    "action-hand-in-quest",
+    "action-tell-secret",
     "npc-talk",
     "npc-attack",
     "get-gold",
@@ -1444,6 +1529,9 @@ export const WORLD_HISTORY_HAPPENING = [
     "crafted-item",
     "start-combat",
     "start-conversation",
+    "offered-quest",
+    "begin-quest",
+    "finish-quest",
     "defeat-npc",
     "die",
 ];
@@ -1474,6 +1562,9 @@ export type WorldHistoryHappening =
     | "action-unpack"
     | "action-craft"
     | "action-trade"
+    | "action-begin-quest"
+    | "action-hand-in-quest"
+    | "action-tell-secret"
     | "npc-talk"
     | "npc-attack"
     | "get-gold"
@@ -1503,6 +1594,9 @@ export type WorldHistoryHappening =
     | "crafted-item"
     | "start-combat"
     | "start-conversation"
+    | "offered-quest"
+    | "begin-quest"
+    | "finish-quest"
     | "defeat-npc"
     | "die";
 
@@ -1532,6 +1626,9 @@ export const WORLD_HISTORY_HAPPENING_DESCRIPTIONS = {
     "action-unpack": `You decide to unpack the contents of a container.`,
     "action-craft": `You decide to engage in the combination of tools and materials.`,
     "action-trade": `You give someone a good offer, and shake hands to perform the trade.`,
+    "action-begin-quest": `You decide to accept the quest offered by someone.`,
+    "action-hand-in-quest": `You decide that it is time to end your quest, and the quest giver will decide if they accept or not.`,
+    "action-tell-secret": `You decide to tell a secret to someone.`,
     "npc-talk": `The NPC says something.`,
     "npc-attack": `The NPC attacks you.`,
     "get-gold": `You get some gold.`,
@@ -1561,6 +1658,9 @@ export const WORLD_HISTORY_HAPPENING_DESCRIPTIONS = {
     "crafted-item": `You created an item with your hands.`,
     "start-combat": `You engage in combat with an enemy.`,
     "start-conversation": `You start a conversation with an NPC.`,
+    "offered-quest": `Someone tells you the details of what they need help with.`,
+    "begin-quest": `Your quest begins.`,
+    "finish-quest": `You successfully finish a quest.`,
     "defeat-npc": `You defeat an enemy.`,
     die: `You die.`,
 };
@@ -1591,6 +1691,9 @@ export const WORLD_HISTORY_HAPPENING_DISPLAYS = {
     "action-unpack": `Action Unpack`,
     "action-craft": `Action Craft`,
     "action-trade": `Action Trade`,
+    "action-begin-quest": `Action Begin Quest`,
+    "action-hand-in-quest": `Action Hand In Quest`,
+    "action-tell-secret": `Action Tell Secret`,
     "npc-talk": `Npc Talk`,
     "npc-attack": `Npc Attack`,
     "get-gold": `Get Gold`,
@@ -1620,6 +1723,9 @@ export const WORLD_HISTORY_HAPPENING_DISPLAYS = {
     "crafted-item": `Crafted Item`,
     "start-combat": `Start Combat`,
     "start-conversation": `Start Conversation`,
+    "offered-quest": `Offered Quest`,
+    "begin-quest": `Begin Quest`,
+    "finish-quest": `Finish Quest`,
     "defeat-npc": `Defeat Npc`,
     die: `Die`,
 };

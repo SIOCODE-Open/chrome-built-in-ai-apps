@@ -130,7 +130,7 @@ export function ItemActions(
     const canDrink = props.drink && props.value.type === "drink";
     const canUnpack = props.unpack && props.value.contains && props.value.contains.length > 0;
     const canCancel = props.cancel;
-    const canUse = props.consume;
+    const canUse = props.consume && props.value.type === "consumable";
 
     const actionItems = [
         canUnequip && <button className={buttonCn} onClick={onUnequip}>

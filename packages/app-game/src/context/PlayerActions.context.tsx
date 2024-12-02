@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { INonPlayerCharacter, IWorldEdge, IWorldItem } from "./World.context";
+import { INonPlayerCharacter, IQuest, IWorldEdge, IWorldItem } from "./World.context";
 import { WorldPlayerCraftingType } from "../model/world.enums";
 
 export type EquipActionSlot =
@@ -48,7 +48,18 @@ export interface IPlayerActionsContext {
         refineWith: Array<IWorldItem>,
         refineUsing?: IWorldItem | null | undefined
     ): void;
+    craftDisassemble(
+        disassembleWhat: IWorldItem,
+        disassembleUsing?: IWorldItem | null | undefined
+    ): void;
+    craftSmelt(
+        smeltWhat: IWorldItem,
+        smeltUsing?: IWorldItem | null | undefined
+    ): void;
     rest(): void;
+    beginQuest(): void;
+    handInQuest(): void;
+    tellSecret(): void;
 }
 
 export const PlayerActionsContext = createContext({} as IPlayerActionsContext);

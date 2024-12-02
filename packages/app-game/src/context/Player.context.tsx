@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { Observable } from "rxjs";
-import { ICharacterGear, ICharacterHealth, ICharacterInventory, INonPlayerCharacter, IWorldItem, IWorldNode } from "./World.context";
+import { ICharacterGear, ICharacterHealth, ICharacterInventory, INonPlayerCharacter, IQuest, IWorldItem, IWorldNode } from "./World.context";
 import { WorldPlayerClass, WorldPlayerHealth, WorldPlayerHunger, WorldPlayerSitutation, WorldPlayerSkill, WorldPlayerThirst } from "../model/world.enums";
 
 export interface IPlayerSkills {
@@ -49,6 +49,10 @@ export interface IPlayerContext {
     getInCombatWith(): INonPlayerCharacter | null;
     inConversationWith: Observable<INonPlayerCharacter | null>;
     getInConversationWith(): INonPlayerCharacter | null;
+    activeQuests: Observable<Array<IQuest>>;
+    getActiveQuests(): Array<IQuest>;
+    navigationTarget: Observable<IWorldNode | null>;
+    getNavigationTarget(): IWorldNode | null;
 
     updatePlayerCharacter(character: IPlayerCharacter): void;
     updatePlayerHealth(health: ICharacterHealth): void;
@@ -56,6 +60,7 @@ export interface IPlayerContext {
     updatePlayerGear(gear: ICharacterGear): void;
     updatePlayerHunger(hunger: IPlayerHunger): void;
     updatePlayerThirst(thirst: IPlayerThirst): void;
+    updateActiveQuests(quests: Array<IQuest>): void;
     addGold(amount: number): void;
     spendGold(amount: number): boolean;
     addItem(item: IWorldItem): void;
@@ -68,6 +73,8 @@ export interface IPlayerContext {
     startConversation(npc: INonPlayerCharacter): void;
     updateInConversationWith(npc: INonPlayerCharacter): void;
     endConversation(): void;
+    startNavigation(target: IWorldNode): void;
+    endNavigation(): void;
 }
 
 export const PlayerContext = createContext({} as IPlayerContext);

@@ -2,22 +2,31 @@
   "populators": {},
   "rules": {
     "add": {
-      "cave.rules.json": [
+      "forest.rules.json": [
         {
-          "id": "cave-cave-paths",
-          "apply": "wilderness.cave",
+          "id": "forest-herbs",
+          "apply": "item.swamp.swamp-herb",
           "count": {
             "min": 1,
             "max": 2
           },
-          "depth": {
-            "min": 0,
-            "max": 5
+          "probability": 0.25,
+          "hasType": "wilderness",
+          "wilderness": {
+            "hasWildernessType": "forest"
+          }
+        },
+        {
+          "id": "forest-wood",
+          "apply": "material.wood",
+          "count": {
+            "min": 1,
+            "max": 2
           },
           "probability": 0.5,
           "hasType": "wilderness",
           "wilderness": {
-            "hasWildernessType": "cave"
+            "hasWildernessType": "forest"
           }
         }
       ]

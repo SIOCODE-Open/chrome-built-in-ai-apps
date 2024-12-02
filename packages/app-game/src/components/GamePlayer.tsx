@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { IPlayerCharacter, IPlayerContext, IPlayerHunger, IPlayerSkills, IPlayerThirst, PlayerProvider } from "../context/Player.context";
 import { BehaviorSubject, Subject } from "rxjs";
-import { ICharacterGear, ICharacterHealth, ICharacterInventory, INonPlayerCharacter, useWorld } from "../context/World.context";
+import { ICharacterGear, ICharacterHealth, ICharacterInventory, INonPlayerCharacter, IQuest, useWorld } from "../context/World.context";
 import { useHistory } from "../context/History.context";
 import { WORLD_PLAYER_SKILL_DESCRIPTIONS, WORLD_PLAYER_SKILL_DISPLAYS, WorldPlayerSitutation, WorldPlayerSkill } from "../model/world.enums";
 import { aiDisplayGearShort } from "../ai/display";
@@ -83,6 +83,14 @@ export function GamePlayer(
         new BehaviorSubject<INonPlayerCharacter | null>(null)
     );
 
+    const activeQuests = useRef(
+        new BehaviorSubject<Array<IQuest>>([])
+    );
+
+    const navigationTarget = useRef(
+        new BehaviorSubject<IWorldNode | null>(null)
+    );
+
     const world = useWorld();
     const history = useHistory();
 
@@ -110,6 +118,10 @@ export function GamePlayer(
         getInCombatWith: () => inCombatWith.current.value,
         inConversationWith: inConversationWith.current.asObservable(),
         getInConversationWith: () => inConversationWith.current.value,
+        activeQuests: activeQuests.current.asObservable(),
+        getActiveQuests: () => activeQuests.current.value,
+        navigationTarget: navigationTarget.current.asObservable(),
+        getNavigationTarget: () => navigationTarget.current.value,
 
         updatePlayerCharacter: (character: IPlayerCharacter) => playerCharacter.current.next(character),
         updatePlayerHealth: (h: ICharacterHealth) => {
@@ -125,6 +137,7 @@ export function GamePlayer(
         },
         updatePlayerHunger: (hunger: IPlayerHunger) => playerHunger.current.next(hunger),
         updatePlayerThirst: (thirst: IPlayerThirst) => playerThirst.current.next(thirst),
+        updateActiveQuests: (quests: Array<IQuest>) => activeQuests.current.next(quests),
         addGold: (amount) => {
             const current = playerInventory.current.value;
             current.gold += amount;
@@ -186,6 +199,12 @@ export function GamePlayer(
         updateInConversationWith: (npc) => {
             inConversationWith.current.next(npc);
         },
+        startNavigation: (target) => {
+            navigationTarget.current.next(target);
+        },
+        endNavigation: () => {
+            navigationTarget.current.next(null);
+        }
     };
 
     const spawnInitialPlayer_Legacy = () => {

@@ -35,6 +35,9 @@ import { ActionRestProcessor } from "./simulation/ActionRestProcessor";
 import { ActionUseProcessor } from "./simulation/ActionUseProcessor";
 import { HealthTicker } from "./simulation/HealthTicker";
 import { TurnHeadlineWriter } from "../ai/TurnHeadlineWriter";
+import { ActionBeginQuestProcessor } from "./simulation/ActionBeginQuestProcessor";
+import { ActionHandInQuestProcessor } from "./simulation/ActionHandInQuestProcessor";
+import { ActionTellSecretProcessor } from "./simulation/ActionTellSecretProcessor";
 
 export function GameSimulation(
     props: {
@@ -63,16 +66,6 @@ export function GameSimulation(
     const world = useWorld();
     const history = useHistory();
     const lm = useLanguageModel();
-
-    const populateItem = async (item: IWorldItem) => {
-        const gen = new ItemDetailGenerator(lm);
-        await gen.generate(item);
-    };
-
-    const populateNode = async (node: IWorldNode) => {
-        const gen = new WorldNodeDetailGenerator2(lm);
-        await gen.generate(node);
-    };
 
     const EVENT_PROCESSORS = [
 
@@ -202,6 +195,9 @@ export function GameSimulation(
         <ActionTradeProcessor />
         <ActionRestProcessor />
         <ActionUseProcessor />
+        <ActionBeginQuestProcessor />
+        <ActionHandInQuestProcessor />
+        <ActionTellSecretProcessor />
         <WakeUpProcessor />
         <ArriveProcessor />
         <DefeatNpcProcessor />

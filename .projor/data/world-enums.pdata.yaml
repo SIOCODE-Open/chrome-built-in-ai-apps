@@ -317,6 +317,44 @@ objects:
       - name: attack
         description: I attack the player.
 
+  - name: npc_quest_type
+    description: The type of quest that a non-player character can offer
+    values:
+      - name: deliver
+        description: Someone gives you an item, that you must deliver to a specific person.
+      # - name: collect
+      #   description: Someone asks you to collect an item fitting a specific description.
+      - name: find_location
+        description: Someone asks you to reach a specific location, and tell them what you find there.
+      - name: talk_to
+        description: Someone asks you to find a specific person and tell them a secret.
+      - name: kill
+        description: Someone asks you to kill a specific person or animal.
+
+  - name: npc_quest_difficulty
+    description: The difficulty of a quest offered by a non-player character
+    values:
+      - name: easy
+        description: You can easily survive and finish this quest.
+      - name: challenging
+        description: This quest offers some challenge, but you can still finish it if you are careful.
+      - name: hard
+        description: This quest is hard, you will probably not survive it.
+      - name: impossible
+        description: This quest is impossible to finish. You will die.
+
+  - name: npc_trade_opinion
+    description: The opinion of a non-player character on a trade offer
+    values:
+      - name: insulting
+        description: The offer is so bad that it is insulting.
+      - name: bad
+        description: The offer is bad, and should not be accepted.
+      - name: acceptable
+        description: The offer is acceptable, and can be accepted.
+      - name: no_brainer
+        description: The offer is so good that it is a no-brainer to accept.
+
   - name: node_temperature
     description: The temperature of a world node
     values:
@@ -404,10 +442,6 @@ objects:
     values:
       - name: house
         description: House of a family or individual.
-      - name: blacksmith
-        description: A workshop where metal is forged and crafted.
-      - name: tavern
-        description: A place to eat, drink, and socialize with other travelers.
       - name: town_hall
         description: The administrative center, and official place of gathering.
       - name: church
@@ -688,6 +722,12 @@ objects:
         description: You decide to engage in the combination of tools and materials.
       - name: action_trade
         description: You give someone a good offer, and shake hands to perform the trade.
+      - name: action_begin_quest
+        description: You decide to accept the quest offered by someone.
+      - name: action_hand_in_quest
+        description: You decide that it is time to end your quest, and the quest giver will decide if they accept or not.
+      - name: action_tell_secret
+        description: You decide to tell a secret to someone.
       - name: npc_talk
         description: The NPC says something.
       - name: npc_attack
@@ -746,6 +786,12 @@ objects:
         description: You engage in combat with an enemy.
       - name: start_conversation
         description: You start a conversation with an NPC.
+      - name: offered_quest
+        description: Someone tells you the details of what they need help with.
+      - name: begin_quest
+        description: Your quest begins.
+      - name: finish_quest
+        description: You successfully finish a quest.
       - name: defeat_npc
         description: You defeat an enemy.
       - name: die

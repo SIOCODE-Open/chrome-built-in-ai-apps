@@ -17,6 +17,12 @@ export function CraftingInformation() {
     const [breakWhat, setBreakWhat] = useState<number>(-1);
     const [breakUsing, setBreakUsing] = useState<number>(-1);
 
+    const [disassembleWhat, setDisassembleWhat] = useState<number>(-1);
+    const [disassembleUsing, setDisassembleUsing] = useState<number>(-1);
+
+    const [smeltWhat, setSmeltWhat] = useState<number>(-1);
+    const [smeltUsing, setSmeltUsing] = useState<number>(-1);
+
     const [assembleWhat1, setAssembleWhat1] = useState<number>(-1);
     const [assembleWhat2, setAssembleWhat2] = useState<number>(-1);
     const [assembleWhat3, setAssembleWhat3] = useState<number>(-1);
@@ -177,12 +183,46 @@ export function CraftingInformation() {
 
     };
 
+    const onDisassemble = () => {
+
+        const disassembleWhatItem = inventory.items.find(
+            item => item.id === disassembleWhat
+        );
+        const disassembleUsingItem = inventory.items.find(
+            item => item.id === disassembleUsing
+        );
+
+        if (!disassembleWhatItem) {
+            return;
+        }
+
+        actions.craftDisassemble(disassembleWhatItem, disassembleUsingItem);
+
+    };
+
+    const onSmelt = () => {
+
+        const smeltWhatItem = inventory.items.find(
+            item => item.id === smeltWhat
+        );
+        const smeltUsingItem = inventory.items.find(
+            item => item.id === smeltUsing
+        );
+
+        if (!smeltWhatItem) {
+            return;
+        }
+
+        actions.craftSmelt(smeltWhatItem, smeltUsingItem);
+
+    };
+
     return <>
         <Card>
             <CardTitle>Crafting</CardTitle>
             <select value={selectedCraftingType}
                 onChange={(e) => onChangeCraftingType(e.target.value as WorldPlayerCraftingType)}
-                className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                 {
                     WORLD_PLAYER_CRAFTING_TYPE.map(
                         (type) => <option key={type} value={type}>
@@ -198,7 +238,7 @@ export function CraftingInformation() {
                     <CardTitle>Break what</CardTitle>
                     <select value={breakWhat}
                         onChange={(e) => setBreakWhat(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select what to break ...</option>
                         {
                             inventory && inventory.items.map(
@@ -211,7 +251,7 @@ export function CraftingInformation() {
                     <CardTitle>Break using</CardTitle>
                     <select value={breakUsing}
                         onChange={(e) => setBreakUsing(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Use no tool</option>
                         {
                             inventory && inventory.items.filter(
@@ -235,7 +275,7 @@ export function CraftingInformation() {
                     <CardTitle>Assemble these ...</CardTitle>
                     <select value={assembleWhat1}
                         onChange={(e) => setAssembleWhat1(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select first item ...</option>
                         {
                             inventory && inventory.items
@@ -253,7 +293,7 @@ export function CraftingInformation() {
                     </select>
                     <select value={assembleWhat2}
                         onChange={(e) => setAssembleWhat2(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select second item ...</option>
                         {
                             inventory && inventory.items
@@ -271,7 +311,7 @@ export function CraftingInformation() {
                     </select>
                     <select value={assembleWhat3}
                         onChange={(e) => setAssembleWhat3(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select third item ...</option>
                         {
                             inventory && inventory.items
@@ -289,7 +329,7 @@ export function CraftingInformation() {
                     </select>
                     <select value={assembleWhat4}
                         onChange={(e) => setAssembleWhat4(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select forth item ...</option>
                         {
                             inventory && inventory.items
@@ -308,7 +348,7 @@ export function CraftingInformation() {
                     <CardTitle>Assemble using</CardTitle>
                     <select value={assembleUsing}
                         onChange={(e) => setAssembleUsing(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Use no tool</option>
                         {
                             inventory && inventory.items.filter(
@@ -335,7 +375,7 @@ export function CraftingInformation() {
                     <CardTitle>Cooking ingredients ...</CardTitle>
                     <select value={cookWhat1}
                         onChange={(e) => setCookWhat1(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select first ingredient ...</option>
                         {
                             inventory && inventory.items
@@ -353,7 +393,7 @@ export function CraftingInformation() {
                     </select>
                     <select value={cookWhat2}
                         onChange={(e) => setCookWhat2(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select second ingredient ...</option>
                         {
                             inventory && inventory.items
@@ -371,7 +411,7 @@ export function CraftingInformation() {
                     </select>
                     <select value={cookWhat3}
                         onChange={(e) => setCookWhat3(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select third ingredient ...</option>
                         {
                             inventory && inventory.items
@@ -389,7 +429,7 @@ export function CraftingInformation() {
                     </select>
                     <select value={cookWhat4}
                         onChange={(e) => setCookWhat4(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select forth ingredient ...</option>
                         {
                             inventory && inventory.items
@@ -408,7 +448,7 @@ export function CraftingInformation() {
                     <CardTitle>Cook using</CardTitle>
                     <select value={cookUsing}
                         onChange={(e) => setCookUsing(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Use no tool</option>
                         {
                             inventory && inventory.items.filter(
@@ -435,7 +475,7 @@ export function CraftingInformation() {
                     <CardTitle>Refine what</CardTitle>
                     <select value={refineWhat}
                         onChange={(e) => setRefineWhat(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select what to refine ...</option>
                         {
                             inventory && inventory.items.map(
@@ -448,7 +488,7 @@ export function CraftingInformation() {
                     <CardTitle>Refine with</CardTitle>
                     <select value={refineWith1}
                         onChange={(e) => setRefineWith1(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select first ingredient ...</option>
                         {
                             inventory && inventory.items
@@ -465,7 +505,7 @@ export function CraftingInformation() {
                     </select>
                     <select value={refineWith2}
                         onChange={(e) => setRefineWith2(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Select second ingredient ...</option>
                         {
                             inventory && inventory.items
@@ -483,7 +523,7 @@ export function CraftingInformation() {
                     <CardTitle>Refine using</CardTitle>
                     <select value={refineUsing}
                         onChange={(e) => setRefineUsing(parseInt(e.target.value))}
-                        className="w-full rounded-full px-2 py-1 border border-neutral-300">
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
                         <option value={-1}>Use no tool</option>
                         {
                             inventory && inventory.items.filter(
@@ -500,6 +540,80 @@ export function CraftingInformation() {
                     <button className="w-full py-1 bg-blue-500 hover:bg-blue-600 active:bg-blue-400 text-white font-bold text-xs text-center rounded-full"
                         onClick={onRefine}>
                         Refine
+                    </button>
+                </>
+            }
+
+            {
+                selectedCraftingType === "disassemble" && <>
+                    <CardTitle>Disassemble what</CardTitle>
+                    <select value={disassembleWhat}
+                        onChange={(e) => setDisassembleWhat(parseInt(e.target.value))}
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
+                        <option value={-1}>Select what to disassemble ...</option>
+                        {
+                            inventory && inventory.items.map(
+                                (item, index) => <option key={index} value={item.id}>
+                                    {item.name}
+                                </option>
+                            )
+                        }
+                    </select>
+                    <CardTitle>Disassemble using</CardTitle>
+                    <select value={disassembleUsing}
+                        onChange={(e) => setDisassembleUsing(parseInt(e.target.value))}
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
+                        <option value={-1}>Use no tool</option>
+                        {
+                            inventory && inventory.items.filter(
+                                (item) => item.id !== disassembleWhat
+                            ).map(
+                                (item, index) => <option key={index} value={item.id}>
+                                    {item.name}
+                                </option>
+                            )
+                        }
+                    </select>
+                    <button className="w-full py-1 bg-blue-500 hover:bg-blue-600 active:bg-blue-400 text-white font-bold text-xs text-center rounded-full"
+                        onClick={onDisassemble}>
+                        Disassemble
+                    </button>
+                </>
+            }
+
+            {
+                selectedCraftingType === "smelt" && <>
+                    <CardTitle>Smelt what</CardTitle>
+                    <select value={smeltWhat}
+                        onChange={(e) => setSmeltWhat(parseInt(e.target.value))}
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
+                        <option value={-1}>Select what to smelt ...</option>
+                        {
+                            inventory && inventory.items.map(
+                                (item, index) => <option key={index} value={item.id}>
+                                    {item.name}
+                                </option>
+                            )
+                        }
+                    </select>
+                    <CardTitle>Smelt using</CardTitle>
+                    <select value={smeltUsing}
+                        onChange={(e) => setSmeltUsing(parseInt(e.target.value))}
+                        className="w-full rounded-full px-2 py-1 border border-neutral-300 bg-white dark:bg-neutral-900 text-black dark:text-white appearance-none">
+                        <option value={-1}>Use no tool</option>
+                        {
+                            inventory && inventory.items.filter(
+                                (item) => item.id !== smeltWhat
+                            ).map(
+                                (item, index) => <option key={index} value={item.id}>
+                                    {item.name}
+                                </option>
+                            )
+                        }
+                    </select>
+                    <button className="w-full py-1 bg-blue-500 hover:bg-blue-600 active:bg-blue-400 text-white font-bold text-xs text-center rounded-full"
+                        onClick={onSmelt}>
+                        Smelt
                     </button>
                 </>
             }

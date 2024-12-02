@@ -30,6 +30,7 @@ export function createNpcLabel(
         actions: <NpcActions value={npc}
             talk={actions.includes("talk")}
             attack={actions.includes("attack")}
+            navigate={actions.includes("navigate")}
         />
     }
 }

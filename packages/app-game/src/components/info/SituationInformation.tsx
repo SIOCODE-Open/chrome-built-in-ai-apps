@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { INonPlayerCharacter, IWorldNode } from "../../context/World.context";
 import { Card } from "../Card";
 import { CardInfoTable } from "../card/CardInfoTable";
@@ -20,6 +20,7 @@ export function SituationInformation(props: any) {
     const [inCombatWith, setInCombatWith] = useState<INonPlayerCharacter | null>(null);
     const [inConversationWith, setInConversationWith] = useState<INonPlayerCharacter | null>(null);
     const [controlsDisabled, setControlsDisabled] = useState(false);
+    const [_, forceUpdate] = useReducer(x => x + 1, 0);
 
     const player = usePlayer();
     const actions = usePlayerActions();
@@ -52,6 +53,16 @@ export function SituationInformation(props: any) {
     useEffect(
         () => {
             const sub = player.inConversationWith.subscribe(setInConversationWith);
+            return () => sub.unsubscribe();
+        },
+        []
+    );
+
+    useEffect(
+        () => {
+            const sub = player.navigationTarget.subscribe(
+                (_) => forceUpdate()
+            );
             return () => sub.unsubscribe();
         },
         []
@@ -136,6 +147,13 @@ export function SituationInformation(props: any) {
                 {WORLD_NODE_ROOM_TYPE_DISPLAYS[location.room.roomType]}
             </TooltipText>;
         }
+
+        if (location.id === player.getNavigationTarget()?.id) {
+            infoTable["Target"] = <TooltipText tooltip={<span className="text-xs font-normal italic text-left">This place is your navigation target.</span>}>
+                Reached
+            </TooltipText>;
+        }
+
     }
 
     if (inCombatWith) {

@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { Observable } from "rxjs";
-import { ICharacterHealth, IConsumableItemEffect, INonPlayerCharacter, IWearableItemEffect, IWorldEdge, IWorldItem, IWorldNode } from "./World.context";
+import { ICharacterHealth, IConsumableItemEffect, INonPlayerCharacter, IPossibleQuest, IQuest, IWearableItemEffect, IWorldEdge, IWorldItem, IWorldNode } from "./World.context";
 import { WorldHistoryHappening, WorldPlayerCraftingType, WorldPlayerEquipSlot, WorldPlayerSitutation, WorldPlayerSkill } from "../model/world.enums";
 import { IPlayerHunger, IPlayerThirst } from "./Player.context";
 
@@ -82,6 +82,10 @@ export interface IHistoryContext {
         want: { gold: number, items: Array<IWorldItem> },
     ): IGameEvent;
     actionRest(): IGameEvent;
+    actionBeginQuest(): IGameEvent;
+    actionHandInQuest(): IGameEvent;
+    actionOfferHelp(): IGameEvent;
+    actionTellSecret(): IGameEvent;
 
     npcTalk(who: INonPlayerCharacter, message: string): IGameEvent;
     npcAttack(who: INonPlayerCharacter): IGameEvent;
@@ -115,6 +119,15 @@ export interface IHistoryContext {
     die(notes: string): IGameEvent;
     flee(notes: string): IGameEvent;
     failFlee(notes: string): IGameEvent;
+    offeredQuest(quest: IQuest): IGameEvent;
+    beginQuest(
+        quest: IQuest,
+        notes?: string,
+    ): IGameEvent;
+    finishQuest(
+        quest: IQuest,
+        notes?: string,
+    ): IGameEvent;
 
     endTurn(turnNumber: number, notes: string, headline: string): IGameEvent;
 }

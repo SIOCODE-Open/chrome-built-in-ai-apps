@@ -376,6 +376,7 @@ function nodeToJsonData(node: IWorldNode) {
             } : undefined,
             labels: (node.ancestor.labels && node.ancestor.labels.length > 0) ? node.ancestor.labels : undefined
         } : undefined,
+        labels: (node.labels && node.labels.length > 0) ? node.labels : undefined
     }
 }
 

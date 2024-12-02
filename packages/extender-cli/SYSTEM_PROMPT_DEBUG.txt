@@ -925,7 +925,7 @@ material.populators.json
 {"id":"material.potion-ingredient","populatorType":"item","name":["Potion Ingredient","Brewing Ingredient","Alchemical Ingredient","Magical Ingredient"],"tier":["common","rare"],"type":"material"},
 {"id":"material.ore","populatorType":"item","name":["Ore","Iron Ore","Copper Ore","Gold Ore","Silver Ore"],"tier":"common","type":"material","labels":["ore"]},
 {"id":"material.crude-rock","populatorType":"item","name":["Crude Rock","Rough Stone","Unrefined Rock","Stone","Rock"],"tier":"common","type":"material","labels":["crude-rock"]},
-{"id":"household.mining-equipment","populatorType":"item","name":["Mining Pickaxe","Mining Shovel","Mining Cart","Mining Lantern","Mining Helmet"],"tier":"common","type":"household","labels":["mining-equipment"]},
+{"id":"household.mining-equipment","populatorType":"item","name":"Mining Equipment","tier":"common","type":"household","labels":["mining-equipment"]},
 {"id":"material.sand","populatorType":"item","name":["Sand","Fine Sand","Coarse Sand","Desert Sand"],"tier":"common","type":"material","labels":["sand"]}
 ]
 merchant.populators.json
@@ -1056,7 +1056,9 @@ blacksmith.rules.json
 cave.rules.json
 [
 {"id":"cave-stones","apply":"material.cave.stone","count":{"min":2,"max":10},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"},"probability":0.9},
-{"id":"cave-ores","apply":"material.cave.ore","count":{"min":1,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"},"probability":0.5}
+{"id":"cave-ores","apply":"material.cave.ore","count":{"min":1,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"},"probability":0.5},
+{"id":"cave-spiders","apply":"npc.cave.giant-spider","count":{"min":1,"max":3},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"},"probability":0.5},
+{"id":"cave-cave-paths","apply":"wilderness.cave","count":{"min":1,"max":2},"depth":{"min":0,"max":5},"probability":0.5,"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"}}
 ]
 church.rules.json
 [
@@ -1095,7 +1097,9 @@ forest.rules.json
 {"id":"forest-wolves","apply":"npc.forest.wolf","count":{"min":0,"max":1},"hasType":"wilderness","wilderness":{"hasWildernessType":"forest"}},
 {"id":"forest-swamp-paths","apply":"wilderness.swamp","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"forest"}},
 {"id":"forest-desert-paths","apply":"wilderness.desert","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"forest"}},
-{"id":"desert-forest-paths","apply":"wilderness.forest","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"desert"}}
+{"id":"desert-forest-paths","apply":"wilderness.forest","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"desert"}},
+{"id":"forest-herbs","apply":"item.swamp.swamp-herb","count":{"min":1,"max":2},"probability":0.25,"hasType":"wilderness","wilderness":{"hasWildernessType":"forest"}},
+{"id":"forest-wood","apply":"material.wood","count":{"min":1,"max":2},"probability":0.5,"hasType":"wilderness","wilderness":{"hasWildernessType":"forest"}}
 ]
 house.rules.json
 [
@@ -1124,7 +1128,8 @@ mountain.rules.json
 {"id":"mountain-wolves","apply":"npc.mountain.wolf","count":{"min":0,"max":1},"hasType":"wilderness","wilderness":{"hasWildernessType":"mountain"}},
 {"id":"mountain-mine","apply":"building.mine","count":{"min":1,"max":1},"hasType":"wilderness","wilderness":{"hasWildernessType":"mountain"},"probability":0.25},
 {"id":"mountain-cave-paths","apply":"wilderness.cave","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"mountain"}},
-{"id":"cave-mountain-paths","apply":"wilderness.mountain","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"}}
+{"id":"cave-mountain-paths","apply":"wilderness.mountain","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"}},
+{"id":"mountain-crude-rocks","apply":"material.crude-rock","count":{"min":1,"max":3},"probability":0.5,"hasType":"wilderness","wilderness":{"hasWildernessType":"mountain"}}
 ]
 pharmacy.rules.json
 [
@@ -1135,8 +1140,11 @@ pharmacy.rules.json
 ]
 river.rules.json
 [
-{"id":"river-generation","apply":"wilderness.river","count":{"min":1,"max":2},"hasType":"root","probability":0.2},
-{"id":"river-fish","apply":"npc.river.fish","count":{"min":2,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"river"},"probability":0.8}
+{"id":"river-fish","apply":"npc.river.fish","count":{"min":2,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"river"},"probability":0.8},
+{"id":"river-forest-paths","apply":"wilderness.forest","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"river"}},
+{"id":"forest-river-paths","apply":"wilderness.river","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"forest"}},
+{"id":"river-mountain-paths","apply":"wilderness.mountain","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"river"}},
+{"id":"mountain-river-paths","apply":"wilderness.river","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"mountain"}}
 ]
 root.rules.json
 [

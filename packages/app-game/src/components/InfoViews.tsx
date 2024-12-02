@@ -86,7 +86,7 @@ export function InfoViews() {
             <GearInformation />
             <CraftingInformation />
 
-            <DebugInformation />
+            {/*<DebugInformation />*/}
         </div>
     </>;
 

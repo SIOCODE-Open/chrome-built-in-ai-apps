@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useGameSimulation } from "../../context/GameSimulation.context";
 import { IGameEvent, useHistory } from "../../context/History.context";
 import { usePlayer } from "../../context/Player.context";
-import { IWorldItem, IWorldNode, useWorld } from "../../context/World.context";
-import { WORLD_ITEM_TYPE_DISPLAYS, WORLD_WEAPON_TYPE, WORLD_WEARABLE_TYPE, WorldItemTier, WorldPlayerCraftingType, WorldWeaponType, WorldWearableType } from "../../model/world.enums";
+import { IConsumableItemEffect, IWearableItemEffect, IWorldItem, IWorldNode, useWorld } from "../../context/World.context";
+import { WORLD_CONSUMABLE_EFFECT_TYPE, WORLD_ITEM_TYPE_DISPLAYS, WORLD_WEAPON_TYPE, WORLD_WEARABLE_EFFECT_ACTIVATION, WORLD_WEARABLE_EFFECT_TYPE, WORLD_WEARABLE_TYPE, WorldConsumableEffectType, WorldItemTier, WorldPlayerCraftingType, WorldWeaponType, WorldWearableEffectActivation, WorldWearableEffectType, WorldWearableType } from "../../model/world.enums";
 import { ItemDetailGenerator } from "../../ai/ItemDetailGenerator";
 import { useLanguageModel } from "@siocode/base";
 import { CraftingGenerator } from "../../ai/CraftingGenerator";
@@ -11,6 +11,9 @@ import { ArmorDefenseGenerator } from "../../model/ArmorDefenseGenerator";
 import { WeaponDamageGenerator } from "../../model/WeaponDamageGenerator";
 import { WeaponSpecializer } from "../../ai/WeaponSpecializer";
 import { WearableSpecializer } from "../../ai/WearableSpecializer";
+import { EffectNamer } from "../../ai/EffectNamer";
+import { aiDisplayConsumableEffect, aiDisplayWearableEffect } from "../../ai/display";
+import { populateItem } from "../../model/GamePopulator";
 
 const tierNumbers = {
     "garbage": 0,
@@ -22,14 +25,14 @@ const tierNumbers = {
 
 const craftingResultTypes = {
     "break": {
-        "weapon": ["material", "household"],
-        "armor": ["material", "household"],
-        "wearable": ["material", "household"],
-        "helmet": ["material", "household"],
-        "boots": ["material", "household"],
-        "food": ["material", "household", "food", "drink", "consumable"],
-        "drink": ["material", "household", "food", "drink", "consumable"],
-        "household": ["material", "household", "consumable"],
+        "weapon": ["material"],
+        "armor": ["material"],
+        "wearable": ["material"],
+        "helmet": ["material"],
+        "boots": ["material"],
+        "food": ["material"],
+        "drink": ["material"],
+        "household": ["material"],
     },
     "assemble": {
         "household": ["wearable", "armor", "weapon", "helmet", "boots"],
@@ -48,9 +51,9 @@ const craftingResultTypes = {
         "wearable": ["material", "household"],
         "helmet": ["material", "household"],
         "boots": ["material", "household"],
-        "food": ["material", "household", "food", "drink", "consumable"],
-        "drink": ["material", "household", "food", "drink", "consumable"],
-        "household": ["material", "household", "consumable"],
+        "food": ["material"],
+        "drink": ["material"],
+        "household": ["material"],
     },
     "refine": {
         "weapon": ["weapon"],
@@ -60,8 +63,8 @@ const craftingResultTypes = {
         "boots": ["boots"],
         "food": ["food", "drink", "consumable"],
         "drink": ["food", "drink", "consumable"],
-        "household": ["household", "consumable"],
-        "material": ["material", "household", "consumable"],
+        "household": ["household"],
+        "material": ["material", "household"],
         "consumable": ["consumable"],
     },
     "smelt": {
@@ -70,12 +73,12 @@ const craftingResultTypes = {
         "wearable": ["material"],
         "helmet": ["material"],
         "boots": ["material"],
-        "food": ["material", "consumable"],
-        "drink": ["material", "consumable"],
-        "household": ["material", "consumable"],
-        "material": ["material", "consumable"],
+        "food": ["material"],
+        "drink": ["material"],
+        "household": ["material"],
+        "material": ["material"],
     },
-}
+};
 
 export function ActionCraftProcessor() {
     const player = usePlayer();
@@ -83,11 +86,6 @@ export function ActionCraftProcessor() {
     const sim = useGameSimulation();
     const world = useWorld();
     const lm = useLanguageModel();
-
-    const populateItem = async (item: IWorldItem) => {
-        const gen = new ItemDetailGenerator(lm);
-        await gen.generate(item);
-    };
 
     const onConsumeIngredients = async (R: Array<IGameEvent>, ingredients: Array<IWorldItem>) => {
 
@@ -363,6 +361,234 @@ export function ActionCraftProcessor() {
 
     };
 
+
+    const onCraftDisassemble = async (R: Array<IGameEvent>, ingredients: Array<IWorldItem>, tools: Array<IWorldItem>) => {
+
+        console.log("[ActionCraftProcessor]", "Disassembling", ingredients, "using", tools);
+
+        if (ingredients.length < 1) {
+            R.push(
+                history.noop("You think hard about how to disassemble nothing, but nothing comes to mind.")
+            );
+            return;
+        }
+
+        // Guaranteed: SUM(ingredient count) + SUM(tool count) + 1
+        // Max: 2 + SUM(ingredient tier) + SUM(tool tier)
+        const guaranteedItemCount = 1 + ingredients.length + tools.length;
+        const maxItemCount = 2 + ingredients.reduce((sum, item) => sum + tierNumbers[item.tier], 0) + tools.reduce((sum, item) => sum + tierNumbers[item.tier], 0);
+        const itemCount = Math.floor(Math.random() * (maxItemCount - guaranteedItemCount)) + guaranteedItemCount;
+        const possibleResults = craftingResultTypes.disassemble[ingredients[0].type];
+
+        if (itemCount === 0 || !possibleResults) {
+            R.push(
+                history.noop("You disassemble the ingredients, but recover nothing.")
+            );
+        }
+
+        if (possibleResults) {
+
+            let resultItems: Array<IWorldItem> = [];
+
+            const maxIngredientTier = ingredients.reduce((max, item) => Math.max(max, tierNumbers[item.tier]), 1);
+            let breakDescription = `created by disassembling ${ingredients.map(i => i.name).join(", ")}`;
+            if (tools.length > 0) {
+                breakDescription += ` using ${tools.map(i => i.name).join(", ")}`;
+            }
+
+            for (let i = 0; i < itemCount; i++) {
+                let resultTier = Math.floor(Math.random() * (maxIngredientTier + 1));
+                const resultTierName = Object.keys(tierNumbers).find(k => tierNumbers[k] === resultTier);
+                const resultType = possibleResults[Math.floor(Math.random() * possibleResults.length)];
+                const resultItem = world.createItem(
+                    WORLD_ITEM_TYPE_DISPLAYS[resultType] + " " + WORLD_ITEM_TYPE_DISPLAYS[resultTierName],
+                    resultType,
+                    resultTierName as WorldItemTier,
+                );
+                resultItems.push(resultItem);
+            }
+
+            const craftingGenerator = new CraftingGenerator(lm);
+            const craftingResult = await craftingGenerator.prompt({
+                craftingType: "disassemble",
+                ingredients,
+                tools,
+                resultPrototypes: resultItems,
+            });
+
+            resultItems = craftingResult.items;
+
+            for (const item of resultItems) {
+                await onPostProcessNewItem(ingredients, item);
+            }
+
+            await onCraftNewItems(R, resultItems, breakDescription);
+
+        }
+
+        await onConsumeIngredients(R, ingredients);
+
+    };
+
+    const onCraftSmelt = async (R: Array<IGameEvent>, ingredients: Array<IWorldItem>, tools: Array<IWorldItem>) => {
+
+        console.log("[ActionCraftProcessor]", "Smelting", ingredients, "using", tools);
+
+        const currentLocation = player.getPlayerLocation();
+
+        if (currentLocation.type !== "building") {
+            R.push(
+                history.noop("You can't smelt here, you are not in a forge.")
+            );
+            return;
+        }
+
+        if (currentLocation.building?.buildingType !== "store" || !currentLocation.labels.includes("blacksmith")) {
+            R.push(
+                history.noop("You can't smelt here, you are not in a forge.")
+            );
+            return;
+        }
+
+        if (ingredients.length < 1) {
+            R.push(
+                history.noop("You think hard about how to smelt nothing, but nothing comes to mind.")
+            );
+            return;
+        }
+
+        // Guaranteed: SUM(ingredient count) + SUM(tool count)
+        // Max: 1 + SUM(ingredient tier) + SUM(tool tier)
+        const guaranteedItemCount = 1 + ingredients.length + tools.length;
+        const maxItemCount = 1 + ingredients.reduce((sum, item) => sum + tierNumbers[item.tier], 0) + tools.reduce((sum, item) => sum + tierNumbers[item.tier], 0);
+        const itemCount = Math.floor(Math.random() * (maxItemCount - guaranteedItemCount)) + guaranteedItemCount;
+        const possibleResults = craftingResultTypes.smelt[ingredients[0].type];
+
+        if (itemCount === 0 || !possibleResults) {
+            R.push(
+                history.noop("You smelt the ingredients, but recover nothing.")
+            );
+        }
+
+        if (possibleResults) {
+
+            let resultItems: Array<IWorldItem> = [];
+
+            const maxIngredientTier = ingredients.reduce((max, item) => Math.max(max, tierNumbers[item.tier]), 1);
+            let breakDescription = `created by smelting ${ingredients.map(i => i.name).join(", ")}`;
+            if (tools.length > 0) {
+                breakDescription += ` using ${tools.map(i => i.name).join(", ")}`;
+            }
+
+            for (let i = 0; i < itemCount; i++) {
+                let resultTier = Math.floor(Math.random() * (maxIngredientTier + 1));
+                const resultTierName = Object.keys(tierNumbers).find(k => tierNumbers[k] === resultTier);
+                const resultType = possibleResults[Math.floor(Math.random() * possibleResults.length)];
+                const resultItem = world.createItem(
+                    WORLD_ITEM_TYPE_DISPLAYS[resultType] + " " + WORLD_ITEM_TYPE_DISPLAYS[resultTierName],
+                    resultType,
+                    resultTierName as WorldItemTier,
+                );
+                resultItems.push(resultItem);
+            }
+
+            const craftingGenerator = new CraftingGenerator(lm);
+            const craftingResult = await craftingGenerator.prompt({
+                craftingType: "smelt",
+                ingredients,
+                tools,
+                resultPrototypes: resultItems,
+            });
+
+            resultItems = craftingResult.items;
+
+            for (const item of resultItems) {
+                await onPostProcessNewItem(ingredients, item);
+            }
+
+            await onCraftNewItems(R, resultItems, breakDescription);
+
+        }
+
+        await onConsumeIngredients(R, ingredients);
+
+    };
+
+    const generateWearableEffect = async (tier: WorldItemTier) => {
+
+        let value = 5 + Math.floor(Math.random() * 10);
+
+        if (tier === "rare") {
+            value = 10 + Math.floor(Math.random() * 15);
+        }
+
+        if (tier === "epic") {
+            value = 25 + Math.floor(Math.random() * 50);
+        }
+
+        if (tier === "legendary") {
+            value = 40 + Math.floor(Math.random() * 200);
+        }
+
+        const effectType = WORLD_WEARABLE_EFFECT_TYPE[Math.floor(Math.random() * WORLD_WEARABLE_EFFECT_TYPE.length)] as WorldWearableEffectType;
+        const effectActivation = WORLD_WEARABLE_EFFECT_ACTIVATION[Math.floor(Math.random() * WORLD_WEARABLE_EFFECT_ACTIVATION.length)] as WorldWearableEffectActivation;
+
+        if (effectType === "destroy-item") {
+            value = undefined;
+        }
+
+        const newEffect: IWearableItemEffect = {
+            details: {},
+            type: effectType,
+            activation: effectActivation,
+            value,
+            name: "Unnamed Effect",
+        };
+        const effectNamer = new EffectNamer(lm);
+        const response = await effectNamer.prompt({
+            effectDescription: aiDisplayWearableEffect(newEffect),
+        });
+        newEffect.name = response;
+
+        return newEffect;
+
+    };
+
+    const generateConsumableEffect = async (tier: WorldItemTier) => {
+
+        let value = 5 + Math.floor(Math.random() * 10);
+
+        if (tier === "rare") {
+            value = 10 + Math.floor(Math.random() * 15);
+        }
+
+        if (tier === "epic") {
+            value = 25 + Math.floor(Math.random() * 50);
+        }
+
+        if (tier === "legendary") {
+            value = 40 + Math.floor(Math.random() * 200);
+        }
+
+        const possibleTypes = ["heal", "damage-self", "damage-enemy"];
+        const effectType = possibleTypes[Math.floor(Math.random() * possibleTypes.length)] as WorldConsumableEffectType;
+
+        const newEffect: IConsumableItemEffect = {
+            details: {},
+            type: effectType,
+            value,
+            name: "Unnamed Effect",
+        };
+        const effectNamer = new EffectNamer(lm);
+        const response = await effectNamer.prompt({
+            effectDescription: aiDisplayConsumableEffect(newEffect),
+        });
+        newEffect.name = response;
+
+        return newEffect;
+
+    };
+
     const onPostProcessNewItem = async (ingredients: Array<IWorldItem>, item: IWorldItem) => {
 
         item.details = {
@@ -381,6 +607,7 @@ export function ActionCraftProcessor() {
             item.weapon = {
                 weaponType: specializationRequest.desiredWeaponType as WorldWeaponType,
                 damage: new WeaponDamageGenerator().generate(item),
+                effects: [],
             };
             item.name = newName;
 
@@ -388,6 +615,7 @@ export function ActionCraftProcessor() {
 
             item.armor = {
                 defense: new ArmorDefenseGenerator().generate(item),
+                effects: [],
             };
 
         } else if (item.type === "wearable") {
@@ -396,12 +624,14 @@ export function ActionCraftProcessor() {
             const specializationRequest = {
                 name: item.name,
                 desiredWearableType: WORLD_WEARABLE_TYPE[Math.floor(Math.random() * WORLD_WEARABLE_TYPE.length)],
+                effects: [],
             };
             const newName = await wearableSpecializer.prompt(specializationRequest);
 
             item.wearable = {
                 wearableType: specializationRequest.desiredWearableType as WorldWearableType,
                 defense: new ArmorDefenseGenerator().generate(item),
+                effects: [],
             };
             item.name = newName;
 
@@ -409,17 +639,85 @@ export function ActionCraftProcessor() {
 
             item.helmet = {
                 defense: new ArmorDefenseGenerator().generate(item),
+                effects: [],
             };
 
         } else if (item.type === "boots") {
 
             item.boots = {
                 defense: new ArmorDefenseGenerator().generate(item),
+                effects: [],
+            };
+
+        } else if (item.type === "consumable") {
+
+            item.consumable = {
+                effects: [],
             };
 
         }
 
-        // TODO: Add effects
+        const hasWearableEffects = item.type === "weapon"
+            || item.type === "armor"
+            || item.type === "wearable"
+            || item.type === "helmet"
+            || item.type === "boots";
+        const hasConsumableEffects = item.type === "consumable";
+
+        if (hasWearableEffects) {
+
+            let maxEffectCount = 1;
+
+            if (item.tier === "rare") {
+                maxEffectCount = 2;
+            }
+            if (item.tier === "epic") {
+                maxEffectCount = 3;
+            }
+            if (item.tier === "legendary") {
+                maxEffectCount = 4;
+            }
+            if (item.tier === "garbage") {
+                maxEffectCount = 0;
+            }
+
+            const effectCount = Math.floor(Math.random() * (maxEffectCount + 1));
+
+            for (let i = 0; i < effectCount; i++) {
+                const newEffect = await generateWearableEffect(item.tier);
+                item.wearable.effects.push(newEffect);
+            }
+
+        }
+
+        if (hasConsumableEffects) {
+
+            let maxEffectCount = 1;
+
+            if (item.tier === "rare") {
+                maxEffectCount = 2;
+            }
+            if (item.tier === "epic") {
+                maxEffectCount = 3;
+            }
+            if (item.tier === "legendary") {
+                maxEffectCount = 4;
+            }
+            if (item.tier === "garbage") {
+                maxEffectCount = 0;
+            }
+
+            const effectCount = Math.floor(Math.random() * (maxEffectCount + 1));
+
+            for (let i = 0; i < effectCount; i++) {
+                const newEffect = await generateConsumableEffect(item.tier);
+                item.consumable.effects.push(newEffect);
+            }
+
+        }
+
+        item.details = undefined;
+        await populateItem(lm, item);
 
     };
 
@@ -436,6 +734,7 @@ export function ActionCraftProcessor() {
             item.weapon = {
                 weaponType: item.weapon.weaponType,
                 damage: new WeaponDamageGenerator().generateAtLeast(item, item.weapon.damage),
+                effects: item.weapon?.effects || [],
             };
 
         } else if (item.type === "armor") {
@@ -443,6 +742,7 @@ export function ActionCraftProcessor() {
             // TODO: Calculate defense
             item.armor = {
                 defense: new ArmorDefenseGenerator().generateAtLeast(item, item.armor.defense),
+                effects: item.armor?.effects || [],
             };
 
         } else if (item.type === "wearable") {
@@ -452,6 +752,7 @@ export function ActionCraftProcessor() {
             item.wearable = {
                 wearableType: "necklace",
                 defense: new ArmorDefenseGenerator().generateAtLeast(item, item.wearable.defense),
+                effects: item.wearable?.effects || [],
             };
 
         } else if (item.type === "helmet") {
@@ -459,6 +760,7 @@ export function ActionCraftProcessor() {
             // TODO: Calculate defense
             item.helmet = {
                 defense: new ArmorDefenseGenerator().generateAtLeast(item, item.helmet.defense),
+                effects: item.helmet?.effects || [],
             };
 
         } else if (item.type === "boots") {
@@ -466,9 +768,80 @@ export function ActionCraftProcessor() {
             // TODO: Calculate defense
             item.boots = {
                 defense: new ArmorDefenseGenerator().generateAtLeast(item, item.boots.defense),
+                effects: item.boots?.effects || [],
+            };
+
+        } else if (item.type === "consumable") {
+
+            item.consumable = {
+                effects: item.consumable?.effects || [],
             };
 
         }
+
+        const hasWearableEffects = item.type === "weapon"
+            || item.type === "armor"
+            || item.type === "wearable"
+            || item.type === "helmet"
+            || item.type === "boots";
+        const hasConsumableEffects = item.type === "consumable";
+
+        if (hasWearableEffects) {
+
+            let maxEffectCount = 1;
+
+            if (item.tier === "rare") {
+                maxEffectCount = 2;
+            }
+            if (item.tier === "epic") {
+                maxEffectCount = 3;
+            }
+            if (item.tier === "legendary") {
+                maxEffectCount = 4;
+            }
+            if (item.tier === "garbage") {
+                maxEffectCount = 0;
+            }
+
+            let effectCount = Math.floor(Math.random() * (maxEffectCount + 1));
+            effectCount -= item.wearable.effects.length;
+
+            for (let i = 0; i < effectCount; i++) {
+                const newEffect = await generateWearableEffect(item.tier);
+                item.wearable.effects.push(newEffect);
+            }
+
+        }
+
+        if (hasConsumableEffects) {
+
+            let maxEffectCount = 1;
+
+            if (item.tier === "rare") {
+                maxEffectCount = 2;
+            }
+            if (item.tier === "epic") {
+                maxEffectCount = 3;
+            }
+            if (item.tier === "legendary") {
+                maxEffectCount = 4;
+            }
+            if (item.tier === "garbage") {
+                maxEffectCount = 0;
+            }
+
+            let effectCount = Math.floor(Math.random() * (maxEffectCount + 1));
+            effectCount -= item.consumable.effects.length;
+
+            for (let i = 0; i < effectCount; i++) {
+                const newEffect = await generateConsumableEffect(item.tier);
+                item.consumable.effects.push(newEffect);
+            }
+
+        }
+
+        item.details = undefined;
+        await populateItem(lm, item);
 
     };
 
@@ -488,6 +861,7 @@ export function ActionCraftProcessor() {
 
         if (craftingType === "disassemble") {
             console.log("[ActionCraftProcessor]", "Disassembling", ingredients, "using", tools);
+            await onCraftDisassemble(R, ingredients, tools);
         } else if (craftingType === "assemble") {
             console.log("[ActionCraftProcessor]", "Assembling", ingredients, "using", tools);
             await onCraftAssemble(R, ingredients, tools);
@@ -502,6 +876,7 @@ export function ActionCraftProcessor() {
             await onCraftRefine(R, ingredients, tools);
         } else if (craftingType === "smelt") {
             console.log("[ActionCraftProcessor]", "Smelting", ingredients, "using", tools);
+            await onCraftSmelt(R, ingredients, tools);
         }
 
         return R;

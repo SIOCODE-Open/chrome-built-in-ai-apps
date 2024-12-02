@@ -233,6 +233,30 @@ export function GameHistory(props: { children?: any }) {
             WORLD_HISTORY_HAPPENING_DESCRIPTIONS["action-rest"],
             {}
         ),
+        actionBeginQuest: () => contextValue.publish(
+            "player",
+            "action-begin-quest",
+            WORLD_HISTORY_HAPPENING_DESCRIPTIONS["action-begin-quest"],
+            {}
+        ),
+        actionHandInQuest: () => contextValue.publish(
+            "player",
+            "action-hand-in-quest",
+            WORLD_HISTORY_HAPPENING_DESCRIPTIONS["action-hand-in-quest"],
+            {}
+        ),
+        actionTellSecret: () => contextValue.publish(
+            "player",
+            "action-tell-secret",
+            WORLD_HISTORY_HAPPENING_DESCRIPTIONS["action-tell-secret"],
+            {}
+        ),
+        actionOfferHelp: () => contextValue.publish(
+            "player",
+            "noop",
+            WORLD_HISTORY_HAPPENING_DESCRIPTIONS["noop"],
+            {}
+        ),
 
         npcTalk: (who, message) => contextValue.publish(
             "story-teller",
@@ -420,6 +444,24 @@ export function GameHistory(props: { children?: any }) {
             "fail-flee",
             WORLD_HISTORY_HAPPENING_DESCRIPTIONS["fail-flee"],
             { notes }
+        ),
+        finishQuest: (quest, notes) => contextValue.publish(
+            "story-teller",
+            "finish-quest",
+            WORLD_HISTORY_HAPPENING_DESCRIPTIONS["finish-quest"],
+            { quest, notes }
+        ),
+        beginQuest: (quest, notes) => contextValue.publish(
+            "story-teller",
+            "begin-quest",
+            WORLD_HISTORY_HAPPENING_DESCRIPTIONS["begin-quest"],
+            { quest, notes }
+        ),
+        offeredQuest: (quest) => contextValue.publish(
+            "story-teller",
+            "offered-quest",
+            WORLD_HISTORY_HAPPENING_DESCRIPTIONS["offered-quest"],
+            { quest }
         ),
 
         endTurn: (turnNumber, notes, headline) => {

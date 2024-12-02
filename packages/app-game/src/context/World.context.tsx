@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { Observable } from "rxjs";
-import { WorldConsumableEffectType, WorldItemTier, WorldItemType, WorldNodeAreaType, WorldNodeBuildingType, WorldNodeHumidity, WorldNodeRoomType, WorldNodeSettlementType, WorldNodeStreetType, WorldNodeTemperature, WorldNodeWildernessType, WorldNpcBackground, WorldNpcGender, WorldNpcPersonalityTrait, WorldNpcRace, WorldNpcStance, WorldPlayerHealth, WorldWeaponType, WorldWearableEffectActivation, WorldWearableEffectType, WorldWearableType } from "../model/world.enums";
+import { WorldConsumableEffectType, WorldItemTier, WorldItemType, WorldNodeAreaType, WorldNodeBuildingType, WorldNodeHumidity, WorldNodeRoomType, WorldNodeSettlementType, WorldNodeStreetType, WorldNodeTemperature, WorldNodeWildernessType, WorldNpcBackground, WorldNpcGender, WorldNpcPersonalityTrait, WorldNpcQuestDifficulty, WorldNpcQuestType, WorldNpcRace, WorldNpcStance, WorldPlayerHealth, WorldWeaponType, WorldWearableEffectActivation, WorldWearableEffectType, WorldWearableType } from "../model/world.enums";
 
 export interface IWorldItemDetails {
     description: string;
@@ -69,6 +69,7 @@ export interface IWorldItem {
     wearable?: IWorldItemWearableCharacteristics;
     consumable?: IWorldItemConsumableCharacteristics;
     lootable?: boolean;
+    tradeValue?: number;
 }
 
 export interface ICharacterInventory {
@@ -104,6 +105,43 @@ export interface IKnowledge {
     distance?: number;
 }
 
+export interface IDeliverQuestCharacteristics {
+    item: IWorldItem;
+    recipient: INonPlayerCharacter;
+}
+
+export interface ICollectQuestCharacteristics {
+    // FIXME
+    // items: Array<IWorldItemMatcher>;
+}
+
+export interface IFindLocationQuestCharacteristics {
+    location: IWorldNode;
+    didVisit?: boolean;
+}
+
+export interface ITalkToQuestCharacteristics {
+    npc: INonPlayerCharacter;
+    didTalk?: boolean;
+}
+
+export interface IKillQuestCharacteristics {
+    npc: INonPlayerCharacter;
+    didKill?: boolean;
+}
+
+export interface IQuest {
+    id: number;
+    type: WorldNpcQuestType;
+    difficulty: WorldNpcQuestDifficulty;
+    narration?: string;
+    deliver?: IDeliverQuestCharacteristics;
+    collect?: ICollectQuestCharacteristics;
+    findLocation?: IFindLocationQuestCharacteristics;
+    talkTo?: ITalkToQuestCharacteristics;
+    kill?: IKillQuestCharacteristics;
+}
+
 export interface INonPlayerCharacter {
     id: number;
     name: string;
@@ -116,6 +154,10 @@ export interface INonPlayerCharacter {
     gear?: ICharacterGear;
     personality?: INonPlayerCharacterPersonality;
     knowledge?: Array<IKnowledge>;
+    activeQuest?: IQuest;
+    nextQuest?: IQuest;
+    possibleQuests?: Array<string>;
+    itemValueOpinions?: Record<number, number>;
 }
 
 export const WORLD_NODE_LEVELS = [
@@ -205,6 +247,14 @@ export interface IWorldContext {
         location: IWorldNode,
     ): INonPlayerCharacter;
     generateItems(populatorId: string): Array<IWorldItem>;
+    generateQuestFor(
+        player: {
+            gear: ICharacterGear;
+            health: ICharacterHealth;
+            location: IWorldNode;
+        },
+        npc: INonPlayerCharacter
+    ): IQuest;
 }
 
 export const WorldContext = createContext({} as IWorldContext);

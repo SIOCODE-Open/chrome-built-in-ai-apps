@@ -4,7 +4,10 @@ import {
     ICharacterGear,
     ICharacterHealth,
     ICharacterInventory,
+    IConsumableItemEffect,
     INonPlayerCharacter,
+    IQuest,
+    IWearableItemEffect,
     IWorldItem,
     IWorldNode,
 } from "../context/World.context";
@@ -27,7 +30,12 @@ import {
     WORLD_NPC_BACKGROUND_DESCRIPTIONS,
     WORLD_NPC_PERSONALITY_TRAIT_DISPLAYS,
     WORLD_NPC_PERSONALITY_TRAIT_DESCRIPTIONS,
+    WORLD_NPC_QUEST_DIFFICULTY_DESCRIPTIONS,
+    WORLD_NPC_ACTION_DISPLAYS,
+    WORLD_WEARABLE_EFFECT_ACTIVATION_DISPLAYS,
+    WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS,
 } from "../model/world.enums";
+import { shuffleArray } from "../utils/shuffleArray";
 
 export const aiDisplayItem = (item: IWorldItem | null) => {
     if (item) {
@@ -138,7 +146,7 @@ export const aiDisplayNpc = (npc: INonPlayerCharacter) => {
         `Personality Traits:`,
         ...npc.personality!.traits.map((t) => `* ${WORLD_NPC_PERSONALITY_TRAIT_DISPLAYS[t]} - ${WORLD_NPC_PERSONALITY_TRAIT_DESCRIPTIONS[t]}`),
         `Knowledge:`,
-        ...npc.knowledge!.map(
+        ...shuffleArray([...npc.knowledge!]).slice(0, 5).map(
             (k) => {
                 if (k.location) {
                     const enemiesCount = k.location.npcs.filter((n) => n.stance === "hostile").length;
@@ -168,4 +176,30 @@ export const aiDisplayTrade = (offered: { gold: number, items: IWorldItem[] }, w
         ...wantedItems.map(i => `You give the other party ${i}`),
         wantedItems.length === 0 ? `You give the other party no items` : null,
     ].filter(l => !!l).join("\n").trim();
+}
+
+export const aiDisplayQuest = (quest: IQuest) => {
+
+    let txt = `Unknown quest type`;
+
+    if (quest.type === "deliver") {
+        txt = `Deliver item ${aiDisplayItem(quest.deliver!.item)} to person ${quest.deliver!.recipient.name} at location ${aiDisplayLocationShort(quest.deliver!.recipient.location)}`;
+    } else if (quest.type === "find-location") {
+        txt = `Travel to location ${aiDisplayLocationShort(quest.findLocation!.location)} and report back`;
+    } else if (quest.type === "talk-to") {
+        txt = `Find person ${quest.talkTo!.npc.name} at location ${aiDisplayLocationShort(quest.talkTo!.npc.location)} and tell them my secret`;
+    } else if (quest.type === "kill") {
+        txt = `Kill person or animal ${quest.kill!.npc.name} at location ${aiDisplayLocationShort(quest.kill!.npc.location)}`;
+    }
+
+    return `[${WORLD_NPC_QUEST_DIFFICULTY_DESCRIPTIONS[quest.difficulty]}] ${txt}`;
+
+}
+
+export const aiDisplayWearableEffect = (effect: IWearableItemEffect) => {
+    return `${WORLD_WEARABLE_EFFECT_ACTIVATION_DISPLAYS[effect.activation]} - ${WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS[effect.type]} - Value: ${effect.value}`;
+}
+
+export const aiDisplayConsumableEffect = (effect: IConsumableItemEffect) => {
+    return `On use - ${WORLD_WEARABLE_EFFECT_TYPE_DESCRIPTIONS[effect.type]} - Value: ${effect.value}`;
 }

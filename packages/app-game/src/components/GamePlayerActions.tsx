@@ -165,6 +165,34 @@ export function GamePlayerActions(
             );
             sim.start();
         },
+        craftDisassemble: (
+            disassembleWhat: IWorldItem,
+            disassembleUsing?: IWorldItem | null
+        ) => {
+            console.log("[GamePlayerActions]", "Disassembling item", disassembleWhat, "using", disassembleUsing);
+
+            history.actionCraft(
+                "disassemble",
+                player.getPlayerLocation(),
+                [disassembleWhat],
+                disassembleUsing ? [disassembleUsing] : []
+            );
+            sim.start();
+        },
+        craftSmelt: (
+            smeltWhat: IWorldItem,
+            smeltUsing?: IWorldItem | null
+        ) => {
+            console.log("[GamePlayerActions]", "Smelting item", smeltWhat, "using", smeltUsing);
+
+            history.actionCraft(
+                "smelt",
+                player.getPlayerLocation(),
+                [smeltWhat],
+                smeltUsing ? [smeltUsing] : []
+            );
+            sim.start();
+        },
         attack: (npc: INonPlayerCharacter) => {
             console.log("[GamePlayerActions]", "Attacking", npc);
 
@@ -198,7 +226,25 @@ export function GamePlayerActions(
 
             history.actionUseItem(item);
             sim.start();
-        }
+        },
+        beginQuest: () => {
+            console.log("[GamePlayerActions]", "Beginning quest");
+
+            history.actionBeginQuest();
+            sim.start();
+        },
+        handInQuest: () => {
+            console.log("[GamePlayerActions]", "Handing in quest");
+
+            history.actionHandInQuest();
+            sim.start();
+        },
+        tellSecret: () => {
+            console.log("[GamePlayerActions]", "Telling secret");
+
+            history.actionTellSecret();
+            sim.start();
+        },
     };
 
     return <PlayerActionsProvider value={contextValue}>
