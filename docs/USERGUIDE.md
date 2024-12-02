@@ -4,7 +4,7 @@
 > 
 > You are in the right place!
 > 
-> This is a complex make, similar to _Dungeons and Dragons_ and other _role playing games_. On this page, we help you get started in the world of _The Crooked Tankard_.
+> This is a complex game, similar to _Dungeons and Dragons_ and other _role playing games_. On this page, we help you get started in the world of _The Crooked Tankard_.
 
 # Step Zero
 
