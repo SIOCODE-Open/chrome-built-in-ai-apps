@@ -856,26 +856,44 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
     private generateItemsFromSpecs: (specs: Array<INodeItemSpec | string>) => Array<IWorldItem> = (specs) => {
         const resultItems: Array<IWorldItem> = [];
 
+        specLoop:
         for (const inputSpec of specs) {
 
             let spec = inputSpec;
 
-            if (typeof inputSpec === "object" && inputSpec.oneOf && inputSpec.oneOf.length > 0) {
-                spec = inputSpec.oneOf[Math.floor(Math.random() * inputSpec.oneOf.length)] as any;
-            }
+            do {
 
-            if (typeof spec === "string") {
-                spec = this.populators.find(p => p.id === spec) as any as INodeItemSpec;
-                if (!spec) {
-                    console.warn("[WorldGenerator2] Could not find item populator with id", spec);
-                    continue;
+                let didResolve = false;
+
+                if (typeof spec === "object" && spec.oneOf && spec.oneOf.length > 0) {
+                    spec = spec.oneOf[Math.floor(Math.random() * spec.oneOf.length)] as any;
+                    didResolve = true;
                 }
 
-            }
-            if (!spec) {
-                console.warn("[WorldGenerator2] Could not find spec for inputSpec", inputSpec);
-                continue;
-            }
+                if (Array.isArray(spec)) {
+                    spec = spec[Math.floor(Math.random() * spec.length)] as any;
+                    didResolve = true;
+                }
+
+                if (typeof spec === "string") {
+                    spec = this.populators.find(p => p.id === spec) as any as INodeItemSpec;
+                    if (!spec) {
+                        console.warn("[WorldGenerator2] Could not find item populator with id", spec);
+                        continue specLoop;
+                    }
+
+                }
+
+                if (!spec) {
+                    console.warn("[WorldGenerator2] Could not find spec for inputSpec", inputSpec);
+                    continue specLoop;
+                }
+
+                if (!didResolve) {
+                    break;
+                }
+
+            } while (true);
 
             if (typeof spec.probability === "number") {
                 const roll = Math.random();

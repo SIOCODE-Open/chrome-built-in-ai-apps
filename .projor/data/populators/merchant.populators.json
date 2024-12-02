@@ -53,6 +53,11 @@
                 "optimistic"
             ],
             "background": "merchant"
-        }
+        },
+        "quests": [
+            "quest.deliver.trade-commodity",
+            "quest.talk-to",
+            "quest.kill"
+        ]
     }
 ]

@@ -1,0 +1,15 @@
+{
+    "map": {
+        "enums": "world-enums"
+    },
+    "filename": "packages/extender-cli/WORLD_ENUMS.txt"
+}
+---
+{{#each enums}}
+// {{{description}}}
+enum World{{{pascalCase name}}}
+{{#each values}}
+    {{{kebabCase name}}} // {{{description}}}
+{{/each}}
+
+{{/each}}

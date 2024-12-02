@@ -75,6 +75,9 @@
                 "honest"
             ],
             "background": "blacksmith"
-        }
+        },
+        "quests": [
+            "quest.deliver.legendary-weapon"
+        ]
     }
 ]

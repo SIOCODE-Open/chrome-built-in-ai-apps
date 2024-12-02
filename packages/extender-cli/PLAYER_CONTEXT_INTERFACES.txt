@@ -1,0 +1,21 @@
+
+export interface IPlayerSkills {
+    skills: Array<WorldPlayerSkill>;
+}
+
+export interface IPlayerHunger {
+    status: WorldPlayerHunger;
+    lastMealTime: number;
+    lastMeal: IWorldItem | null;
+}
+
+export interface IPlayerThirst {
+    status: WorldPlayerThirst;
+    lastDrinkTime: number;
+    lastDrink: IWorldItem | null;
+}
+
+export interface IPlayerCharacter {
+    name: string;
+    characterClass: WorldPlayerClass;
+}

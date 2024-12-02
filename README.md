@@ -2,6 +2,8 @@
 
 The Crooked Tankard is a _text-based role playing game_. It is powered by _web technologies_, specifically _built-in AI_ and _React_. The AI generates narration, items, and many more to create _infinite replayability_ and a _vast random world_.
 
+![](./docs/screenshot.png)
+
 ▶️ [Watch our video of the game](https://siocode.hu)
 
 🎮 [Play it here](https://crooked-tankard.siocode.hu)

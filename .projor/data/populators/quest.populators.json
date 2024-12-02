@@ -64,5 +64,97 @@
                 "max": 500
             }
         }
+    },
+    {
+        "id": "quest.deliver.legendary-weapon",
+        "populatorType": "quest",
+        "type": "deliver",
+        "deliver": {
+            "item": [
+                "weapon.legendary.any-legendary-weapon"
+            ]
+        },
+        "reward": {
+            "gold": {
+                "min": 500,
+                "max": 2000
+            }
+        }
+    },
+    {
+        "id": "quest.deliver.magical-artifact",
+        "populatorType": "quest",
+        "type": "deliver",
+        "deliver": {
+            "item": "artifact.magical-artifact"
+        },
+        "reward": {
+            "gold": {
+                "min": 500,
+                "max": 1000
+            }
+        }
+    },
+    {
+        "id": "quest.deliver.alchemist-experiment",
+        "populatorType": "quest",
+        "type": "deliver",
+        "deliver": {
+            "item": "artifact.alchemist-experiment"
+        },
+        "reward": {
+            "gold": {
+                "min": 250,
+                "max": 500
+            }
+        }
+    },
+    {
+        "id": "quest.deliver.herb",
+        "populatorType": "quest",
+        "type": "deliver",
+        "deliver": {
+            "item": "material.herb"
+        },
+        "reward": {
+            "gold": {
+                "min": 10,
+                "max": 50
+            },
+            "items": [
+                "consumable.healing-potion.small"
+            ]
+        }
+    },
+    {
+        "id": "quest.deliver.personalized-medicine",
+        "populatorType": "quest",
+        "type": "deliver",
+        "deliver": {
+            "item": "artifact.personalized-medicine"
+        },
+        "reward": {
+            "gold": {
+                "min": 100,
+                "max": 500
+            },
+            "items": [
+                "consumable.healing-potion.large"
+            ]
+        }
+    },
+    {
+        "id": "quest.deliver.trade-commodity",
+        "populatorType": "quest",
+        "type": "deliver",
+        "deliver": {
+            "item": "material.trade-commodity"
+        },
+        "reward": {
+            "gold": {
+                "min": 100,
+                "max": 500
+            }
+        }
     }
 ]

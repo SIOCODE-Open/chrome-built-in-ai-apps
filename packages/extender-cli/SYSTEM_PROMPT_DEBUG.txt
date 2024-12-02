@@ -4,197 +4,260 @@ The game can be extended with new **populators** and **rules**.
 
 You will be given a broad context of interfaces and enumerations. Only output data adhering to these structures, and make sure to only ever use enum values that are actually defined!
 
-
 export interface IWorldItemDetails {
-  description: string;
+    description: string;
 }
 
 export interface IWearableItemEffect {
-  name: string;
-  details?: any;
-  type: WorldWearableEffectType;
-  activation: WorldWearableEffectActivation;
-  value?: number;
+    name: string;
+    details?: any;
+    type: WorldWearableEffectType;
+    activation: WorldWearableEffectActivation;
+    value?: number;
 }
 
 export interface IConsumableItemEffect {
-  name: string;
-  details?: any;
-  type: WorldConsumableEffectType;
-  value?: number;
+    name: string;
+    details?: any;
+    type: WorldConsumableEffectType;
+    value?: number;
 }
 
 export interface IWorldItemWeaponCharacteristics {
-  weaponType: WorldWeaponType;
-  damage: number;
-  effects?: Array<IWearableItemEffect>;
+    weaponType: WorldWeaponType;
+    damage: number;
+    effects?: Array<IWearableItemEffect>;
 }
 
 export interface IWorldItemArmorCharacteristics {
-  defense: number;
-  effects?: Array<IWearableItemEffect>;
+    defense: number;
+    effects?: Array<IWearableItemEffect>;
 }
 
 export interface IWorldItemBootsCharacteristics {
-  defense: number;
-  effects?: Array<IWearableItemEffect>;
+    defense: number;
+    effects?: Array<IWearableItemEffect>;
 }
 
 export interface IWorldItemHelmetCharacteristics {
-  defense: number;
-  effects?: Array<IWearableItemEffect>;
+    defense: number;
+    effects?: Array<IWearableItemEffect>;
 }
 
 export interface IWorldItemWearableCharacteristics {
-  wearableType: WorldWearableType;
-  defense: number;
-  effects?: Array<IWearableItemEffect>;
+    wearableType: WorldWearableType;
+    defense: number;
+    effects?: Array<IWearableItemEffect>;
 }
 
 export interface IWorldItemConsumableCharacteristics {
-  effects: Array<IConsumableItemEffect>;
+    effects: Array<IConsumableItemEffect>;
 }
 
 export interface IWorldItem {
-  id: number;
-  name: string;
-  type: WorldItemType;
-  tier: WorldItemTier;
-  labels: Array<string>;
-  details?: IWorldItemDetails;
-  contains?: Array<IWorldItem>;
-  static?: boolean;
-  destroyed?: boolean;
-  weapon?: IWorldItemWeaponCharacteristics;
-  armor?: IWorldItemArmorCharacteristics;
-  boots?: IWorldItemBootsCharacteristics;
-  helmet?: IWorldItemHelmetCharacteristics;
-  wearable?: IWorldItemWearableCharacteristics;
-  consumable?: IWorldItemConsumableCharacteristics;
-  lootable?: boolean;
+    id: number;
+    name: string;
+    type: WorldItemType;
+    tier: WorldItemTier;
+    labels: Array<string>;
+    details?: IWorldItemDetails;
+    contains?: Array<IWorldItem>;
+    static?: boolean;
+    destroyed?: boolean;
+    weapon?: IWorldItemWeaponCharacteristics;
+    armor?: IWorldItemArmorCharacteristics;
+    boots?: IWorldItemBootsCharacteristics;
+    helmet?: IWorldItemHelmetCharacteristics;
+    wearable?: IWorldItemWearableCharacteristics;
+    consumable?: IWorldItemConsumableCharacteristics;
+    lootable?: boolean;
+    tradeValue?: number;
 }
 
 export interface ICharacterInventory {
-  gold: number;
-  items: Array<IWorldItem>;
+    gold: number;
+    items: Array<IWorldItem>;
 }
 
 export interface ICharacterGear {
-  armor?: IWorldItem | null;
-  boots?: IWorldItem | null;
-  helmet?: IWorldItem | null;
-  weapon?: IWorldItem | null;
-  wearable?: IWorldItem | null;
+    armor?: IWorldItem | null;
+    boots?: IWorldItem | null;
+    helmet?: IWorldItem | null;
+    weapon?: IWorldItem | null;
+    wearable?: IWorldItem | null;
 }
 
 export interface INonPlayerCharacterPersonality {
-  traits: Array<WorldNpcPersonalityTrait>;
-  background: WorldNpcBackground;
+    traits: Array<WorldNpcPersonalityTrait>;
+    background: WorldNpcBackground;
 }
 
 export interface ICharacterHealth {
-  status: WorldPlayerHealth;
-  points: number;
-  max: number;
+    status: WorldPlayerHealth;
+    points: number;
+    max: number;
 }
 
 export interface IKnowledge {
-  item?: IWorldItem;
-  itemLocation?: IWorldNode;
-  location?: IWorldNode;
-  npc?: INonPlayerCharacter;
-  npcLocation?: IWorldNode;
-  distance?: number;
+    item?: IWorldItem;
+    itemLocation?: IWorldNode;
+    location?: IWorldNode;
+    npc?: INonPlayerCharacter;
+    npcLocation?: IWorldNode;
+    distance?: number;
+}
+
+export interface IDeliverQuestCharacteristics {
+    item: IWorldItem;
+    recipient: INonPlayerCharacter;
+}
+
+export interface ICollectQuestCharacteristics {
+    // FIXME
+    // items: Array<IWorldItemMatcher>;
+}
+
+export interface IFindLocationQuestCharacteristics {
+    location: IWorldNode;
+    didVisit?: boolean;
+}
+
+export interface ITalkToQuestCharacteristics {
+    npc: INonPlayerCharacter;
+    didTalk?: boolean;
+}
+
+export interface IKillQuestCharacteristics {
+    npc: INonPlayerCharacter;
+    didKill?: boolean;
+}
+
+export interface IQuestReward {
+    gold?: number;
+    items?: Array<IWorldItem>;
+}
+
+export interface IQuest {
+    id: number;
+    type: WorldNpcQuestType;
+    difficulty: WorldNpcQuestDifficulty;
+    narration?: string;
+    deliver?: IDeliverQuestCharacteristics;
+    collect?: ICollectQuestCharacteristics;
+    findLocation?: IFindLocationQuestCharacteristics;
+    talkTo?: ITalkToQuestCharacteristics;
+    kill?: IKillQuestCharacteristics;
+    reward?: IQuestReward;
 }
 
 export interface INonPlayerCharacter {
-  id: number;
-  name: string;
-  race: WorldNpcRace;
-  labels: Array<string>;
-  location: IWorldNode;
-  stance: WorldNpcStance;
-  health: ICharacterHealth;
-  inventory?: ICharacterInventory;
-  gear?: ICharacterGear;
-  personality?: INonPlayerCharacterPersonality;
-  knowledge?: Array<IKnowledge>;
+    id: number;
+    name: string;
+    race: WorldNpcRace;
+    labels: Array<string>;
+    location: IWorldNode;
+    stance: WorldNpcStance;
+    health: ICharacterHealth;
+    inventory?: ICharacterInventory;
+    gear?: ICharacterGear;
+    personality?: INonPlayerCharacterPersonality;
+    knowledge?: Array<IKnowledge>;
+    activeQuest?: IQuest;
+    nextQuest?: IQuest;
+    possibleQuests?: Array<string>;
+    itemValueOpinions?: Record<number, number>;
+}
+
+export const WORLD_NODE_LEVELS = [
+    'room',
+    'building',
+    'street',
+    'wilderness',
+    'dungeon',
+    'world',
+];
+
+export type WorldNodeLevel = typeof WORLD_NODE_LEVELS[number];
+
+export interface IWorldNodeDetails {
+    description: string;
 }
 
 export interface IWorldHierarchyNode {
-  name: string;
-  level?: WorldNodeLevel;
+    name: string;
+    level?: WorldNodeLevel;
+    details?: IWorldNodeDetails; // FIXME ???
 }
 
 export interface IWorldNodeBuilding {
-  buildingType: WorldNodeBuildingType;
+    buildingType: WorldNodeBuildingType;
 }
 
 export interface IWorldNodeRoom {
-  roomType: WorldNodeRoomType;
+    roomType: WorldNodeRoomType;
 }
 
 export interface IWorldNodeStreet {
-  streetType: WorldNodeStreetType;
+    streetType: WorldNodeStreetType;
 }
 
 export interface IWorldNodeSettlement {
-  settlementType: WorldNodeSettlementType;
+    settlementType: WorldNodeSettlementType;
 }
 
 export interface IWorldNodeWilderness {
-  wildernessType: WorldNodeWildernessType;
+    wildernessType: WorldNodeWildernessType;
 }
 
 export interface IWorldNode {
-  id: number;
-  name: string;
-  type: WorldNodeAreaType;
-  level?: WorldNodeLevel;
-  temperature: WorldNodeTemperature;
-  humidity: WorldNodeHumidity;
-  labels: Array<string>;
-  outEdges: Array<IWorldEdge>;
-  details?: IWorldNodeDetails;
-  hierarchy: Array<IWorldHierarchyNode>;
-  items?: Array<IWorldItem>;
-  npcs?: Array<INonPlayerCharacter>;
-  building?: IWorldNodeBuilding;
-  room?: IWorldNodeRoom;
-  street?: IWorldNodeStreet;
-  settlement?: IWorldNodeSettlement;
-  wilderness?: IWorldNodeWilderness;
-  ancestor?: IWorldNode;
+    id: number;
+    name: string;
+    type: WorldNodeAreaType;
+    level?: WorldNodeLevel;
+    temperature: WorldNodeTemperature;
+    humidity: WorldNodeHumidity;
+    labels: Array<string>;
+    outEdges: Array<IWorldEdge>;
+    details?: IWorldNodeDetails;
+    hierarchy: Array<IWorldHierarchyNode>;
+    items?: Array<IWorldItem>;
+    npcs?: Array<INonPlayerCharacter>;
+    building?: IWorldNodeBuilding;
+    room?: IWorldNodeRoom;
+    street?: IWorldNodeStreet;
+    settlement?: IWorldNodeSettlement;
+    wilderness?: IWorldNodeWilderness;
+    ancestor?: IWorldNode;
 }
 
 export interface IWorldEdge {
-  id: number;
-  from: IWorldNode;
-  to: IWorldNode;
-  distance: number;
-  labels: Array<string>;
-  discovered: boolean;
+    id: number;
+    from: IWorldNode;
+    to: IWorldNode;
+    distance: number;
+    labels: Array<string>;
+    discovered: boolean;
 }
 
 export interface IPlayerSkills {
-  skills: Array<WorldPlayerSkill>;
+    skills: Array<WorldPlayerSkill>;
 }
 
 export interface IPlayerHunger {
-  status: WorldPlayerHunger;
-  lastMealTime: number;
-  lastMeal: IWorldItem | null;
+    status: WorldPlayerHunger;
+    lastMealTime: number;
+    lastMeal: IWorldItem | null;
 }
 
 export interface IPlayerThirst {
-  status: WorldPlayerThirst;
-  lastDrinkTime: number;
-  lastDrink: IWorldItem | null;
+    status: WorldPlayerThirst;
+    lastDrinkTime: number;
+    lastDrink: IWorldItem | null;
 }
 
 export interface IPlayerCharacter {
-  name: string;
-  characterClass: WorldPlayerClass;
+    name: string;
+    characterClass: WorldPlayerClass;
 }
 
 // The type of an item
@@ -368,6 +431,27 @@ enum WorldNpcAction
     talk // I say something.
     attack // I attack the player.
 
+// The type of quest that a non-player character can offer
+enum WorldNpcQuestType
+    deliver // Someone gives you an item, that you must deliver to a specific person.
+    find-location // Someone asks you to reach a specific location, and tell them what you find there.
+    talk-to // Someone asks you to find a specific person and tell them a secret.
+    kill // Someone asks you to kill a specific person or animal.
+
+// The difficulty of a quest offered by a non-player character
+enum WorldNpcQuestDifficulty
+    easy // You can easily survive and finish this quest.
+    challenging // This quest offers some challenge, but you can still finish it if you are careful.
+    hard // This quest is hard, you will probably not survive it.
+    impossible // This quest is impossible to finish. You will die.
+
+// The opinion of a non-player character on a trade offer
+enum WorldNpcTradeOpinion
+    insulting // The offer is so bad that it is insulting.
+    bad // The offer is bad, and should not be accepted.
+    acceptable // The offer is acceptable, and can be accepted.
+    no-brainer // The offer is so good that it is a no-brainer to accept.
+
 // The temperature of a world node
 enum WorldNodeTemperature
     freezing // Extremely cold, ice and snow are common.
@@ -418,12 +502,12 @@ enum WorldNodeStreetType
 // Type of building
 enum WorldNodeBuildingType
     house // House of a family or individual.
-    blacksmith // A workshop where metal is forged and crafted.
-    tavern // A place to eat, drink, and socialize with other travelers.
     town-hall // The administrative center, and official place of gathering.
     church // A place of worship and spiritual reflection.
     farm // A place where crops are grown and animals are raised.
     store // A generic or specialized store for buying and selling goods.
+    dungeon // A dangerous building, often found standalone in wilderness, possibly holding good loot.
+    base // A friendly base, often found standalone in wilderness, possibly housing allies and providing loot.
 
 // Type of room
 enum WorldNodeRoomType
@@ -574,6 +658,9 @@ enum WorldHistoryHappening
     action-unpack // You decide to unpack the contents of a container.
     action-craft // You decide to engage in the combination of tools and materials.
     action-trade // You give someone a good offer, and shake hands to perform the trade.
+    action-begin-quest // You decide to accept the quest offered by someone.
+    action-hand-in-quest // You decide that it is time to end your quest, and the quest giver will decide if they accept or not.
+    action-tell-secret // You decide to tell a secret to someone.
     npc-talk // The NPC says something.
     npc-attack // The NPC attacks you.
     get-gold // You get some gold.
@@ -603,183 +690,182 @@ enum WorldHistoryHappening
     crafted-item // You created an item with your hands.
     start-combat // You engage in combat with an enemy.
     start-conversation // You start a conversation with an NPC.
+    offered-quest // Someone tells you the details of what they need help with.
+    begin-quest // Your quest begins.
+    finish-quest // You successfully finish a quest.
     defeat-npc // You defeat an enemy.
     die // You die.
 
-
-
 export type NodePopulatorType =
-  | "children"
-  | "item"
-  | "npc";
+    | "children"
+    | "item"
+    | "npc"
+    | "quest";
+
+type OneOfAttr<T> = T | Array<T> | { oneOf: Array<T> };
+type MinMaxAttr = { min: number, max: number };
 
 export interface INodeChildrenPopulator {
-  id: string;
-  populatorType: "children";
-  type: WorldNodeAreaType | Array<WorldNodeAreaType>;
-  name: string;
-  building?: {
-    buildingType: WorldNodeBuildingType | Array<WorldNodeBuildingType>;
-  };
-  room?: {
-    roomType: WorldNodeRoomType | Array<WorldNodeRoomType>;
-  };
-  street?: {
-    streetType: WorldNodeStreetType | Array<WorldNodeStreetType>;
-  };
-  settlement?: {
-    settlementType: WorldNodeSettlementType | Array<WorldNodeSettlementType>;
-  };
-  wilderness?: {
-    wildernessType: WorldNodeWildernessType | Array<WorldNodeWildernessType>;
-  };
-  temperature: "same" | WorldNodeTemperature | Array<WorldNodeTemperature>;
-  humidity: "same" | WorldNodeHumidity | Array<WorldNodeHumidity>;
-  distance: number | Array<number>;
-  labels?: Array<string>;
+    id: string;
+    populatorType: "children";
+    type: OneOfAttr<WorldNodeAreaType>;
+    name: OneOfAttr<string>;
+    building?: {
+        buildingType: OneOfAttr<WorldNodeBuildingType>;
+    };
+    room?: {
+        roomType: OneOfAttr<WorldNodeRoomType>;
+    };
+    street?: {
+        streetType: OneOfAttr<WorldNodeStreetType>;
+    };
+    settlement?: {
+        settlementType: OneOfAttr<WorldNodeSettlementType>;
+    };
+    wilderness?: {
+        wildernessType: OneOfAttr<WorldNodeWildernessType>;
+    };
+    temperature: "same" | OneOfAttr<WorldNodeTemperature>;
+    humidity: "same" | OneOfAttr<WorldNodeHumidity>;
+    distance: OneOfAttr<number> | MinMaxAttr;
+    labels?: Array<string>;
 }
 
 export type INodeItemWearableEffectSpec = {
-  name: string | Array<string>;
-  type: WorldWearableEffectType | Array<WorldWearableEffectType>;
-  activation: WorldWearableEffectActivation | Array<WorldWearableEffectActivation>;
-  value?: number | Array<number>;
-  probability?: number;
+    name: OneOfAttr<string>;
+    type: OneOfAttr<WorldWearableEffectType>;
+    activation: OneOfAttr<WorldWearableEffectActivation>;
+    value?: OneOfAttr<number> | MinMaxAttr;
+    probability?: number;
 }
 
 export type INodeItemConsumableEffectSpec = {
-  name: string | Array<string>;
-  type: WorldConsumableEffectType | Array<WorldConsumableEffectType>;
-  value?: number | Array<number>;
-  probability?: number;
+    name: OneOfAttr<string>;
+    type: OneOfAttr<WorldConsumableEffectType>;
+    value?: OneOfAttr<number> | MinMaxAttr;
+    probability?: number;
 }
 
 export interface INodeItemSpec {
-  type: WorldItemType | Array<WorldItemType>;
-  tier: WorldItemTier | Array<WorldItemTier>;
-  name: string | Array<string>;
-  noAi?: boolean;
-  weapon?: {
-    weaponType: WorldWeaponType | Array<WorldWeaponType>;
-    damage: {
-      min: number;
-      max: number;
+    type: OneOfAttr<WorldItemType>;
+    tier: OneOfAttr<WorldItemTier>;
+    name: OneOfAttr<string>;
+    noAi?: boolean;
+    weapon?: {
+        weaponType: OneOfAttr<WorldWeaponType>;
+        damage: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
     };
-    effects?: Array<INodeItemWearableEffectSpec>;
-  };
-  armor?: {
-    defense: {
-      min: number;
-      max: number;
+    armor?: {
+        defense: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
     };
-    effects?: Array<INodeItemWearableEffectSpec>;
-  };
-  wearable?: {
-    wearableType: WorldWearableType | Array<WorldWearableType>;
-    defense: {
-      min: number;
-      max: number;
+    wearable?: {
+        wearableType: WorldWearableType | Array<WorldWearableType>;
+        defense: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
     };
-    effects?: Array<INodeItemWearableEffectSpec>;
-  };
-  helmet?: {
-    defense: {
-      min: number;
-      max: number;
+    helmet?: {
+        defense: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
     };
-    effects?: Array<INodeItemWearableEffectSpec>;
-  };
-  boots?: {
-    defense: {
-      min: number;
-      max: number;
+    boots?: {
+        defense: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
     };
-    effects?: Array<INodeItemWearableEffectSpec>;
-  };
-  consumable?: {
-    effects: Array<INodeItemConsumableEffectSpec>;
-  };
-  static?: boolean;
-  probability?: number;
-  contains?: Array<INodeItemSpec>;
-  lootable?: boolean;
-  oneOf?: Array<INodeItemSpec> | Array<string>;
-  labels?: Array<string>;
+    consumable?: {
+        effects: Array<INodeItemConsumableEffectSpec>;
+    };
+    static?: boolean;
+    probability?: number;
+    contains?: Array<INodeItemSpec>;
+    lootable?: boolean;
+    oneOf?: Array<INodeItemSpec> | Array<string>;
+    labels?: Array<string>;
 }
 
 export interface INodeItemPopulator extends INodeItemSpec {
-  id: string;
-  populatorType: "item";
+    id: string;
+    populatorType: "item";
 }
 
 export interface INodeNpcPopulator {
-  id: string;
-  populatorType: "npc";
-  name: string | Array<string>;
-  race: WorldNpcRace | Array<WorldNpcRace>;
-  stance: WorldNpcStance | Array<WorldNpcStance>;
-  health: {
-    status: WorldPlayerHealth | Array<WorldPlayerHealth>;
-    points: number | Array<number>;
-    max: number | Array<number>;
-  }
-  inventory?: {
-    gold?: number | Array<number>;
-    items?: Array<INodeItemSpec> | Array<string>;
-  };
-  gear?: {
-    armor?: INodeItemSpec | string | null;
-    helmet?: INodeItemSpec | string | null;
-    boots?: INodeItemSpec | string | null;
-    weapon?: INodeItemSpec | string | null;
-    wearable?: INodeItemSpec | string | null;
-  };
-  personality?: {
-    traits: Array<WorldNpcPersonalityTrait>;
-    background: WorldNpcBackground | Array<WorldNpcBackground>;
-  };
-  labels?: Array<string>;
-  oneOf?: Array<INodeNpcPopulator> | Array<string>;
+    id: string;
+    populatorType: "npc";
+    name: OneOfAttr<string>;
+    race: OneOfAttr<WorldNpcRace>;
+    stance: OneOfAttr<WorldNpcStance>;
+    health: {
+        status: OneOfAttr<WorldPlayerHealth>;
+        points: OneOfAttr<number> | MinMaxAttr;
+        max: OneOfAttr<number> | MinMaxAttr;
+    }
+    inventory?: {
+        gold?: OneOfAttr<number> | MinMaxAttr;
+        items?: Array<INodeItemSpec> | Array<string>;
+    };
+    gear?: {
+        armor?: INodeItemSpec | string | null;
+        helmet?: INodeItemSpec | string | null;
+        boots?: INodeItemSpec | string | null;
+        weapon?: INodeItemSpec | string | null;
+        wearable?: INodeItemSpec | string | null;
+    };
+    personality?: {
+        traits: Array<WorldNpcPersonalityTrait>;
+        background: OneOfAttr<WorldNpcBackground>;
+    };
+    labels?: Array<string>;
+    quests?: Array<string>;
+    oneOf?: Array<INodeNpcPopulator> | Array<string>;
+}
+
+export interface IQuestPopulator {
+    id: string;
+    populatorType: "quest";
+    type: OneOfAttr<WorldNpcQuestType>;
+    difficulty: OneOfAttr<WorldNpcQuestDifficulty>;
+    deliver?: {
+        item: OneOfAttr<string>;
+    }
+    reward?: {
+        gold?: OneOfAttr<number> | MinMaxAttr;
+        items?: Array<string>;
+    }
 }
 
 export type INodePopulator = INodeChildrenPopulator
-  | INodeItemPopulator
-  | INodeNpcPopulator;
+    | INodeItemPopulator
+    | INodeNpcPopulator
+    | IQuestPopulator;
 
 export interface INodeRuleMatcher {
-  hasType?: WorldNodeAreaType;
-  hasLabel?: string;
-  building?: {
-    hasBuildingType: WorldNodeBuildingType;
-  };
-  room?: {
-    hasRoomType: WorldNodeRoomType;
-  };
-  street?: {
-    hasStreetType: WorldNodeStreetType;
-  };
-  settlement?: {
-    hasSettlementType: WorldNodeSettlementType;
-  };
-  wilderness?: {
-    hasWildernessType: WorldNodeWildernessType;
-  };
-  ancestor?: INodeRuleMatcher;
+    hasType?: WorldNodeAreaType;
+    hasLabel?: string;
+    building?: {
+        hasBuildingType: WorldNodeBuildingType;
+    };
+    room?: {
+        hasRoomType: WorldNodeRoomType;
+    };
+    street?: {
+        hasStreetType: WorldNodeStreetType;
+    };
+    settlement?: {
+        hasSettlementType: WorldNodeSettlementType;
+    };
+    wilderness?: {
+        hasWildernessType: WorldNodeWildernessType;
+    };
+    ancestor?: INodeRuleMatcher;
 }
 
 export interface INodePopulatorRule extends INodeRuleMatcher {
-  id: string;
-  // !!! ATTENTION! DO NOT USE {"oneOf": [ ... ]} or [...] FOR `apply`!!!
-  apply: string;
-  count: {
-    min: number;
-    max: number;
-  };
-  depth?: {
-    min: number;
-    max: number;
-  };
-  probability?: number;
+    id: string;
+    apply: OneOfAttr<string>;
+    count: MinMaxAttr;
+    depth?: MinMaxAttr;
+    probability?: number;
 }
 
 Starting populators:
@@ -793,7 +879,7 @@ alchemists.populators.json
 {"id":"building.alchemists-guild","populatorType":"children","name":"Alchemist's Guild","distance":5,"humidity":["normal","dry"],"temperature":["mild","warm"],"type":"building","building":{"buildingType":"store"},"labels":["alchemists-guild"]},
 {"id":"wearable.rare.nice-amulet","populatorType":"item","name":["Nice Amulet","Amulet of Protection","Silver Amulet"],"tier":"rare","type":"wearable","wearable":{"wearableType":"necklace","defense":{"min":10,"max":20},"effects":[{"name":"minor-heal","type":"heal","activation":"when-defending","value":20}]}},
 {"id":"item.alchemists-guild.alchemist.loot","populatorType":"item","oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.healing-potion.large","consumable.poison.small","consumable.poison.normal","material.herb","material.potion-ingredient"],"probability":1,"lootable":true},
-{"id":"npc.alchemists-guild.alchemist","populatorType":"npc","name":"Alchemist","health":{"status":"healthy","points":1200,"max":1200},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.nice-armor","boots":"boots.rare.nice-boots","helmet":"helmet.rare.nice-helmet","wearable":"wearable.rare.nice-amulet","weapon":"weapon.rare.nice-staff"},"personality":{"traits":["curious","diligent","patient","optimistic","humble"],"background":"alchemist"},"inventory":{"gold":[500,1000,2000,3000],"items":["item.alchemists-guild.alchemist.loot","item.alchemists-guild.alchemist.loot","item.alchemists-guild.alchemist.loot","item.alchemists-guild.alchemist.loot","item.alchemists-guild.alchemist.loot"]}}
+{"id":"npc.alchemists-guild.alchemist","populatorType":"npc","name":"Alchemist","health":{"status":"healthy","points":1200,"max":1200},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.nice-armor","boots":"boots.rare.nice-boots","helmet":"helmet.rare.nice-helmet","wearable":"wearable.rare.nice-amulet","weapon":"weapon.rare.nice-staff"},"personality":{"traits":["curious","diligent","patient","optimistic","humble"],"background":"alchemist"},"inventory":{"gold":[500,1000,2000,3000],"items":["item.alchemists-guild.alchemist.loot","item.alchemists-guild.alchemist.loot","item.alchemists-guild.alchemist.loot","item.alchemists-guild.alchemist.loot","item.alchemists-guild.alchemist.loot"]},"quests":["quest.deliver.alchemist-experiment"]}
 ]
 armor.populators.json
 [
@@ -813,13 +899,16 @@ artifact.populators.json
 {"id":"artifact.book","populatorType":"item","name":["Book on History","Book on Magic","Book on Science"],"tier":["rare"],"type":"artifact"},
 {"id":"artifact.painting","populatorType":"item","name":["Beautiful Painting","Exquisite Painting","Nice Painting"],"tier":["rare"],"type":"artifact"},
 {"id":"artifact.religious-icon","populatorType":"item","name":["Religious Icon","Holy Icon","Sacred Icon"],"tier":["common"],"type":"artifact"},
-{"id":"artifact.religious-book","populatorType":"item","name":["Religious Book","Religious Singing Book","Sacred Book"],"tier":["common"],"type":"artifact"}
+{"id":"artifact.religious-book","populatorType":"item","name":["Religious Book","Religious Singing Book","Sacred Book"],"tier":["common"],"type":"artifact"},
+{"id":"artifact.magical-artifact","populatorType":"item","name":"Magical Artifact","tier":["rare","epic"],"type":"artifact"},
+{"id":"artifact.alchemist-experiment","populatorType":"item","name":["Experiment of an Alchemist","Alchemist Experiment"],"tier":["rare"],"type":"artifact"},
+{"id":"artifact.personalized-medicine","populatorType":"item","name":["Personalized Medicine","Personalized Potion","Personalized Treatment"],"tier":["rare","epic","legendary"],"type":"artifact"}
 ]
 blacksmith.populators.json
 [
 {"id":"building.blacksmith","populatorType":"children","name":"Blacksmith Workshop","distance":5,"humidity":"dry","temperature":["warm","hot"],"type":"building","building":{"buildingType":"store"},"labels":["blacksmith"]},
 {"id":"item.blacksmith.smith.loot","populatorType":"item","oneOf":["weapon.rare.nice-sword","weapon.rare.nice-axe","armor.rare.nice-armor"],"lootable":true},
-{"id":"npc.blacksmith.smith","populatorType":"npc","name":"Smith","health":{"status":"healthy","points":2000,"max":2000},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.rare.elegant-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.rare.nice-sword","weapon.rare.nice-axe"]}},"inventory":{"gold":[4000,10000],"items":["item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot"]},"personality":{"traits":["cautious","indifferent","disciplined","patient","honest"],"background":"blacksmith"}}
+{"id":"npc.blacksmith.smith","populatorType":"npc","name":"Smith","health":{"status":"healthy","points":2000,"max":2000},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.rare.elegant-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.rare.nice-sword","weapon.rare.nice-axe"]}},"inventory":{"gold":[4000,10000],"items":["item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot"]},"personality":{"traits":["cautious","indifferent","disciplined","patient","honest"],"background":"blacksmith"},"quests":["quest.deliver.legendary-weapon"]}
 ]
 boots.populators.json
 [
@@ -836,7 +925,7 @@ cave.populators.json
 ]
 church.populators.json
 [
-{"id":"npc.church.priest","populatorType":"npc","name":"Priest","health":{"status":"healthy","points":100,"max":100},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.priest-robe"},"personality":{"traits":["kind","patient","loyal","forgiving","compassionate"],"background":"priest"},"inventory":{"gold":[0,10,25,50,100],"items":[{"oneOf":["artifact.religious-book"]}]}},
+{"id":"npc.church.priest","populatorType":"npc","name":"Priest","health":{"status":"healthy","points":100,"max":100},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.priest-robe"},"personality":{"traits":["kind","patient","loyal","forgiving","compassionate"],"background":"priest"},"inventory":{"gold":[0,10,25,50,100],"items":[{"oneOf":["artifact.religious-book"]}]},"quests":["quest.find-location"]},
 {"id":"building.church","populatorType":"children","name":"Church","distance":5,"humidity":["dry","normal"],"temperature":["mild","cool","cold"],"type":"building","building":{"buildingType":"church"},"labels":["church"]}
 ]
 consumable.populators.json
@@ -863,10 +952,10 @@ drink.populators.json
 dungeon.populators.json
 [
 {"id":"building.dungeon","populatorType":"children","name":"Dungeon","distance":10,"humidity":["normal","humid","wet"],"temperature":["cool","cold"],"type":"building","building":{"buildingType":"dungeon"},"labels":["dungeon"]},
-{"id":"item.dungeon.epic.loot","populatorType":"item","oneOf":["weapon.epic.amazing-sword","weapon.epic.amazing-axe","weapon.epic.amazing-knife","weapon.epic.amazing-dagger","weapon.epic.amazing-bow","weapon.epic.amazing-crossbow","weapon.epic.amazing-staff","armor.rare.nice-armor","helmet.rare.nice-helmet","boots.rare.nice-boots","wearable.rare.nice-amulet","consumable.healing-potion.large","consumable.scroll.lightning"],"lootable":true},
 {"id":"item.dungeon.rare.loot","populatorType":"item","oneOf":["weapon.rare.nice-sword","weapon.rare.nice-axe","weapon.rare.nice-bow","weapon.rare.nice-crossbow","weapon.rare.nice-staff","armor.rare.nice-armor","helmet.rare.nice-helmet","boots.rare.nice-boots","wearable.rare.nice-amulet","consumable.healing-potion.normal","consumable.scroll.fireball","consumable.dynamite"],"lootable":true},
 {"id":"item.dungeon.skeleton.loot","populatorType":"item","oneOf":["weapon.common.simple-sword","armor.common.simple-chainmail","helmet.common.simple-helmet","boots.common.simple-boots"],"lootable":true},
-{"id":"npc.dungeon.undead","populatorType":"npc","name":["Undead","Zombie","Skeleton"],"race":"animal","stance":"hostile","health":{"status":["healthy","injured"],"points":[100,200,300],"max":300},"inventory":{"items":["item.dungeon.skeleton.loot","item.dungeon.skeleton.loot","item.dungeon.skeleton.loot"]}}
+{"id":"npc.dungeon.undead","populatorType":"npc","name":["Undead","Zombie","Skeleton"],"race":"animal","stance":"hostile","health":{"status":["healthy","injured"],"points":[100,200,300],"max":300},"inventory":{"items":["item.dungeon.skeleton.loot","item.dungeon.skeleton.loot","item.dungeon.skeleton.loot"]}},
+{"id":"item.dungeon.epic.loot","populatorType":"item","oneOf":["weapon.epic.any-epic-weapon","armor.rare.nice-armor","helmet.rare.nice-helmet","boots.rare.nice-boots","wearable.rare.nice-amulet","consumable.healing-potion.large","consumable.scroll.lightning","weapon.legendary.any-legendary-weapon"],"lootable":true}
 ]
 engineers.populators.json
 [
@@ -930,7 +1019,7 @@ material.populators.json
 ]
 merchant.populators.json
 [
-{"id":"npc.merchant","populatorType":"npc","name":"Merchant","health":{"status":"healthy","points":[150,200,300],"max":300},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.common.simple-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[500,700,1200],"items":["material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity"]},"personality":{"traits":["adventurous","brave","diligent","disciplined","optimistic"],"background":"merchant"}}
+{"id":"npc.merchant","populatorType":"npc","name":"Merchant","health":{"status":"healthy","points":[150,200,300],"max":300},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.common.simple-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[500,700,1200],"items":["material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity"]},"personality":{"traits":["adventurous","brave","diligent","disciplined","optimistic"],"background":"merchant"},"quests":["quest.deliver.trade-commodity","quest.talk-to","quest.kill"]}
 ]
 mine.populators.json
 [
@@ -945,7 +1034,21 @@ mountain.populators.json
 pharmacy.populators.json
 [
 {"id":"building.pharmacy","populatorType":"children","name":"Pharmacy","distance":5,"humidity":["normal"],"temperature":["mild","cool"],"type":"building","building":{"buildingType":"store"},"labels":["pharmacy"]},
-{"id":"npc.pharmacy.pharmacist","populatorType":"npc","name":"Pharmacist","health":{"status":"healthy","points":100,"max":100},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.nice-armor","helmet":"helmet.rare.nice-helmet","boots":"boots.rare.nice-boots","weapon":"weapon.rare.nice-staff"},"personality":{"traits":["kind","honest","generous","patient","humble","empathetic"],"background":"healer"},"inventory":{"gold":[500,1000,1500,2000,3000],"items":[{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["material.herb","material.potion-ingredient"]},{"oneOf":["material.herb","material.potion-ingredient"]}]}}
+{"id":"npc.pharmacy.pharmacist","populatorType":"npc","name":"Pharmacist","health":{"status":"healthy","points":100,"max":100},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.nice-armor","helmet":"helmet.rare.nice-helmet","boots":"boots.rare.nice-boots","weapon":"weapon.rare.nice-staff"},"personality":{"traits":["kind","honest","generous","patient","humble","empathetic"],"background":"healer"},"inventory":{"gold":[500,1000,1500,2000,3000],"items":[{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["consumable.healing-potion.small","consumable.healing-potion.normal","consumable.poison.small","consumable.poison.normal"]},{"oneOf":["material.herb","material.potion-ingredient"]},{"oneOf":["material.herb","material.potion-ingredient"]}]},"quests":["quest.deliver.herb","quest.deliver.personalized-medicine"]}
+]
+quest.populators.json
+[
+{"id":"quest.deliver.food","populatorType":"quest","type":"deliver","deliver":{"item":["food.simple-food"]},"reward":{"gold":{"min":10,"max":100}}},
+{"id":"quest.deliver.drink","populatorType":"quest","type":"deliver","difficulty":"easy","deliver":{"item":["drink.simple-drink"]},"reward":{"gold":{"min":10,"max":100}}},
+{"id":"quest.talk-to","populatorType":"quest","type":"talk-to","reward":{"gold":{"min":50,"max":500}}},
+{"id":"quest.find-location","populatorType":"quest","type":"find-location","reward":{"gold":{"min":50,"max":500}}},
+{"id":"quest.kill","populatorType":"quest","type":"kill","reward":{"gold":{"min":50,"max":500}}},
+{"id":"quest.deliver.legendary-weapon","populatorType":"quest","type":"deliver","deliver":{"item":["weapon.legendary.any-legendary-weapon"]},"reward":{"gold":{"min":500,"max":2000}}},
+{"id":"quest.deliver.magical-artifact","populatorType":"quest","type":"deliver","deliver":{"item":"artifact.magical-artifact"},"reward":{"gold":{"min":500,"max":1000}}},
+{"id":"quest.deliver.alchemist-experiment","populatorType":"quest","type":"deliver","deliver":{"item":"artifact.alchemist-experiment"},"reward":{"gold":{"min":250,"max":500}}},
+{"id":"quest.deliver.herb","populatorType":"quest","type":"deliver","deliver":{"item":"material.herb"},"reward":{"gold":{"min":10,"max":50},"items":["consumable.healing-potion.small"]}},
+{"id":"quest.deliver.personalized-medicine","populatorType":"quest","type":"deliver","deliver":{"item":"artifact.personalized-medicine"},"reward":{"gold":{"min":100,"max":500},"items":["consumable.healing-potion.large"]}},
+{"id":"quest.deliver.trade-commodity","populatorType":"quest","type":"deliver","deliver":{"item":"material.trade-commodity"},"reward":{"gold":{"min":100,"max":500}}}
 ]
 river.populators.json
 [
@@ -969,12 +1072,12 @@ tavern.populators.json
 {"id":"room.tavern.bedroom","populatorType":"children","name":"Tavern Bedroom","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"bedroom"}},
 {"id":"room.tavern.kitchen","populatorType":"children","name":"Tavern Kitchen","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"kitchen"}},
 {"id":"room.tavern.cellar","populatorType":"children","name":"Tavern Cellar","distance":1,"humidity":"humid","temperature":["cool","cold"],"type":"room","room":{"roomType":"storage"}},
-{"id":"npc.tavern.tavern-keeper","populatorType":"npc","name":"Tavern Keeper","health":{"status":"healthy","points":1000,"max":1000},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.common.simple-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[100,250,400,800],"items":["household.kitchen-item","food.simple-food","drink.simple-drink"]},"personality":{"traits":["brave","cheerful","adventurous","compassionate","disciplined","honest","humble"],"background":"innkeeper"},"quests":[{"type":"deliver","cargo":{"oneOf":["food.simple-food","drink.simple-drink"]}}]},
+{"id":"npc.tavern.tavern-keeper","populatorType":"npc","name":"Tavern Keeper","health":{"status":"healthy","points":1000,"max":1000},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.common.simple-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[100,250,400,800],"items":["household.kitchen-item","food.simple-food","drink.simple-drink"]},"personality":{"traits":["brave","cheerful","adventurous","compassionate","disciplined","honest","humble"],"background":"innkeeper"},"quests":["quest.deliver.food","quest.deliver.drink","quest.talk-to"]},
 {"id":"building.tavern","populatorType":"children","name":"Tavern","distance":5,"humidity":["normal","humid"],"temperature":["mild","warm"],"type":"building","building":{"buildingType":"base"},"labels":["tavern"]}
 ]
 town-hall.populators.json
 [
-{"id":"npc.town-hall.mayor","populatorType":"npc","name":"Mayor","health":{"status":"healthy","points":800,"max":800},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.elegant-clothing","boots":"boots.rare.elegant-boots","helmet":"helmet.rare.elegant-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[1000,3000,8000],"items":[{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]},{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]},{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]},{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]},{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]}]},"personality":{"traits":["kind","generous","loyal","curious","empathetic","cheerful","compassionate"],"background":"diplomat"}},
+{"id":"npc.town-hall.mayor","populatorType":"npc","name":"Mayor","health":{"status":"healthy","points":800,"max":800},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.elegant-clothing","boots":"boots.rare.elegant-boots","helmet":"helmet.rare.elegant-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[1000,3000,8000],"items":[{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]},{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]},{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]},{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]},{"oneOf":["artifact.sculpture","artifact.painting","artifact.book","artifact.letter","artifact.map"]}]},"personality":{"traits":["kind","generous","loyal","curious","empathetic","cheerful","compassionate"],"background":"diplomat"},"quests":["quest.kill"]},
 {"id":"building.town-hall","populatorType":"children","name":"Town Hall","distance":5,"humidity":["normal"],"temperature":["mild"],"type":"building","building":{"buildingType":"town-hall"},"labels":["town-hall"]}
 ]
 village.populators.json
@@ -1002,22 +1105,33 @@ weapon.populators.json
 {"id":"weapon.common.simple-staff","populatorType":"item","name":["Staff","Simple Staff","Lame Staff"],"tier":"common","type":"weapon","weapon":{"weaponType":"bow","damage":{"min":5,"max":30}}},
 {"id":"weapon.rare.nice-staff","populatorType":"item","name":["Nice Staff","Nice Heavy Staff"],"tier":"rare","type":"weapon","weapon":{"weaponType":"staff","damage":{"min":30,"max":70}}},
 {"id":"weapon.animal.wolf-paws","populatorType":"item","name":"Wolf Paws","tier":"common","type":"weapon","weapon":{"weaponType":"knife","damage":{"min":10,"max":15}},"lootable":false},
-{"id":"weapon.epic.amazing-staff","populatorType":"item","name":["Powerful Steel Staff","Blessed Iron Staff"],"tier":"epic","type":"weapon","weapon":{"weaponType":"staff","damage":{"min":100,"max":150},"effects":[{"name":"Smite","activation":["when-attacking"],"type":["damage"],"value":[90,500,1000],"probability":1},{"name":"Superpower2","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":[90,500,1000],"probability":0.2}]}},
-{"id":"weapon.epic.amazing-sword","populatorType":"item","name":["Powerful Steel Sword","Blessed Iron Sword"],"tier":"epic","type":"weapon","weapon":{"weaponType":"sword","damage":{"min":100,"max":150},"effects":[{"name":"Smite","activation":["when-attacking"],"type":["damage"],"value":[10,12,15,18,20],"probability":1},{"name":"Smite","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":[10,12,15,18,20],"probability":0.2}]}},
-{"id":"weapon.epic.amazing-axe","populatorType":"item","name":["Mighty Steel Axe","Blessed Iron Axe"],"tier":"epic","type":"weapon","weapon":{"weaponType":"axe","damage":{"min":120,"max":180},"effects":[{"name":"Smite","activation":["when-attacking"],"type":["damage"],"value":[10,12,15,18,20],"probability":1},{"name":"Smite","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":[10,12,15,18,20],"probability":0.2}]}},
-{"id":"weapon.epic.amazing-knife","populatorType":"item","name":["Sharp Steel Knife","Blessed Iron Knife"],"tier":"epic","type":"weapon","weapon":{"weaponType":"knife","damage":{"min":60,"max":90},"effects":[{"name":"Smite","activation":["when-attacking"],"type":["damage"],"value":[10,12,15,18,20],"probability":1},{"name":"Smite","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":[10,12,15,18,20],"probability":0.2}]}},
-{"id":"weapon.epic.amazing-dagger","populatorType":"item","name":["Poisonous Steel Dagger","Blessed Iron Dagger"],"tier":"epic","type":"weapon","weapon":{"weaponType":"dagger","damage":{"min":70,"max":100},"effects":[{"name":"Smite","activation":["when-attacking"],"type":["damage"],"value":[10,12,15,18,20],"probability":1},{"name":"Smite","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":[10,12,15,18,20],"probability":0.2}]}},
-{"id":"weapon.epic.amazing-bow","populatorType":"item","name":["Powerful Steel Bow","Blessed Iron Bow"],"tier":"epic","type":"weapon","weapon":{"weaponType":"bow","damage":{"min":80,"max":120},"effects":[{"name":"Smite","activation":["when-attacking"],"type":["damage"],"value":[10,12,15,18,20],"probability":1},{"name":"Smite","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":[10,12,15,18,20],"probability":0.2}]}},
-{"id":"weapon.epic.amazing-crossbow","populatorType":"item","name":["Powerful Steel Crossbow","Blessed Iron Crossbow"],"tier":"epic","type":"weapon","weapon":{"weaponType":"crossbow","damage":{"min":90,"max":130},"effects":[{"name":"Smite","activation":["when-attacking"],"type":["damage"],"value":[10,12,15,18,20],"probability":1},{"name":"Smite","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":[10,12,15,18,20],"probability":0.2}]}},
+{"id":"weapon.epic.amazing-staff","populatorType":"item","name":["Powerful Steel Staff","Blessed Iron Staff"],"tier":"epic","type":"weapon","weapon":{"weaponType":"staff","damage":{"min":100,"max":150},"effects":[{"name":"Weapon Effect","activation":["when-attacking"],"type":["damage"],"value":{"min":90,"max":500},"probability":1},{"name":"Weapon Effect","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":{"min":90,"max":500},"probability":0.2}]}},
+{"id":"weapon.epic.amazing-sword","populatorType":"item","name":["Powerful Steel Sword","Blessed Iron Sword"],"tier":"epic","type":"weapon","weapon":{"weaponType":"sword","damage":{"min":100,"max":150},"effects":[{"name":"Weapon Effect","activation":["when-attacking"],"type":["damage"],"value":{"min":10,"max":20},"probability":1},{"name":"Weapon Effect","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":{"min":10,"max":20},"probability":0.2}]}},
+{"id":"weapon.epic.amazing-axe","populatorType":"item","name":["Mighty Steel Axe","Blessed Iron Axe"],"tier":"epic","type":"weapon","weapon":{"weaponType":"axe","damage":{"min":120,"max":180},"effects":[{"name":"Weapon Effect","activation":["when-attacking"],"type":["damage"],"value":{"min":10,"max":20},"probability":1},{"name":"Weapon Effect","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":{"min":10,"max":20},"probability":0.2}]}},
+{"id":"weapon.epic.amazing-knife","populatorType":"item","name":["Sharp Steel Knife","Blessed Iron Knife"],"tier":"epic","type":"weapon","weapon":{"weaponType":"knife","damage":{"min":60,"max":90},"effects":[{"name":"Weapon Effect","activation":["when-attacking"],"type":["damage"],"value":{"min":10,"max":20},"probability":1},{"name":"Weapon Effect","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":{"min":10,"max":20},"probability":0.2}]}},
+{"id":"weapon.epic.amazing-dagger","populatorType":"item","name":["Poisonous Steel Dagger","Blessed Iron Dagger"],"tier":"epic","type":"weapon","weapon":{"weaponType":"dagger","damage":{"min":70,"max":100},"effects":[{"name":"Weapon Effect","activation":["when-attacking"],"type":["damage"],"value":{"min":10,"max":20},"probability":1},{"name":"Weapon Effect","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":{"min":10,"max":20},"probability":0.2}]}},
+{"id":"weapon.epic.amazing-bow","populatorType":"item","name":["Powerful Steel Bow","Blessed Iron Bow"],"tier":"epic","type":"weapon","weapon":{"weaponType":"bow","damage":{"min":80,"max":120},"effects":[{"name":"Weapon Effect","activation":["when-attacking"],"type":["damage"],"value":{"min":10,"max":20},"probability":1},{"name":"Weapon Effect","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":{"min":10,"max":20},"probability":0.2}]}},
+{"id":"weapon.epic.amazing-crossbow","populatorType":"item","name":["Powerful Steel Crossbow","Blessed Iron Crossbow"],"tier":"epic","type":"weapon","weapon":{"weaponType":"crossbow","damage":{"min":90,"max":130},"effects":[{"name":"Weapon Effect","activation":["when-attacking"],"type":["damage"],"value":{"min":10,"max":20},"probability":1},{"name":"Weapon Effect","activation":["when-attacking","when-defending"],"type":["damage","heal"],"value":{"min":10,"max":20},"probability":0.2}]}},
 {"id":"weapon.animal.scorpion-venom-claws","populatorType":"item","name":"Scorpion Venom Claws","tier":"common","type":"weapon","weapon":{"weaponType":"knife","damage":{"min":75,"max":100}},"noAi":true,"lootable":false},
-{"id":"weapon.animal.spider-fangs","populatorType":"item","name":"Spider Fangs","tier":"common","type":"weapon","weapon":{"weaponType":"knife","damage":{"min":15,"max":25}},"lootable":false}
+{"id":"weapon.animal.spider-fangs","populatorType":"item","name":"Spider Fangs","tier":"common","type":"weapon","weapon":{"weaponType":"knife","damage":{"min":15,"max":25}},"lootable":false},
+{"id":"weapon.legendary.legendary-sword","populatorType":"item","name":"Legendary Sword","tier":"legendary","type":"weapon","weapon":{"weaponType":"sword","damage":{"min":200,"max":300},"effects":[{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":0.2}]}},
+{"id":"weapon.legendary.legendary-axe","populatorType":"item","name":"Legendary Axe","tier":"legendary","type":"weapon","weapon":{"weaponType":"axe","damage":{"min":250,"max":350},"effects":[{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":0.2}]}},
+{"id":"weapon.legendary.legendary-knife","populatorType":"item","name":"Legendary Knife","tier":"legendary","type":"weapon","weapon":{"weaponType":"knife","damage":{"min":150,"max":250},"effects":[{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":0.2}]}},
+{"id":"weapon.legendary.legendary-dagger","populatorType":"item","name":"Legendary Dagger","tier":"legendary","type":"weapon","weapon":{"weaponType":"dagger","damage":{"min":175,"max":275},"effects":[{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":0.2}]}},
+{"id":"weapon.legendary.legendary-bow","populatorType":"item","name":"Legendary Bow","tier":"legendary","type":"weapon","weapon":{"weaponType":"bow","damage":{"min":200,"max":300},"effects":[{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":0.2}]}},
+{"id":"weapon.legendary.legendary-crossbow","populatorType":"item","name":"Legendary Crossbow","tier":"legendary","type":"weapon","weapon":{"weaponType":"crossbow","damage":{"min":225,"max":325},"effects":[{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":0.2}]}},
+{"id":"weapon.legendary.legendary-staff","populatorType":"item","name":"Legendary Staff","tier":"legendary","type":"weapon","weapon":{"weaponType":"staff","damage":{"min":200,"max":300},"effects":[{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":1},{"name":"Weapon Effect","type":["damage","heal"],"activation":["when-attacking","when-defending"],"value":{"min":150,"max":400},"probability":0.2}]}},
+{"id":"weapon.rare.any-rare-weapon","populatorType":"item","name":"Rare Weapon","tier":"rare","type":"weapon","oneOf":["weapon.rare.nice-sword","weapon.rare.nice-axe","weapon.rare.nice-bow","weapon.rare.nice-crossbow","weapon.rare.nice-staff"]},
+{"id":"weapon.common.any-common-weapon","populatorType":"item","name":"Common Weapon","tier":"common","type":"weapon","oneOf":["weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-knife","weapon.common.simple-dagger","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]},
+{"id":"weapon.epic.any-epic-weapon","populatorType":"item","name":"Epic Weapon","tier":"epic","type":"weapon","oneOf":["weapon.epic.amazing-sword","weapon.epic.amazing-axe","weapon.epic.amazing-knife","weapon.epic.amazing-dagger","weapon.epic.amazing-bow","weapon.epic.amazing-crossbow","weapon.epic.amazing-staff"]},
+{"id":"weapon.legendary.any-legendary-weapon","populatorType":"item","name":"Legendary Weapon","tier":"legendary","type":"weapon","oneOf":["weapon.legendary.legendary-sword","weapon.legendary.legendary-axe","weapon.legendary.legendary-knife","weapon.legendary.legendary-dagger","weapon.legendary.legendary-bow","weapon.legendary.legendary-crossbow","weapon.legendary.legendary-staff"]}
 ]
 wizard.populators.json
 [
 {"id":"building.wizards-tower","populatorType":"children","name":"Wizard's Tower","distance":5,"humidity":["normal","dry"],"temperature":["mild","cool"],"type":"building","building":{"buildingType":"house"},"labels":["wizards-tower"]},
 {"id":"material.magical-material","populatorType":"item","name":"Magical Material","tier":"rare","type":"material","labels":["magical"]},
 {"id":"material.magical-dust","populatorType":"item","name":"Magical Dust","tier":"common","type":"material","labels":["magical"]},
-{"id":"npc.wizards-tower.wizard","populatorType":"npc","name":"Wizard","race":"human","stance":"friendly","health":{"status":"healthy","points":1000,"max":1000},"gear":{"armor":"armor.rare.nice-armor","boots":"boots.rare.nice-boots","helmet":"helmet.rare.nice-helmet","weapon":"weapon.rare.nice-staff"},"inventory":{"gold":[1000,2000,3000],"items":["material.magical-material","material.magical-material","weapon.rare.nice-staff","weapon.rare.nice-staff","material.magical-dust","material.magical-dust","material.magical-dust"]},"personality":{"traits":["curious","diligent","patient","optimistic","humble"],"background":"scholar"},"labels":["wizard"]}
+{"id":"npc.wizards-tower.wizard","populatorType":"npc","name":"Wizard","race":"human","stance":"friendly","health":{"status":"healthy","points":1000,"max":1000},"gear":{"armor":"armor.rare.nice-armor","boots":"boots.rare.nice-boots","helmet":"helmet.rare.nice-helmet","weapon":"weapon.rare.nice-staff"},"inventory":{"gold":[1000,2000,3000],"items":["material.magical-material","material.magical-material","weapon.rare.nice-staff","weapon.rare.nice-staff","material.magical-dust","material.magical-dust","material.magical-dust"]},"personality":{"traits":["curious","diligent","patient","optimistic","humble"],"background":"scholar"},"labels":["wizard"],"quests":["quest.deliver.magical-artifact"]}
 ]
 wizards-tower.populators.json
 [

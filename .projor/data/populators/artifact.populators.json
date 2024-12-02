@@ -84,5 +84,42 @@
             "common"
         ],
         "type": "artifact"
+    },
+    {
+        "id": "artifact.magical-artifact",
+        "populatorType": "item",
+        "name": "Magical Artifact",
+        "tier": [
+            "rare",
+            "epic"
+        ],
+        "type": "artifact"
+    },
+    {
+        "id": "artifact.alchemist-experiment",
+        "populatorType": "item",
+        "name": [
+            "Experiment of an Alchemist",
+            "Alchemist Experiment"
+        ],
+        "tier": [
+            "rare"
+        ],
+        "type": "artifact"
+    },
+    {
+        "id": "artifact.personalized-medicine",
+        "populatorType": "item",
+        "name": [
+            "Personalized Medicine",
+            "Personalized Potion",
+            "Personalized Treatment"
+        ],
+        "tier": [
+            "rare",
+            "epic",
+            "legendary"
+        ],
+        "type": "artifact"
     }
 ]

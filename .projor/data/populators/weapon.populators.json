@@ -242,22 +242,21 @@
             },
             "effects": [
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking"
                     ],
                     "type": [
                         "damage"
                     ],
-                    "value": [
-                        90,
-                        500,
-                        1000
-                    ],
+                    "value": {
+                        "min": 90,
+                        "max": 500
+                    },
                     "probability": 1
                 },
                 {
-                    "name": "Superpower2",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking",
                         "when-defending"
@@ -266,11 +265,10 @@
                         "damage",
                         "heal"
                     ],
-                    "value": [
-                        90,
-                        500,
-                        1000
-                    ],
+                    "value": {
+                        "min": 90,
+                        "max": 500
+                    },
                     "probability": 0.2
                 }
             ]
@@ -293,24 +291,21 @@
             },
             "effects": [
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking"
                     ],
                     "type": [
                         "damage"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 1
                 },
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking",
                         "when-defending"
@@ -319,13 +314,10 @@
                         "damage",
                         "heal"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 0.2
                 }
             ]
@@ -348,24 +340,21 @@
             },
             "effects": [
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking"
                     ],
                     "type": [
                         "damage"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 1
                 },
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking",
                         "when-defending"
@@ -374,13 +363,10 @@
                         "damage",
                         "heal"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 0.2
                 }
             ]
@@ -403,24 +389,21 @@
             },
             "effects": [
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking"
                     ],
                     "type": [
                         "damage"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 1
                 },
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking",
                         "when-defending"
@@ -429,13 +412,10 @@
                         "damage",
                         "heal"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 0.2
                 }
             ]
@@ -458,24 +438,21 @@
             },
             "effects": [
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking"
                     ],
                     "type": [
                         "damage"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 1
                 },
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking",
                         "when-defending"
@@ -484,13 +461,10 @@
                         "damage",
                         "heal"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 0.2
                 }
             ]
@@ -513,24 +487,21 @@
             },
             "effects": [
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking"
                     ],
                     "type": [
                         "damage"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 1
                 },
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking",
                         "when-defending"
@@ -539,13 +510,10 @@
                         "damage",
                         "heal"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 0.2
                 }
             ]
@@ -568,24 +536,21 @@
             },
             "effects": [
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking"
                     ],
                     "type": [
                         "damage"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 1
                 },
                 {
-                    "name": "Smite",
+                    "name": "Weapon Effect",
                     "activation": [
                         "when-attacking",
                         "when-defending"
@@ -594,13 +559,10 @@
                         "damage",
                         "heal"
                     ],
-                    "value": [
-                        10,
-                        12,
-                        15,
-                        18,
-                        20
-                    ],
+                    "value": {
+                        "min": 10,
+                        "max": 20
+                    },
                     "probability": 0.2
                 }
             ]
@@ -636,5 +598,515 @@
             }
         },
         "lootable": false
+    },
+    {
+        "id": "weapon.legendary.legendary-sword",
+        "populatorType": "item",
+        "name": "Legendary Sword",
+        "tier": "legendary",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "sword",
+            "damage": {
+                "min": 200,
+                "max": 300
+            },
+            "effects": [
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.legendary.legendary-axe",
+        "populatorType": "item",
+        "name": "Legendary Axe",
+        "tier": "legendary",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "axe",
+            "damage": {
+                "min": 250,
+                "max": 350
+            },
+            "effects": [
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.legendary.legendary-knife",
+        "populatorType": "item",
+        "name": "Legendary Knife",
+        "tier": "legendary",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "knife",
+            "damage": {
+                "min": 150,
+                "max": 250
+            },
+            "effects": [
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.legendary.legendary-dagger",
+        "populatorType": "item",
+        "name": "Legendary Dagger",
+        "tier": "legendary",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "dagger",
+            "damage": {
+                "min": 175,
+                "max": 275
+            },
+            "effects": [
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.legendary.legendary-bow",
+        "populatorType": "item",
+        "name": "Legendary Bow",
+        "tier": "legendary",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "bow",
+            "damage": {
+                "min": 200,
+                "max": 300
+            },
+            "effects": [
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.legendary.legendary-crossbow",
+        "populatorType": "item",
+        "name": "Legendary Crossbow",
+        "tier": "legendary",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "crossbow",
+            "damage": {
+                "min": 225,
+                "max": 325
+            },
+            "effects": [
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.legendary.legendary-staff",
+        "populatorType": "item",
+        "name": "Legendary Staff",
+        "tier": "legendary",
+        "type": "weapon",
+        "weapon": {
+            "weaponType": "staff",
+            "damage": {
+                "min": 200,
+                "max": 300
+            },
+            "effects": [
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 1
+                },
+                {
+                    "name": "Weapon Effect",
+                    "type": [
+                        "damage",
+                        "heal"
+                    ],
+                    "activation": [
+                        "when-attacking",
+                        "when-defending"
+                    ],
+                    "value": {
+                        "min": 150,
+                        "max": 400
+                    },
+                    "probability": 0.2
+                }
+            ]
+        }
+    },
+    {
+        "id": "weapon.rare.any-rare-weapon",
+        "populatorType": "item",
+        "name": "Rare Weapon",
+        "tier": "rare",
+        "type": "weapon",
+        "oneOf": [
+            "weapon.rare.nice-sword",
+            "weapon.rare.nice-axe",
+            "weapon.rare.nice-bow",
+            "weapon.rare.nice-crossbow",
+            "weapon.rare.nice-staff"
+        ]
+    },
+    {
+        "id": "weapon.common.any-common-weapon",
+        "populatorType": "item",
+        "name": "Common Weapon",
+        "tier": "common",
+        "type": "weapon",
+        "oneOf": [
+            "weapon.common.simple-sword",
+            "weapon.common.simple-axe",
+            "weapon.common.simple-knife",
+            "weapon.common.simple-dagger",
+            "weapon.common.simple-bow",
+            "weapon.common.simple-crossbow",
+            "weapon.common.simple-staff"
+        ]
+    },
+    {
+        "id": "weapon.epic.any-epic-weapon",
+        "populatorType": "item",
+        "name": "Epic Weapon",
+        "tier": "epic",
+        "type": "weapon",
+        "oneOf": [
+            "weapon.epic.amazing-sword",
+            "weapon.epic.amazing-axe",
+            "weapon.epic.amazing-knife",
+            "weapon.epic.amazing-dagger",
+            "weapon.epic.amazing-bow",
+            "weapon.epic.amazing-crossbow",
+            "weapon.epic.amazing-staff"
+        ]
+    },
+    {
+        "id": "weapon.legendary.any-legendary-weapon",
+        "populatorType": "item",
+        "name": "Legendary Weapon",
+        "tier": "legendary",
+        "type": "weapon",
+        "oneOf": [
+            "weapon.legendary.legendary-sword",
+            "weapon.legendary.legendary-axe",
+            "weapon.legendary.legendary-knife",
+            "weapon.legendary.legendary-dagger",
+            "weapon.legendary.legendary-bow",
+            "weapon.legendary.legendary-crossbow",
+            "weapon.legendary.legendary-staff"
+        ]
     }
 ]

@@ -1,0 +1,172 @@
+
+export type NodePopulatorType =
+    | "children"
+    | "item"
+    | "npc"
+    | "quest";
+
+type OneOfAttr<T> = T | Array<T> | { oneOf: Array<T> };
+type MinMaxAttr = { min: number, max: number };
+
+export interface INodeChildrenPopulator {
+    id: string;
+    populatorType: "children";
+    type: OneOfAttr<WorldNodeAreaType>;
+    name: OneOfAttr<string>;
+    building?: {
+        buildingType: OneOfAttr<WorldNodeBuildingType>;
+    };
+    room?: {
+        roomType: OneOfAttr<WorldNodeRoomType>;
+    };
+    street?: {
+        streetType: OneOfAttr<WorldNodeStreetType>;
+    };
+    settlement?: {
+        settlementType: OneOfAttr<WorldNodeSettlementType>;
+    };
+    wilderness?: {
+        wildernessType: OneOfAttr<WorldNodeWildernessType>;
+    };
+    temperature: "same" | OneOfAttr<WorldNodeTemperature>;
+    humidity: "same" | OneOfAttr<WorldNodeHumidity>;
+    distance: OneOfAttr<number> | MinMaxAttr;
+    labels?: Array<string>;
+}
+
+export type INodeItemWearableEffectSpec = {
+    name: OneOfAttr<string>;
+    type: OneOfAttr<WorldWearableEffectType>;
+    activation: OneOfAttr<WorldWearableEffectActivation>;
+    value?: OneOfAttr<number> | MinMaxAttr;
+    probability?: number;
+}
+
+export type INodeItemConsumableEffectSpec = {
+    name: OneOfAttr<string>;
+    type: OneOfAttr<WorldConsumableEffectType>;
+    value?: OneOfAttr<number> | MinMaxAttr;
+    probability?: number;
+}
+
+export interface INodeItemSpec {
+    type: OneOfAttr<WorldItemType>;
+    tier: OneOfAttr<WorldItemTier>;
+    name: OneOfAttr<string>;
+    noAi?: boolean;
+    weapon?: {
+        weaponType: OneOfAttr<WorldWeaponType>;
+        damage: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
+    };
+    armor?: {
+        defense: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
+    };
+    wearable?: {
+        wearableType: WorldWearableType | Array<WorldWearableType>;
+        defense: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
+    };
+    helmet?: {
+        defense: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
+    };
+    boots?: {
+        defense: OneOfAttr<number> | MinMaxAttr;
+        effects?: Array<INodeItemWearableEffectSpec>;
+    };
+    consumable?: {
+        effects: Array<INodeItemConsumableEffectSpec>;
+    };
+    static?: boolean;
+    probability?: number;
+    contains?: Array<INodeItemSpec>;
+    lootable?: boolean;
+    oneOf?: Array<INodeItemSpec> | Array<string>;
+    labels?: Array<string>;
+}
+
+export interface INodeItemPopulator extends INodeItemSpec {
+    id: string;
+    populatorType: "item";
+}
+
+export interface INodeNpcPopulator {
+    id: string;
+    populatorType: "npc";
+    name: OneOfAttr<string>;
+    race: OneOfAttr<WorldNpcRace>;
+    stance: OneOfAttr<WorldNpcStance>;
+    health: {
+        status: OneOfAttr<WorldPlayerHealth>;
+        points: OneOfAttr<number> | MinMaxAttr;
+        max: OneOfAttr<number> | MinMaxAttr;
+    }
+    inventory?: {
+        gold?: OneOfAttr<number> | MinMaxAttr;
+        items?: Array<INodeItemSpec> | Array<string>;
+    };
+    gear?: {
+        armor?: INodeItemSpec | string | null;
+        helmet?: INodeItemSpec | string | null;
+        boots?: INodeItemSpec | string | null;
+        weapon?: INodeItemSpec | string | null;
+        wearable?: INodeItemSpec | string | null;
+    };
+    personality?: {
+        traits: Array<WorldNpcPersonalityTrait>;
+        background: OneOfAttr<WorldNpcBackground>;
+    };
+    labels?: Array<string>;
+    quests?: Array<string>;
+    oneOf?: Array<INodeNpcPopulator> | Array<string>;
+}
+
+export interface IQuestPopulator {
+    id: string;
+    populatorType: "quest";
+    type: OneOfAttr<WorldNpcQuestType>;
+    difficulty: OneOfAttr<WorldNpcQuestDifficulty>;
+    deliver?: {
+        item: OneOfAttr<string>;
+    }
+    reward?: {
+        gold?: OneOfAttr<number> | MinMaxAttr;
+        items?: Array<string>;
+    }
+}
+
+export type INodePopulator = INodeChildrenPopulator
+    | INodeItemPopulator
+    | INodeNpcPopulator
+    | IQuestPopulator;
+
+export interface INodeRuleMatcher {
+    hasType?: WorldNodeAreaType;
+    hasLabel?: string;
+    building?: {
+        hasBuildingType: WorldNodeBuildingType;
+    };
+    room?: {
+        hasRoomType: WorldNodeRoomType;
+    };
+    street?: {
+        hasStreetType: WorldNodeStreetType;
+    };
+    settlement?: {
+        hasSettlementType: WorldNodeSettlementType;
+    };
+    wilderness?: {
+        hasWildernessType: WorldNodeWildernessType;
+    };
+    ancestor?: INodeRuleMatcher;
+}
+
+export interface INodePopulatorRule extends INodeRuleMatcher {
+    id: string;
+    apply: OneOfAttr<string>;
+    count: MinMaxAttr;
+    depth?: MinMaxAttr;
+    probability?: number;
+}

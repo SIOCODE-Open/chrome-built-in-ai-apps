@@ -22,26 +22,6 @@
         ]
     },
     {
-        "id": "item.dungeon.epic.loot",
-        "populatorType": "item",
-        "oneOf": [
-            "weapon.epic.amazing-sword",
-            "weapon.epic.amazing-axe",
-            "weapon.epic.amazing-knife",
-            "weapon.epic.amazing-dagger",
-            "weapon.epic.amazing-bow",
-            "weapon.epic.amazing-crossbow",
-            "weapon.epic.amazing-staff",
-            "armor.rare.nice-armor",
-            "helmet.rare.nice-helmet",
-            "boots.rare.nice-boots",
-            "wearable.rare.nice-amulet",
-            "consumable.healing-potion.large",
-            "consumable.scroll.lightning"
-        ],
-        "lootable": true
-    },
-    {
         "id": "item.dungeon.rare.loot",
         "populatorType": "item",
         "oneOf": [
@@ -100,5 +80,20 @@
                 "item.dungeon.skeleton.loot"
             ]
         }
+    },
+    {
+        "id": "item.dungeon.epic.loot",
+        "populatorType": "item",
+        "oneOf": [
+            "weapon.epic.any-epic-weapon",
+            "armor.rare.nice-armor",
+            "helmet.rare.nice-helmet",
+            "boots.rare.nice-boots",
+            "wearable.rare.nice-amulet",
+            "consumable.healing-potion.large",
+            "consumable.scroll.lightning",
+            "weapon.legendary.any-legendary-weapon"
+        ],
+        "lootable": true
     }
 ]

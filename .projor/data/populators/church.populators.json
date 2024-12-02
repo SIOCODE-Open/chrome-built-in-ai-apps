@@ -38,7 +38,10 @@
                     ]
                 }
             ]
-        }
+        },
+        "quests": [
+            "quest.find-location"
+        ]
     },
     {
         "id": "building.church",

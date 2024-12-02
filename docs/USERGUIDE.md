@@ -117,3 +117,13 @@ At the beginning of the game, you have _40_ out of max _100_ health points. This
 You can find or craft _consumables_, that heal you. You can also find wearable items, that heal you when attacking or defending, but this is not available right at the beginning of the game.
 
 You should be able to find a _pharmacy_, or _alchemist's guild_ in the village. You can _trade_ with NPCs here to acquire _healing potions_, which can then be consumed by _clicking_ on them, and selecting the _hand with a hard_ icon. This action icon is also used to consume _other consumables_, such as _explosives_ or _scrolls_.
+
+![](./images/game-consume.png)
+
+# Combat
+
+Once you venture out of your _starting village_, you will find yourself in the _wilderness_. It is full of _hostile characters_, who will _attack you on sight_.
+
+When you are fighting, the **Wandering ...** box comes **Combat!**. This box shows you the _enemy you are fighting_, and also contains the button for your **Attack** action.
+
+![](./images/game-combat.png)

@@ -7,6 +7,8 @@ import * as worldenums from "./world.enums";
 const LOGTAG = chalk.dim("[extender-cli]");
 const CLOUD_URL = `https://chrome-builtin-ai-challenge-gemini-gateway-700248413310.europe-west4.run.app`;
 
+var MODELNAME: "gemini-1.5-flash" | "gemini-1.5-flash-8b" | "gemini-1.5-pro" = "gemini-1.5-flash";
+
 const theme = {
     prefix: LOGTAG,
 }
@@ -65,6 +67,10 @@ interface IProject {
     populatorCollections: Array<any>;
     ruleCollections: Array<any>;
     interfacesContent: string;
+    populatorInterfacesContent: string;
+    playerContextInterfacesContent: string;
+    worldContextInterfacesContent: string;
+    worldEnumsContent: string;
 }
 
 const project: IProject = {
@@ -73,6 +79,10 @@ const project: IProject = {
     populatorCollections: [],
     ruleCollections: [],
     interfacesContent: "",
+    populatorInterfacesContent: "",
+    playerContextInterfacesContent: "",
+    worldContextInterfacesContent: "",
+    worldEnumsContent: "",
 }
 
 interface IProjectCommand {
@@ -127,6 +137,11 @@ function projectSystemPrompt(): string {
     ).join("\n");
 
     txt = txt.substring(0, startingRulesStartIndex) + "Starting rules:\n\n" + newStartingRulesContent + "\n\n" + txt.substring(startingRulesEndIndex);
+
+    txt = txt.replace("[WORLD_CONTEXT_INTERFACES]", project.worldContextInterfacesContent.trim());
+    txt = txt.replace("[PLAYER_CONTEXT_INTERFACES]", project.playerContextInterfacesContent.trim());
+    txt = txt.replace("[WORLD_ENUMS]", project.worldEnumsContent.trim());
+    txt = txt.replace("[POPULATOR_INTERFACES]", project.populatorInterfacesContent.trim());
 
     return txt;
 
@@ -319,6 +334,38 @@ async function readProject() {
     const interfacesFileContent = await readFile(interfacesFilePath, "utf-8");
     project.interfacesContent = interfacesFileContent;
     print("Loaded interfaces from", chalk.bold(interfacesFilePath));
+
+    const populatorInterfacesFilePath = path.resolve(
+        cwd,
+        "POPULATOR_INTERFACES.txt"
+    );
+    const populatorInterfacesFileContent = await readFile(populatorInterfacesFilePath, "utf-8");
+    project.populatorInterfacesContent = populatorInterfacesFileContent;
+    print("Loaded populator interfaces from", chalk.bold(populatorInterfacesFilePath));
+
+    const playerContextInterfacesFilePath = path.resolve(
+        cwd,
+        "PLAYER_CONTEXT_INTERFACES.txt"
+    );
+    const playerContextInterfacesFileContent = await readFile(playerContextInterfacesFilePath, "utf-8");
+    project.playerContextInterfacesContent = playerContextInterfacesFileContent;
+    print("Loaded player context interfaces from", chalk.bold(playerContextInterfacesFilePath));
+
+    const worldContextInterfacesFilePath = path.resolve(
+        cwd,
+        "WORLD_CONTEXT_INTERFACES.txt"
+    );
+    const worldContextInterfacesFileContent = await readFile(worldContextInterfacesFilePath, "utf-8");
+    project.worldContextInterfacesContent = worldContextInterfacesFileContent;
+    print("Loaded world context interfaces from", chalk.bold(worldContextInterfacesFilePath));
+
+    const worldEnumsFilePath = path.resolve(
+        cwd,
+        "WORLD_ENUMS.txt"
+    );
+    const worldEnumsFileContent = await readFile(worldEnumsFilePath, "utf-8");
+    project.worldEnumsContent = worldEnumsFileContent;
+    print("Loaded world enums from", chalk.bold(worldEnumsFilePath));
 
     const projorDataDirectory = path.resolve(
         cwd,
@@ -769,13 +816,25 @@ async function mainLoopTick(password: string) {
         return true;
     }
 
+    if (userCommand === "pro") {
+        MODELNAME = "gemini-1.5-pro";
+        print("Switched to", chalk.bold(MODELNAME), "model.");
+        return true;
+    }
+
+    if (userCommand === "flash") {
+        MODELNAME = "gemini-1.5-flash";
+        print("Switched to", chalk.bold(MODELNAME), "model.");
+        return true;
+    }
+
     const machineResponse = await callCloud({
         messages: [
             { role: "system", content: projectSystemPrompt() },
             { role: "user", content: userCommand },
         ],
         password,
-        model: "gemini-1.5-flash",
+        model: MODELNAME,
     });
 
     try {

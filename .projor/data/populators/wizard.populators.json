@@ -85,6 +85,9 @@
         },
         "labels": [
             "wizard"
+        ],
+        "quests": [
+            "quest.deliver.magical-artifact"
         ]
     }
 ]

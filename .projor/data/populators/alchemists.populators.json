@@ -103,6 +103,9 @@
                 "item.alchemists-guild.alchemist.loot",
                 "item.alchemists-guild.alchemist.loot"
             ]
-        }
+        },
+        "quests": [
+            "quest.deliver.alchemist-experiment"
+        ]
     }
 ]
