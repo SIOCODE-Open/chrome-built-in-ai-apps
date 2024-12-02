@@ -1,26 +1,18 @@
 [
     {
-        "id": "quest.deliver.easy",
-        "populatorType": "quest",
-        "type": "deliver",
-        "difficulty": "easy",
-        "deliver": {
-            "item": [
-                "artifact.letter",
-                "food.simple-food",
-                "drink.simple-drink"
-            ]
-        }
-    },
-    {
         "id": "quest.deliver.food",
         "populatorType": "quest",
         "type": "deliver",
-        "difficulty": "easy",
         "deliver": {
             "item": [
                 "food.simple-food"
             ]
+        },
+        "reward": {
+            "gold": {
+                "min": 10,
+                "max": 100
+            }
         }
     },
     {
@@ -32,24 +24,45 @@
             "item": [
                 "drink.simple-drink"
             ]
+        },
+        "reward": {
+            "gold": {
+                "min": 10,
+                "max": 100
+            }
         }
     },
     {
         "id": "quest.talk-to",
         "populatorType": "quest",
         "type": "talk-to",
-        "difficulty": "easy"
+        "reward": {
+            "gold": {
+                "min": 50,
+                "max": 500
+            }
+        }
     },
     {
         "id": "quest.find-location",
         "populatorType": "quest",
         "type": "find-location",
-        "difficulty": "easy"
+        "reward": {
+            "gold": {
+                "min": 50,
+                "max": 500
+            }
+        }
     },
     {
         "id": "quest.kill",
         "populatorType": "quest",
         "type": "kill",
-        "difficulty": "easy"
+        "reward": {
+            "gold": {
+                "min": 50,
+                "max": 500
+            }
+        }
     }
 ]

@@ -50,13 +50,13 @@ export function GamePlayerActions(
         dropItem: (item: IWorldItem) => {
             console.log("[GamePlayerActions]", "Dropping item", item);
 
-            history.actionDrop(item);
+            history.actionDrop(item, player.getPlayerLocation());
             sim.start();
         },
         pickupItem: (item: IWorldItem) => {
             console.log("[GamePlayerActions]", "Picking up item", item);
 
-            history.actionPickUp(item);
+            history.actionPickUp(item, player.getPlayerLocation());
             sim.start();
         },
         eatItem: (item: IWorldItem) => {

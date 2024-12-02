@@ -52,8 +52,8 @@ export interface IHistoryContext {
     wakeUp(where: IWorldNode): IGameEvent;
 
     actionLookAround(where: IWorldNode): IGameEvent;
-    actionPickUp(what: IWorldItem): IGameEvent;
-    actionDrop(what: IWorldItem): IGameEvent;
+    actionPickUp(what: IWorldItem, where: IWorldNode): IGameEvent;
+    actionDrop(what: IWorldItem, where: IWorldNode): IGameEvent;
     actionEquip(slot: WorldPlayerEquipSlot, what: IWorldItem): IGameEvent;
     actionUnequip(slot: WorldPlayerEquipSlot, what: IWorldItem): IGameEvent;
     actionMove(from: IWorldNode, to: IWorldNode, through: IWorldEdge): IGameEvent;

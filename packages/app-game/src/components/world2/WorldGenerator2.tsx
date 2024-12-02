@@ -1036,6 +1036,17 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
 
         }
 
+        if (populator.reward) {
+            result.reward = {
+                gold: typeof populator.reward.gold !== "undefined"
+                    ? attributeChoice(populator.reward.gold)
+                    : undefined,
+                items: typeof populator.reward.items !== "undefined"
+                    ? this.generateItemsFromSpecs(populator.reward.items)
+                    : []
+            };
+        }
+
         result.difficulty = new QuestDifficultyCalculator().calculate(
             {
                 gear: playerGear,

@@ -530,7 +530,8 @@ export function ActionCraftProcessor() {
             value = 40 + Math.floor(Math.random() * 200);
         }
 
-        const effectType = WORLD_WEARABLE_EFFECT_TYPE[Math.floor(Math.random() * WORLD_WEARABLE_EFFECT_TYPE.length)] as WorldWearableEffectType;
+        const types = ["damage", "heal"]
+        const effectType = types[Math.floor(Math.random() * types.length)] as WorldWearableEffectType;
         const effectActivation = WORLD_WEARABLE_EFFECT_ACTIVATION[Math.floor(Math.random() * WORLD_WEARABLE_EFFECT_ACTIVATION.length)] as WorldWearableEffectActivation;
 
         if (effectType === "destroy-item") {
@@ -628,6 +629,8 @@ export function ActionCraftProcessor() {
             };
             const newName = await wearableSpecializer.prompt(specializationRequest);
 
+            console.log("[ActionCraftProcessor]", "Specialized wearable", specializationRequest, "to", newName);
+
             item.wearable = {
                 wearableType: specializationRequest.desiredWearableType as WorldWearableType,
                 defense: new ArmorDefenseGenerator().generate(item),
@@ -685,7 +688,21 @@ export function ActionCraftProcessor() {
 
             for (let i = 0; i < effectCount; i++) {
                 const newEffect = await generateWearableEffect(item.tier);
-                item.wearable.effects.push(newEffect);
+                if (item.type === "weapon") {
+                    item.weapon.effects.push(newEffect);
+                }
+                if (item.type === "armor") {
+                    item.armor.effects.push(newEffect);
+                }
+                if (item.type === "wearable") {
+                    item.wearable.effects.push(newEffect);
+                }
+                if (item.type === "helmet") {
+                    item.helmet.effects.push(newEffect);
+                }
+                if (item.type === "boots") {
+                    item.boots.effects.push(newEffect);
+                }
             }
 
         }
@@ -750,7 +767,7 @@ export function ActionCraftProcessor() {
             // TODO: Detect wearable type
             // TODO: Calculate defense
             item.wearable = {
-                wearableType: "necklace",
+                wearableType: item.wearable.wearableType,
                 defense: new ArmorDefenseGenerator().generateAtLeast(item, item.wearable.defense),
                 effects: item.wearable?.effects || [],
             };
@@ -808,7 +825,21 @@ export function ActionCraftProcessor() {
 
             for (let i = 0; i < effectCount; i++) {
                 const newEffect = await generateWearableEffect(item.tier);
-                item.wearable.effects.push(newEffect);
+                if (item.type === "weapon") {
+                    item.weapon.effects.push(newEffect);
+                }
+                if (item.type === "armor") {
+                    item.armor.effects.push(newEffect);
+                }
+                if (item.type === "wearable") {
+                    item.wearable.effects.push(newEffect);
+                }
+                if (item.type === "helmet") {
+                    item.helmet.effects.push(newEffect);
+                }
+                if (item.type === "boots") {
+                    item.boots.effects.push(newEffect);
+                }
             }
 
         }
@@ -840,8 +871,10 @@ export function ActionCraftProcessor() {
 
         }
 
-        item.details = undefined;
-        await populateItem(lm, item);
+        if (item.type === "consumable") {
+            item.details = undefined;
+            await populateItem(lm, item);
+        }
 
     };
 

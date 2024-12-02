@@ -16,7 +16,7 @@ import { LocationTooltip } from "../tooltips/LocationTooltip";
 import { NpcTooltip } from "../tooltips/NpcTooltip";
 import { NpcTradeResponder } from "../../ai/NpcTradeResponder";
 import { usePlayerActions } from "../../context/PlayerActions.context";
-import { createItemLabel } from "../labels/ItemLabel";
+import { createGoldLabel, createItemLabel } from "../labels/ItemLabel";
 import { createNpcLabel } from "../labels/NpcLabel";
 import { QuestDescriber } from "../../ai/QuestDescriber";
 import { createLocationLabel } from "../labels/LocationLabel";
@@ -332,6 +332,7 @@ export function ConversationInformation() {
     }
 
     const questLabels = [];
+    const questRewardLabels = [];
 
     if (conversationAction === "offer-help" && inConversationWith.nextQuest) {
         if (inConversationWith.nextQuest.type === "deliver") {
@@ -382,6 +383,22 @@ export function ConversationInformation() {
                     inConversationWith.nextQuest.findLocation!.location
                 )
             );
+        }
+
+        if (inConversationWith.nextQuest.reward) {
+            if (inConversationWith.nextQuest.reward.gold) {
+                questRewardLabels.push(createGoldLabel(inConversationWith.nextQuest.reward.gold));
+            }
+            if (inConversationWith.nextQuest.reward.items) {
+                for (const item of inConversationWith.nextQuest.reward.items) {
+                    questRewardLabels.push(
+                        createItemLabel(
+                            item,
+                            { actions: [] }
+                        )
+                    );
+                }
+            }
         }
     }
 
@@ -578,6 +595,8 @@ export function ConversationInformation() {
                             </p>
                             <CardTitle>They mention ...</CardTitle>
                             <CardLabelList value={questLabels} />
+                            <CardTitle>Your reward ...</CardTitle>
+                            <CardLabelList value={questRewardLabels} />
                             <button className={classNames(buttonClass, "w-full text-center")}
                                 onClick={onAcceptQuest}>
                                 Accept quest

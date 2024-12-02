@@ -49,3 +49,16 @@ export function createItemLabel(
         />
     }
 }
+
+export function createGoldLabel(value: number) {
+    return {
+        id: "gold",
+        label: `${value} Gold`,
+        color: "blue",
+        count: value,
+        tooltip: <>
+            <span className="text-xs italic font-normal">You get <span className="font-bold">{value}</span> gold.</span>
+        </>,
+        actions: null
+    };
+}

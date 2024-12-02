@@ -70,7 +70,8 @@ const EXAMPLES = [
         name: "Sword",
         tier: "common",
         type: "weapon",
-        proposedName: "Iron Shortsword"
+        proposedName: "Iron Shortsword",
+        weaponType: "sword"
     },
     {
         name: "Sword",
@@ -89,7 +90,8 @@ const EXAMPLES = [
         name: "Sword",
         tier: "legendary",
         type: "weapon",
-        proposedName: "Dragon's Fang"
+        proposedName: "Dragon's Fang",
+        weaponType: "sword"
     },
 
     // Axe
@@ -97,7 +99,8 @@ const EXAMPLES = [
         name: "Axe",
         tier: "common",
         type: "weapon",
-        proposedName: "Woodcutter's Hatchet"
+        proposedName: "Woodcutter's Hatchet",
+        weaponType: "axe"
     },
     {
         name: "Axe",
@@ -109,7 +112,8 @@ const EXAMPLES = [
         name: "Axe",
         tier: "epic",
         type: "weapon",
-        proposedName: "Titan's Battleaxe"
+        proposedName: "Titan's Battleaxe",
+        weaponType: "axe"
     },
 
     // Armor
@@ -185,12 +189,14 @@ const EXAMPLES = [
         name: "Wearable",
         tier: "common",
         type: "wearable",
+        wearableType: "cloak",
         proposedName: "Woolen Cloak"
     },
     {
         name: "Wearable",
         tier: "rare",
         type: "wearable",
+        wearableType: "necklace",
         proposedName: "Jeweled Amulet"
     },
     {
@@ -311,11 +317,18 @@ export class ItemDetailGenerator {
                 ...randomExamples.map(
                     ex => {
                         let itemEffectsPart = "";
+                        let itemSubtypePart = "";
                         if (typeof ex["effects"] === "string") {
                             itemEffectsPart = `\nItem effects: ${ex["effects"]}`;
                         }
+                        if (typeof ex["weaponType"] === "string") {
+                            itemSubtypePart = ` (${ex["weaponType"]})`;
+                        }
+                        if (typeof ex["wearableType"] === "string") {
+                            itemSubtypePart = ` (${ex["wearableType"]})`;
+                        }
                         return [
-                            { role: "user", content: `Item name: ${ex.name}\nItem tier: ${ex.tier}\nItem type: ${ex.type}${itemEffectsPart}` },
+                            { role: "user", content: `Item name: ${ex.name}\nItem tier: ${ex.tier}\nItem type: ${ex.type}${itemSubtypePart}${itemEffectsPart}` },
                             { role: "assistant", content: `I propose the following name: ${ex.proposedName}` }
                         ]
                     }

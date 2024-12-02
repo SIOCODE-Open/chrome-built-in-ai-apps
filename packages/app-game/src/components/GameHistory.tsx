@@ -107,17 +107,17 @@ export function GameHistory(props: { children?: any }) {
             WORLD_HISTORY_HAPPENING_DESCRIPTIONS["action-look-around"],
             { location: where }
         ),
-        actionPickUp: (what) => contextValue.publish(
+        actionPickUp: (what, where) => contextValue.publish(
             "player",
             "action-pick-up",
             WORLD_HISTORY_HAPPENING_DESCRIPTIONS["action-pick-up"],
-            { item: what }
+            { item: what, location: where }
         ),
-        actionDrop: (what) => contextValue.publish(
+        actionDrop: (what, where) => contextValue.publish(
             "player",
             "action-drop",
             WORLD_HISTORY_HAPPENING_DESCRIPTIONS["action-drop"],
-            { item: what }
+            { item: what, location: where }
         ),
         actionEquip: (slot, what) => contextValue.publish(
             "player",

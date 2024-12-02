@@ -5,35 +5,106 @@ import { shuffleArray } from "../utils/shuffleArray";
 const EXAMPLES = [
     // Positive Examples (Renaming Necessary)
     {
-        name: "Golden Necklace",
+        name: "Garnet Pendant",
         desiredWearableType: "ring",
-        response: "Golden Ring"
+        response: "Garnet Ring"
     },
     {
-        name: "Emerald Bracelet",
-        desiredWearableType: "belt",
-        response: "Emerald Belt"
-    },
-    {
-        name: "Sapphire Amulet",
+        name: "Sapphire Blade",
         desiredWearableType: "necklace",
         response: "Sapphire Necklace"
     },
     {
-        name: "Leather Belt",
+        name: "Woolen Sash",
         desiredWearableType: "necklace",
-        response: "Leather Necklace"
+        response: "Woolen Necklace"
     },
     {
-        name: "Mystic Charm",
+        name: "Solar Talisman",
         desiredWearableType: "trinket",
-        response: "Mystic Trinket"
+        response: "Solar Trinket"
     },
+    {
+        name: "Bronze Charm",
+        desiredWearableType: "ring",
+        response: "Bronze Ring"
+    },
+    {
+        name: "Ruby Anklet",
+        desiredWearableType: "bracelet",
+        response: "Ruby Bracelet"
+    },
+    {
+        name: "Opal Diadem",
+        desiredWearableType: "necklace",
+        response: "Opal Necklace"
+    },
+    {
+        name: "Jade Buckle",
+        desiredWearableType: "belt",
+        response: "Jade Belt"
+    },
+    {
+        name: "Celestial Medallion",
+        desiredWearableType: "trinket",
+        response: "Celestial Trinket"
+    },
+    {
+        name: "Ethereal Amulet",
+        desiredWearableType: "necklace",
+        response: "Ethereal Necklace"
+    },
+    {
+        name: "Adamant Band",
+        desiredWearableType: "bracelet",
+        response: "Adamant Bracelet"
+    },
+    {
+        name: "Topaz Choker",
+        desiredWearableType: "bracelet",
+        response: "Topaz Bracelet"
+    },
+    {
+        name: "Amber Ornament",
+        desiredWearableType: "necklace",
+        response: "Amber Necklace"
+    },
+    {
+        name: "Moonstone Earring",
+        desiredWearableType: "ring",
+        response: "Moonstone Ring"
+    },
+    {
+        name: "Titanium Armor",
+        desiredWearableType: "belt",
+        response: "Titanium Belt"
+    },
+    {
+        name: "Sunstone Brooch",
+        desiredWearableType: "bracelet",
+        response: "Sunstone Bracelet"
+    },
+    {
+        name: "The Frozen's Lords Crossbow",
+        desiredWearableType: "necklace",
+        response: "The Frozen's Lords Pendant"
+    },
+    {
+        name: "Dragonborn's Shield",
+        desiredWearableType: "trinket",
+        response: "Dragonborn's Trinket"
+    },
+    {
+        name: "Flaming Poisoned Scroll of Hell and Devastation",
+        desiredWearableType: "bracelet",
+        response: "Flaming Poisoned Bracelet of Hell and Devastation"
+    },
+
     // Negative Examples (No Renaming Necessary)
     {
-        name: "Golden Necklace",
-        desiredWearableType: "necklace",
-        response: "Golden Necklace"
+        name: "Silver Ring",
+        desiredWearableType: "ring",
+        response: "Silver Ring"
     },
     {
         name: "Emerald Bracelet",
@@ -51,13 +122,68 @@ const EXAMPLES = [
         response: "Mystic Trinket"
     },
     {
-        name: "Silver Ring",
+        name: "Golden Necklace",
+        desiredWearableType: "necklace",
+        response: "Golden Necklace"
+    },
+    {
+        name: "Iron Ring",
         desiredWearableType: "ring",
-        response: "Silver Ring"
+        response: "Iron Ring"
+    },
+    {
+        name: "Amethyst Bracelet",
+        desiredWearableType: "bracelet",
+        response: "Amethyst Bracelet"
+    },
+    {
+        name: "Diamond Necklace",
+        desiredWearableType: "necklace",
+        response: "Diamond Necklace"
+    },
+    {
+        name: "Obsidian Belt",
+        desiredWearableType: "belt",
+        response: "Obsidian Belt"
+    },
+    {
+        name: "Enchanted Trinket",
+        desiredWearableType: "trinket",
+        response: "Enchanted Trinket"
+    },
+    {
+        name: "Ancient Necklace",
+        desiredWearableType: "necklace",
+        response: "Ancient Necklace"
+    },
+    {
+        name: "Platinum Bracelet",
+        desiredWearableType: "bracelet",
+        response: "Platinum Bracelet"
+    },
+    {
+        name: "Crystal Bracelet",
+        desiredWearableType: "bracelet",
+        response: "Crystal Bracelet"
+    },
+    {
+        name: "Pearl Necklace",
+        desiredWearableType: "necklace",
+        response: "Pearl Necklace"
+    },
+    {
+        name: "Copper Ring",
+        desiredWearableType: "ring",
+        response: "Copper Ring"
+    },
+    {
+        name: "Silk Belt",
+        desiredWearableType: "belt",
+        response: "Silk Belt"
     }
 ];
 
-const SYSTEM_PROMPT = `Your task is to adjust the wearable's name to match the desired wearable type. Keep the original name if it already fits the desired type, or modify it to reflect the new wearable type while retaining as much of the original name as appropriate. The wearable types are: necklace, ring, bracelet, belt, trinket. Always start your response with 'The new wearable name is:'. Be concise.`;
+const SYSTEM_PROMPT = `Your task is to adjust the wearable's name to match the desired wearable type. Keep the original name if it already fits the desired type, or modify it to reflect the new wearable type while retaining as much of the original name as appropriate. Always start your response with 'The new wearable name is:'. Be concise.`;
 
 export interface IWearableSpecializerRequest {
     name: string;
@@ -114,7 +240,7 @@ export class WearableSpecializer implements IAITask<IWearableSpecializerRequest,
 
             try {
 
-                const llm = await this.lm.create(inPrompt.messages, { temperature: 0.7, topK: 1 });
+                const llm = await this.lm.create(inPrompt.messages, { temperature: 1, topK: 4 });
 
                 let resultText = await llm.prompt(inPrompt.nextMessage);
 

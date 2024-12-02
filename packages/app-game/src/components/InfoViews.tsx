@@ -36,6 +36,8 @@ export function InfoViews() {
         }
     );
 
+    const isDevmode = new URLSearchParams(window.location.search).get("devmode") === "true";
+
     useEffect(
         () => {
             const fn = async () => {
@@ -86,7 +88,7 @@ export function InfoViews() {
             <GearInformation />
             <CraftingInformation />
 
-            {/*<DebugInformation />*/}
+            {isDevmode && <DebugInformation />}
         </div>
     </>;
 

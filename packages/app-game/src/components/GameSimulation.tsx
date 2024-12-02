@@ -38,6 +38,7 @@ import { TurnHeadlineWriter } from "../ai/TurnHeadlineWriter";
 import { ActionBeginQuestProcessor } from "./simulation/ActionBeginQuestProcessor";
 import { ActionHandInQuestProcessor } from "./simulation/ActionHandInQuestProcessor";
 import { ActionTellSecretProcessor } from "./simulation/ActionTellSecretProcessor";
+import { FinishQuestProcessor } from "./simulation/FinishQuestProcessor";
 
 export function GameSimulation(
     props: {
@@ -202,6 +203,7 @@ export function GameSimulation(
         <ArriveProcessor />
         <DefeatNpcProcessor />
         <NpcAttackProcessor />
+        <FinishQuestProcessor />
         <HungerThirstTicker />
         <HealthTicker />
         {props.children}

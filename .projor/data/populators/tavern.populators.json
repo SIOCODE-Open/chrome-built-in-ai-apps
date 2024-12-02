@@ -90,6 +90,8 @@
             "background": "innkeeper"
         },
         "quests": [
+            "quest.deliver.food",
+            "quest.deliver.drink",
             "quest.talk-to"
         ]
     },

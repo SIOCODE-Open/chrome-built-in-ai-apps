@@ -130,6 +130,11 @@ export interface IKillQuestCharacteristics {
     didKill?: boolean;
 }
 
+export interface IQuestReward {
+    gold?: number;
+    items?: Array<IWorldItem>;
+}
+
 export interface IQuest {
     id: number;
     type: WorldNpcQuestType;
@@ -140,6 +145,7 @@ export interface IQuest {
     findLocation?: IFindLocationQuestCharacteristics;
     talkTo?: ITalkToQuestCharacteristics;
     kill?: IKillQuestCharacteristics;
+    reward?: IQuestReward;
 }
 
 export interface INonPlayerCharacter {

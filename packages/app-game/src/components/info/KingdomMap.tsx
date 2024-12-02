@@ -17,12 +17,29 @@ const BLACK_ICON_DATA = {
     "mdi:forest": `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAX9JREFUWEfdl91xAjEMhJdOQiUklQCVkFSSUAlQCZSS25tTxugkyz+X3Ez8koedkz/vynLYYOW1WXl/tAC8AHhkwCP96dNagNP09YcDEOmzz2oAXgFcpgpvAK6qWqSbzKUAtPWeVGAEhJAoIt1NrBSAJ+cJ0/UOQKKI9C6AA4BPp4JA0B26oFcK2RSBttYqsh3i2Q8CN/N099ZEEVjW6k3YjMcMhOgmRA6AV8o7lWd1dRQeQIn1GoJRcNE1qx+oz1zwALyTuN08FefV9PpBX92xlgVQY313FBognWa50+Y0GVBeFE9TNAVoyd0CEauLorAi6AHRjaav8awRLYCSu+9FIKfnIegA/6YjfNaIGqCnAQWqajz/Rg8QpHg8pwA91lvjmd3OR4yPmaf/zIElrLdmwjkzGceo6EBP10ezIoyCAEtaXz0Zo+dYClpZfk3PcORCVl8KgI22UzvdhngJ+ScAzQ4t5cD/B+A81//lcK7Lj5NId/ugNIKol5r11QG+AQgBasDSUb2oAAAAAElFTkSuQmCC`,
 };
 
+const WHITE_ICON_DATA = {
+    "mdi:house": `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAPZJREFUWEftlusNwjAMhM+bMApMAt2kTAJMAqN0k0OWEok+3DppSkGKf0e5L+dXBDuH7KyPCrDKAZI3AJ2IXHNTmQ1A8gngGIRbAA8R6VJBsgAG4lHzBaBJhUgCIHkAoLbHlw8fnAzhBnCIRxhNw8nrhAuApL5Yc+4NN8QiQIb4J6Q6oWkxYxZgpXgU1cK8WwQmAMlLKDiv7XPnWmtWTAKEAaMAJWMSYgRg9HgpkNHA6gFsLD45sL5VA2Yh/i2A9vZw8eiYtkZ0cQdGFy60bQWoDlQHshzQnj4bS0A/oL09H1a3+3y8d/FDUmoLJf8HthauDvyMA29zH6QhcQh7kwAAAABJRU5ErkJggg==`,
+    "mdi:family-room": `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAWZJREFUWEftVsFxwyAQ5DqJO0kqSVxJ7EriVGJ1Eney1mo4D8LAncTDjkd87Bkty3Lswkl48JAHrx82AVsFzAoA+MqMegkhXESEv7NRwPL7UMLqxKoAAOdx8nsjJQcROfJ7XPingR1CCPuSkKIAB6GutYt//hxxpoBTjqsJ+B6BBw9pxLR2rzQnEdl7BZAwP/uSHiV8PQHcPY/hzTiGJRX4EBGacTZuHgDAxbgo4/UbUUxCS4RHAPlowAGAHtVREzEJiIvnTqbDPw0zegTQzNzQHT9FqICS6xkZTmQVasMjoLaRKRUqoOT6CQAAPQLGy0pi6fNU/R8BrYyrWemV4ohVrFbYPALHbWhC1h6BSdwJMD3QyW9Ofy4BjIjnQTG3tQAwPc/pVWw1IAu4TejtaZ71AwDYAenNx4dDY2YyGgDGVLurXdoZ3TUkyc1XbCDWKEljyJsx5Xg+AWt22DPHbMt7yD1zNwFX5P+9Id7qqKoAAAAASUVORK5CYII=`,
+    "mdi:sign-routes": `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAARRJREFUWEftl+ERgjAMhZNNcBLdRN1EJ9FN1Elkk6fvrvyBQNJeD/Akf1vo1/T1JVVZOHTh9eW3AQA8RKRR1V1pJoszAOAkIre08FlV7yUQtQCeItJOALSqerXGawFENn+xIOYEIOQAYhQgCewQ2VrGnIFWTIC5Fif4AKBwcU+Er7FbYgE0IvLOSCun1r2GAHIh6gJwSwliSoT7792nGTG8I9h8oJNU3Ac8EfZqgTe9G4/5QORvBQCmUGtZsSfCuA9Edp9uyarKcX0f8DKxtoZky8CfZSAVqiNbrCRWs9/zhGw2JN5HAFgh+R7oB7tiHgVNKRzZTgiAzQr7BStYdrMeKSUAXQ9gEuQ+ULIBwrkNTlwc4AOjX44h0l0O+gAAAABJRU5ErkJggg==`,
+    "mdi:city": `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAPtJREFUWEftltENgzAMRH2b0E26SdvJSidpR2ETQ5AjRTQQ+SKUVCpfSCbc8/ncAml8obG+/DaAqr5FZABwYZ2kHTDxqwlPLAQFsBGPzVMQboBEfBKRj6kHJwYRcUMwAGqiI4BHuFfV5yJ+D/cAXO90PWxi5wJYN0ehXjsNdmdGUO+AqsYOqc2qHkFPANmQJbacE8LEgeYAYcdf1vFtCVz81Ysm7NXX1dy7AIxp7WsNazNQSu42pF0DsCM4HJHHASqE3i05GkFzgFKeqLpnBJRA6ZAHIPtnkwhQdQ9A8ww0B6AsLo3IM4JSnqh6/wBUWxWH3B+lFVrZo3+AGZsj3CGt3ah3AAAAAElFTkSuQmCC`,
+    "mdi:forest": `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAZtJREFUWEftl+FRwzAMha1N6CTQSYBJKJPQTgJMQjd55PmSXOJIshyX6x/8p3fVRf78niQnku685M77p2YAAA8icrXAa/HyuSYAAG9MICLvGkAtrj0TBgDwlFL6HJMcReRrmbAWtxQLAVDWlNLPIgktIES2ohb36iwKwJNTgeU6TVYAcONdAABeUkofRpIMAYDqUKVyzZC7LFCk1fIcBnueh8DJ2OTgdY1rgSFtuQ+L8dWByHELwgQYW8o6lSr1HitUgKD0JQSt4GJBavWgWmEBWEXlFXRuTceKVetOiTYAjdJ3W7ECKKaZd1ovRhV4WsuK1RSdAXb6roE0WaFZUI7dFiVWhaa08aYQNQBtrEYhptPzEBxO/F2O8E0hljXA6zba+xZU03j+ixogWHg8LwF6pN+MZxE5AuAlxstMjfPPDNDZ+6YVgxIXpx2zVXLD9tt3UwZvvGgXtE/GSGbDy7OI8BruWtFXMq2YZoDxremxIPkWkXON7lYALqAH8Q8QVYDzvHzLuU4fJ+M1bsa7LagVUk88pEDPBrVnfwGYmPG6bM6RuAAAAABJRU5ErkJggg==`
+}
+
 async function loadBlackIcon(name: keyof typeof BLACK_ICON_DATA) {
     return new Promise<HTMLImageElement>((resolve, reject) => {
         const img = new Image();
         img.onload = () => resolve(img);
         img.onerror = reject;
         img.src = BLACK_ICON_DATA[name];
+    });
+}
+
+async function loadWhiteIcon(name: keyof typeof WHITE_ICON_DATA) {
+    return new Promise<HTMLImageElement>((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = WHITE_ICON_DATA[name];
     });
 }
 
@@ -256,13 +273,28 @@ export function KingdomMap(
             return;
         }
 
-        iconsRef.current = {
-            "mdi:house": await loadBlackIcon("mdi:house"),
-            "mdi:family-room": await loadBlackIcon("mdi:family-room"),
-            "mdi:sign-routes": await loadBlackIcon("mdi:sign-routes"),
-            "mdi:city": await loadBlackIcon("mdi:city"),
-            "mdi:forest": await loadBlackIcon("mdi:forest"),
-        };
+        const csm = canvasRef.current.computedStyleMap();
+        const csmColor = csm.get("color").toString();
+
+        if (csmColor === "rgb(255, 255, 255)") {
+            iconsRef.current = {
+                "mdi:house": await loadWhiteIcon("mdi:house"),
+                "mdi:family-room": await loadWhiteIcon("mdi:family-room"),
+                "mdi:sign-routes": await loadWhiteIcon("mdi:sign-routes"),
+                "mdi:city": await loadWhiteIcon("mdi:city"),
+                "mdi:forest": await loadWhiteIcon("mdi:forest"),
+            };
+        } else {
+
+            iconsRef.current = {
+                "mdi:house": await loadBlackIcon("mdi:house"),
+                "mdi:family-room": await loadBlackIcon("mdi:family-room"),
+                "mdi:sign-routes": await loadBlackIcon("mdi:sign-routes"),
+                "mdi:city": await loadBlackIcon("mdi:city"),
+                "mdi:forest": await loadBlackIcon("mdi:forest"),
+            };
+
+        }
     };
 
     const onDraw = async () => {

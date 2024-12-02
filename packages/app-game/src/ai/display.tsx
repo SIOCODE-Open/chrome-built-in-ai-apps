@@ -192,6 +192,18 @@ export const aiDisplayQuest = (quest: IQuest) => {
         txt = `Kill person or animal ${quest.kill!.npc.name} at location ${aiDisplayLocationShort(quest.kill!.npc.location)}`;
     }
 
+    if (quest.reward) {
+        txt += " - Reward: ";
+        const rewards = [];
+        if (typeof quest.reward.gold !== "undefined") {
+            rewards.push(`${quest.reward.gold} gold`);
+        }
+        if (quest.reward.items) {
+            rewards.push(...quest.reward.items.map(i => aiDisplayItem(i)));
+        }
+        txt += rewards.join(", ");
+    }
+
     return `[${WORLD_NPC_QUEST_DIFFICULTY_DESCRIPTIONS[quest.difficulty]}] ${txt}`;
 
 }

@@ -894,6 +894,9 @@ export interface INodePopulatorRule extends INodeRuleMatcher {
 
 Starting populators:
 
+ai-generated.populators.json
+[
+],
 alchemists.populators.json
 [
 {"id":"building.alchemists-guild","populatorType":"children","name":"Alchemist's Guild","distance":5,"humidity":["normal","dry"],"temperature":["mild","warm"],"type":"building","building":{"buildingType":"store"},"labels":["alchemists-guild"]},
@@ -911,9 +914,6 @@ armor.populators.json
 {"id":"armor.animal.wolf-fur","populatorType":"item","name":"Wolf Fur","tier":"common","type":"armor","armor":{"defense":{"min":10,"max":13}},"lootable":false},
 {"id":"armor.common.simple-chainmail","populatorType":"item","name":["Simple Chainmail","Chainmail Armor","Simple Chainmail Armor"],"tier":"common","type":"armor","armor":{"defense":{"min":5,"max":15}}}
 ],
-ai-generated.populators.json
-[
-],
 artifact.populators.json
 [
 {"id":"artifact.sculpture","populatorType":"item","name":["Beautiful Stone Sculpture","Exquisite Marvel Sculpture","Nice Bronze Sculpture"],"tier":["rare"],"type":"artifact"},
@@ -924,17 +924,17 @@ artifact.populators.json
 {"id":"artifact.religious-icon","populatorType":"item","name":["Religious Icon","Holy Icon","Sacred Icon"],"tier":["common"],"type":"artifact"},
 {"id":"artifact.religious-book","populatorType":"item","name":["Religious Book","Religious Singing Book","Sacred Book"],"tier":["common"],"type":"artifact"}
 ],
-boots.populators.json
-[
-{"id":"boots.common.simple-boots","populatorType":"item","name":["Simple Boots","Simple Footwear","Simple Shoes"],"tier":"common","type":"boots","boots":{"defense":{"min":0,"max":3}}},
-{"id":"boots.rare.elegant-boots","populatorType":"item","name":["Elegant Boots","Noble Elegant Footwear","Elegant Shoes"],"tier":"rare","type":"boots","boots":{"defense":{"min":20,"max":50}}},
-{"id":"boots.rare.nice-boots","populatorType":"item","name":["Nice Steel Boots","Polished Iron Boots","Nice Boots"],"tier":"rare","type":"boots","boots":{"defense":{"min":30,"max":60}}}
-],
 blacksmith.populators.json
 [
 {"id":"building.blacksmith","populatorType":"children","name":"Blacksmith Workshop","distance":5,"humidity":"dry","temperature":["warm","hot"],"type":"building","building":{"buildingType":"store"},"labels":["blacksmith"]},
 {"id":"item.blacksmith.smith.loot","populatorType":"item","oneOf":["weapon.rare.nice-sword","weapon.rare.nice-axe","armor.rare.nice-armor"],"lootable":true},
 {"id":"npc.blacksmith.smith","populatorType":"npc","name":"Smith","health":{"status":"healthy","points":2000,"max":2000},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.rare.elegant-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.rare.nice-sword","weapon.rare.nice-axe"]}},"inventory":{"gold":[4000,10000],"items":["item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot","item.blacksmith.smith.loot"]},"personality":{"traits":["cautious","indifferent","disciplined","patient","honest"],"background":"blacksmith"}}
+],
+boots.populators.json
+[
+{"id":"boots.common.simple-boots","populatorType":"item","name":["Simple Boots","Simple Footwear","Simple Shoes"],"tier":"common","type":"boots","boots":{"defense":{"min":0,"max":3}}},
+{"id":"boots.rare.elegant-boots","populatorType":"item","name":["Elegant Boots","Noble Elegant Footwear","Elegant Shoes"],"tier":"rare","type":"boots","boots":{"defense":{"min":20,"max":50}}},
+{"id":"boots.rare.nice-boots","populatorType":"item","name":["Nice Steel Boots","Polished Iron Boots","Nice Boots"],"tier":"rare","type":"boots","boots":{"defense":{"min":30,"max":60}}}
 ],
 cave.populators.json
 [
@@ -983,25 +983,41 @@ engineers.populators.json
 {"id":"item.engineers-guild.engineer.loot","populatorType":"item","oneOf":["material.common","material.iron","material.steel","material.wood","consumable.dynamite"],"probability":1,"lootable":true},
 {"id":"npc.engineers-guild.engineer","populatorType":"npc","name":"Engineer","health":{"status":"healthy","points":1500,"max":1500},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.nice-armor","boots":"boots.rare.nice-boots","helmet":"helmet.rare.nice-helmet","weapon":"weapon.rare.nice-staff"},"personality":{"traits":["curious","diligent","patient","optimistic","humble"],"background":"artisan"},"inventory":{"gold":[500,1000,2000,3000],"items":["item.engineers-guild.engineer.loot","item.engineers-guild.engineer.loot","item.engineers-guild.engineer.loot","item.engineers-guild.engineer.loot","item.engineers-guild.engineer.loot","item.engineers-guild.engineer.loot","item.engineers-guild.engineer.loot","item.engineers-guild.engineer.loot"]}}
 ],
+food.populators.json
+[
+{"id":"food.simple-food","populatorType":"item","name":["Edible Food","Tasty Snack","Healthy Food","Simple Meal"],"tier":"common","type":"food"}
+],
 farm.populators.json
 [
 {"id":"building.farm","populatorType":"children","name":"Farm","distance":5,"humidity":["normal","humid"],"temperature":["mild","warm"],"type":"building","building":{"buildingType":"farm"}},
 {"id":"room.farm.granary","populatorType":"children","name":"Granary","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"storage"}}
-],
-food.populators.json
-[
-{"id":"food.simple-food","populatorType":"item","name":["Edible Food","Tasty Snack","Healthy Food","Simple Meal"],"tier":"common","type":"food"}
 ],
 forest.populators.json
 [
 {"id":"wilderness.forest","populatorType":"children","name":"Forest","distance":20,"humidity":["normal","humid","wet"],"temperature":["mild","cool","cold"],"type":"wilderness","wilderness":{"wildernessType":"forest"}},
 {"id":"npc.forest.wolf","populatorType":"npc","name":["Wolf","Common Wolf","Forest Wolf"],"race":"animal","stance":"hostile","health":{"status":"healthy","points":250,"max":250},"gear":{"weapon":"weapon.animal.wolf-paws","armor":"armor.animal.wolf-fur"}}
 ],
+house.populators.json
+[
+{"id":"room.house.bedroom","populatorType":"children","name":"Bedroom","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"bedroom"}},
+{"id":"room.house.kitchen","populatorType":"children","name":"Kitchen","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"kitchen"}},
+{"id":"room.house.storage","populatorType":"children","name":"Storeroom","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"storage"}},
+{"id":"building.house","populatorType":"children","name":"House","distance":5,"humidity":["dry","normal","humid"],"temperature":["cool","mild","warm","hot"],"type":"building","building":{"buildingType":"house"},"labels":["house"]}
+],
 helmets.populators.json
 [
 {"id":"helmet.common.simple-helmet","populatorType":"item","name":["Simple Helmet","Simple Headgear","Simple Hat"],"tier":"common","type":"helmet","helmet":{"defense":{"min":0,"max":3}}},
 {"id":"helmet.rare.elegant-helmet","populatorType":"item","name":["Elegant Headwear","Noble Elegant Hat"],"tier":"rare","type":"helmet","helmet":{"defense":{"min":10,"max":20}}},
 {"id":"helmet.rare.nice-helmet","populatorType":"item","name":["Nice Steel Helmet","Polished Iron Helmet"],"tier":"rare","type":"helmet","helmet":{"defense":{"min":20,"max":30}}}
+],
+household.populators.json
+[
+{"id":"household.common-item","populatorType":"item","name":["Household Item","Household Tool"],"tier":"common","type":"household"},
+{"id":"household.kitchen-item","populatorType":"item","name":["Kitchen Tool","Kitchen Container","Kitchen Equipment","Kitchen Utensil"],"tier":"common","type":"household"},
+{"id":"furniture.bed","populatorType":"item","name":"Bed","tier":"common","type":"household","static":true},
+{"id":"furniture.chest","populatorType":"item","name":["Chest","Locker","Box"],"tier":"common","type":"household","static":true,"contains":[{"probability":0.8,"name":"Common Household Tool","tier":"common","type":"household"},{"probability":0.25,"name":"Rare Household Tool","tier":"rare","type":"household"}]},
+{"id":"household.religious-item","populatorType":"item","name":["Religious Item","Faith Item","Sacred Item"],"tier":["common","rare"],"type":"household"},
+{"id":"household.potion-brewing-equipment","populatorType":"item","name":["Potion Brewing Equipment","Alchemy Set","Brewing Apparatus","Cauldron","Distillation Kit"],"tier":["common","rare"],"type":"household"}
 ],
 material.populators.json
 [
@@ -1021,22 +1037,6 @@ material.populators.json
 {"id":"household.mining-equipment","populatorType":"item","name":"Mining Equipment","tier":"common","type":"household","labels":["mining-equipment"]},
 {"id":"material.sand","populatorType":"item","name":["Sand","Fine Sand","Coarse Sand","Desert Sand"],"tier":"common","type":"material","labels":["sand"]}
 ],
-house.populators.json
-[
-{"id":"room.house.bedroom","populatorType":"children","name":"Bedroom","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"bedroom"}},
-{"id":"room.house.kitchen","populatorType":"children","name":"Kitchen","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"kitchen"}},
-{"id":"room.house.storage","populatorType":"children","name":"Storeroom","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"storage"}},
-{"id":"building.house","populatorType":"children","name":"House","distance":5,"humidity":["dry","normal","humid"],"temperature":["cool","mild","warm","hot"],"type":"building","building":{"buildingType":"house"},"labels":["house"]}
-],
-household.populators.json
-[
-{"id":"household.common-item","populatorType":"item","name":["Household Item","Household Tool"],"tier":"common","type":"household"},
-{"id":"household.kitchen-item","populatorType":"item","name":["Kitchen Tool","Kitchen Container","Kitchen Equipment","Kitchen Utensil"],"tier":"common","type":"household"},
-{"id":"furniture.bed","populatorType":"item","name":"Bed","tier":"common","type":"household","static":true},
-{"id":"furniture.chest","populatorType":"item","name":["Chest","Locker","Box"],"tier":"common","type":"household","static":true,"contains":[{"probability":0.8,"name":"Common Household Tool","tier":"common","type":"household"},{"probability":0.25,"name":"Rare Household Tool","tier":"rare","type":"household"}]},
-{"id":"household.religious-item","populatorType":"item","name":["Religious Item","Faith Item","Sacred Item"],"tier":["common","rare"],"type":"household"},
-{"id":"household.potion-brewing-equipment","populatorType":"item","name":["Potion Brewing Equipment","Alchemy Set","Brewing Apparatus","Cauldron","Distillation Kit"],"tier":["common","rare"],"type":"household"}
-],
 merchant.populators.json
 [
 {"id":"npc.merchant","populatorType":"npc","name":"Merchant","health":{"status":"healthy","points":[150,200,300],"max":300},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.common.simple-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[500,700,1200],"items":["material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity","material.trade-commodity"]},"personality":{"traits":["adventurous","brave","diligent","disciplined","optimistic"],"background":"merchant"}}
@@ -1051,15 +1051,6 @@ mountain.populators.json
 {"id":"wilderness.mountain","populatorType":"children","name":"Mountain","distance":50,"humidity":["normal","dry"],"temperature":["cool","cold","freezing"],"type":"wilderness","wilderness":{"wildernessType":"mountain"}},
 {"id":"npc.mountain.wolf","populatorType":"npc","name":["Wolf","Common Wolf","Mountain Wolf"],"race":"animal","stance":"hostile","health":{"status":"healthy","points":750,"max":750},"gear":{"weapon":"weapon.animal.wolf-paws","armor":"armor.animal.wolf-fur"}}
 ],
-quest.populators.json
-[
-{"id":"quest.deliver.easy","populatorType":"quest","type":"deliver","difficulty":"easy","deliver":{"item":["artifact.letter","food.simple-food","drink.simple-drink"]}},
-{"id":"quest.deliver.food","populatorType":"quest","type":"deliver","difficulty":"easy","deliver":{"item":["food.simple-food"]}},
-{"id":"quest.deliver.drink","populatorType":"quest","type":"deliver","difficulty":"easy","deliver":{"item":["drink.simple-drink"]}},
-{"id":"quest.talk-to","populatorType":"quest","type":"talk-to","difficulty":"easy"},
-{"id":"quest.find-location","populatorType":"quest","type":"find-location","difficulty":"easy"},
-{"id":"quest.kill","populatorType":"quest","type":"kill","difficulty":"easy"}
-],
 pharmacy.populators.json
 [
 {"id":"building.pharmacy","populatorType":"children","name":"Pharmacy","distance":5,"humidity":["normal"],"temperature":["mild","cool"],"type":"building","building":{"buildingType":"store"},"labels":["pharmacy"]},
@@ -1069,14 +1060,6 @@ river.populators.json
 [
 {"id":"wilderness.river","populatorType":"children","name":"River","distance":30,"humidity":["normal","humid","wet"],"temperature":["mild","warm","cool"],"type":"wilderness","wilderness":{"wildernessType":"river"}},
 {"id":"npc.river.fish","populatorType":"npc","name":"Fish","race":"animal","stance":"neutral","health":{"status":"healthy","points":50,"max":50},"labels":["fish"]}
-],
-tavern.populators.json
-[
-{"id":"room.tavern.bedroom","populatorType":"children","name":"Tavern Bedroom","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"bedroom"}},
-{"id":"room.tavern.kitchen","populatorType":"children","name":"Tavern Kitchen","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"kitchen"}},
-{"id":"room.tavern.cellar","populatorType":"children","name":"Tavern Cellar","distance":1,"humidity":"humid","temperature":["cool","cold"],"type":"room","room":{"roomType":"storage"}},
-{"id":"npc.tavern.tavern-keeper","populatorType":"npc","name":"Tavern Keeper","health":{"status":"healthy","points":1000,"max":1000},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.common.simple-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[100,250,400,800],"items":["household.kitchen-item","food.simple-food","drink.simple-drink"]},"personality":{"traits":["brave","cheerful","adventurous","compassionate","disciplined","honest","humble"],"background":"innkeeper"},"quests":["quest.talk-to"]},
-{"id":"building.tavern","populatorType":"children","name":"Tavern","distance":5,"humidity":["normal","humid"],"temperature":["mild","warm"],"type":"building","building":{"buildingType":"base"},"labels":["tavern"]}
 ],
 swamp.populators.json
 [
@@ -1104,6 +1087,13 @@ village.populators.json
 {"id":"street.village-farm-street","populatorType":"children","name":"Farm Street","distance":5,"humidity":"same","temperature":"same","type":"street","labels":["farm-street"],"street":{"streetType":"village-street"}},
 {"id":"npc.village.peasant","populatorType":"npc","name":"Peasant","health":{"status":"healthy","points":[150,200],"max":200},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.common.simple-boots","helmet":"helmet.common.simple-helmet"},"inventory":{"gold":[10,20,50]},"personality":{"traits":["apathetic","arrogant","cowardly","indifferent","pessimistic","selfish"],"background":"peasant"}},
 {"id":"npc.village.guard","populatorType":"npc","name":"Peasant","health":{"status":"healthy","points":[150,200],"max":200},"race":"human","stance":"friendly","gear":{"armor":"armor.rare.nice-armor","boots":"boots.rare.nice-boots","helmet":"helmet.rare.nice-helmet","weapon":{"oneOf":["weapon.rare.nice-sword","weapon.rare.nice-axe","weapon.rare.nice-bow","weapon.rare.nice-crossbow"]}},"inventory":{"gold":[100,200,300],"items":["food.simple-food","food.simple-food","drink.simple-drink","drink.simple-drink"]},"personality":{"traits":["brave","cheerful","adventurous","compassionate","disciplined","honest","humble"],"background":"peasant"}}
+],
+wizard.populators.json
+[
+{"id":"building.wizards-tower","populatorType":"children","name":"Wizard's Tower","distance":5,"humidity":["normal","dry"],"temperature":["mild","cool"],"type":"building","building":{"buildingType":"house"},"labels":["wizards-tower"]},
+{"id":"material.magical-material","populatorType":"item","name":"Magical Material","tier":"rare","type":"material","labels":["magical"]},
+{"id":"material.magical-dust","populatorType":"item","name":"Magical Dust","tier":"common","type":"material","labels":["magical"]},
+{"id":"npc.wizards-tower.wizard","populatorType":"npc","name":"Wizard","race":"human","stance":"friendly","health":{"status":"healthy","points":1000,"max":1000},"gear":{"armor":"armor.rare.nice-armor","boots":"boots.rare.nice-boots","helmet":"helmet.rare.nice-helmet","weapon":"weapon.rare.nice-staff"},"inventory":{"gold":[1000,2000,3000],"items":["material.magical-material","material.magical-material","weapon.rare.nice-staff","weapon.rare.nice-staff","material.magical-dust","material.magical-dust","material.magical-dust"]},"personality":{"traits":["curious","diligent","patient","optimistic","humble"],"background":"scholar"},"labels":["wizard"]}
 ],
 weapon.populators.json
 [
@@ -1134,12 +1124,21 @@ wizards-tower.populators.json
 [
 {"id":"wizards-tower.scrolls","populatorType":"item","name":["Scroll","Magical Scroll"],"tier":["rare","epic"],"type":"consumable","oneOf":["consumable.scroll.fireball","consumable.scroll.lightning"],"probability":0.5}
 ],
-wizard.populators.json
+quest.populators.json
 [
-{"id":"building.wizards-tower","populatorType":"children","name":"Wizard's Tower","distance":5,"humidity":["normal","dry"],"temperature":["mild","cool"],"type":"building","building":{"buildingType":"house"},"labels":["wizards-tower"]},
-{"id":"material.magical-material","populatorType":"item","name":"Magical Material","tier":"rare","type":"material","labels":["magical"]},
-{"id":"material.magical-dust","populatorType":"item","name":"Magical Dust","tier":"common","type":"material","labels":["magical"]},
-{"id":"npc.wizards-tower.wizard","populatorType":"npc","name":"Wizard","race":"human","stance":"friendly","health":{"status":"healthy","points":1000,"max":1000},"gear":{"armor":"armor.rare.nice-armor","boots":"boots.rare.nice-boots","helmet":"helmet.rare.nice-helmet","weapon":"weapon.rare.nice-staff"},"inventory":{"gold":[1000,2000,3000],"items":["material.magical-material","material.magical-material","weapon.rare.nice-staff","weapon.rare.nice-staff","material.magical-dust","material.magical-dust","material.magical-dust"]},"personality":{"traits":["curious","diligent","patient","optimistic","humble"],"background":"scholar"},"labels":["wizard"]}
+{"id":"quest.deliver.food","populatorType":"quest","type":"deliver","deliver":{"item":["food.simple-food"]},"reward":{"gold":{"min":10,"max":100}}},
+{"id":"quest.deliver.drink","populatorType":"quest","type":"deliver","difficulty":"easy","deliver":{"item":["drink.simple-drink"]},"reward":{"gold":{"min":10,"max":100}}},
+{"id":"quest.talk-to","populatorType":"quest","type":"talk-to","reward":{"gold":{"min":50,"max":500}}},
+{"id":"quest.find-location","populatorType":"quest","type":"find-location","reward":{"gold":{"min":50,"max":500}}},
+{"id":"quest.kill","populatorType":"quest","type":"kill","reward":{"gold":{"min":50,"max":500}}}
+],
+tavern.populators.json
+[
+{"id":"room.tavern.bedroom","populatorType":"children","name":"Tavern Bedroom","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"bedroom"}},
+{"id":"room.tavern.kitchen","populatorType":"children","name":"Tavern Kitchen","distance":1,"humidity":"same","temperature":"same","type":"room","room":{"roomType":"kitchen"}},
+{"id":"room.tavern.cellar","populatorType":"children","name":"Tavern Cellar","distance":1,"humidity":"humid","temperature":["cool","cold"],"type":"room","room":{"roomType":"storage"}},
+{"id":"npc.tavern.tavern-keeper","populatorType":"npc","name":"Tavern Keeper","health":{"status":"healthy","points":1000,"max":1000},"race":"human","stance":"friendly","gear":{"armor":"armor.common.simple-clothing","boots":"boots.common.simple-boots","helmet":"helmet.common.simple-helmet","weapon":{"oneOf":["weapon.common.simple-dagger","weapon.common.simple-sword","weapon.common.simple-axe","weapon.common.simple-bow","weapon.common.simple-crossbow","weapon.common.simple-staff"]}},"inventory":{"gold":[100,250,400,800],"items":["household.kitchen-item","food.simple-food","drink.simple-drink"]},"personality":{"traits":["brave","cheerful","adventurous","compassionate","disciplined","honest","humble"],"background":"innkeeper"},"quests":["quest.deliver.food","quest.deliver.drink","quest.talk-to"]},
+{"id":"building.tavern","populatorType":"children","name":"Tavern","distance":5,"humidity":["normal","humid"],"temperature":["mild","warm"],"type":"building","building":{"buildingType":"base"},"labels":["tavern"]}
 ]
 
 End of starting populators.
@@ -1170,18 +1169,18 @@ blacksmith.rules.json
 {"id":"blacksmith-raw-materials-copper","apply":"material.copper","count":{"min":0,"max":3},"hasType":"building","hasLabel":"blacksmith"},
 {"id":"blacksmith-raw-materials-steel","apply":"material.steel","count":{"min":0,"max":3},"hasType":"building","hasLabel":"blacksmith"}
 ],
+church.rules.json
+[
+{"id":"church-artifacts-icons","apply":"artifact.religious-icon","count":{"min":1,"max":2},"hasType":"building","building":{"hasBuildingType":"church"}},
+{"id":"church-artifacts-books","apply":"artifact.religious-book","count":{"min":1,"max":2},"hasType":"building","building":{"hasBuildingType":"church"}},
+{"id":"church-npc-priest","apply":"npc.church.priest","count":{"min":1,"max":1},"hasType":"building","building":{"hasBuildingType":"church"}}
+],
 cave.rules.json
 [
 {"id":"cave-stones","apply":"material.cave.stone","count":{"min":2,"max":10},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"},"probability":0.9},
 {"id":"cave-ores","apply":"material.cave.ore","count":{"min":1,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"},"probability":0.5},
 {"id":"cave-spiders","apply":"npc.cave.giant-spider","count":{"min":1,"max":3},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"},"probability":0.5},
 {"id":"cave-cave-paths","apply":"wilderness.cave","count":{"min":1,"max":2},"depth":{"min":0,"max":5},"probability":0.5,"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"}}
-],
-church.rules.json
-[
-{"id":"church-artifacts-icons","apply":"artifact.religious-icon","count":{"min":1,"max":2},"hasType":"building","building":{"hasBuildingType":"church"}},
-{"id":"church-artifacts-books","apply":"artifact.religious-book","count":{"min":1,"max":2},"hasType":"building","building":{"hasBuildingType":"church"}},
-{"id":"church-npc-priest","apply":"npc.church.priest","count":{"min":1,"max":1},"hasType":"building","building":{"hasBuildingType":"church"}}
 ],
 desert.rules.json
 [
@@ -1194,6 +1193,9 @@ dungeon.rules.json
 {"id":"dungeon-loot-epic","apply":"item.dungeon.epic.loot","count":{"min":1,"max":3},"hasType":"building","building":{"hasBuildingType":"dungeon"},"hasLabel":"dungeon","probability":0.7},
 {"id":"dungeon-loot-rare","apply":"item.dungeon.rare.loot","count":{"min":2,"max":5},"hasType":"building","building":{"hasBuildingType":"dungeon"},"hasLabel":"dungeon","probability":0.9}
 ],
+farm.rules.json
+[
+],
 engineers.rules.json
 [
 {"id":"engineers-guild-engineer","apply":"npc.engineers-guild.engineer","count":{"min":1,"max":1},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"engineers-guild"},
@@ -1201,9 +1203,6 @@ engineers.rules.json
 {"id":"engineers-guild-iron","apply":"material.iron","count":{"min":2,"max":5},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"engineers-guild"},
 {"id":"engineers-guild-steel","apply":"material.steel","count":{"min":2,"max":5},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"engineers-guild"},
 {"id":"engineers-guild-wood","apply":"material.wood","count":{"min":2,"max":5},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"engineers-guild"}
-],
-farm.rules.json
-[
 ],
 forest.rules.json
 [
@@ -1224,6 +1223,12 @@ house.rules.json
 {"id":"house-storerooms","apply":"room.house.storage","count":{"min":0,"max":1},"hasType":"building","building":{"hasBuildingType":"house"}},
 {"id":"house-peasant","apply":"npc.village.peasant","count":{"min":0,"max":1},"hasType":"building","building":{"hasBuildingType":"house"}}
 ],
+kitchen.rules.json
+[
+{"id":"kitchen-items","apply":"household.kitchen-item","count":{"min":0,"max":1},"hasType":"room","room":{"hasRoomType":"kitchen"}},
+{"id":"kitchen-food-ingredients","apply":"material.food-ingredient","count":{"min":1,"max":2},"hasType":"room","room":{"hasRoomType":"kitchen"}},
+{"id":"kitchen-drink-ingredients","apply":"material.drink-ingredient","count":{"min":1,"max":2},"hasType":"room","room":{"hasRoomType":"kitchen"}}
+],
 mine.rules.json
 [
 {"id":"mine-miners","apply":"npc.mine.miner","count":{"min":1,"max":3},"hasType":"building","building":{"hasBuildingType":"base"},"hasLabel":"mine"},
@@ -1241,11 +1246,12 @@ mountain.rules.json
 {"id":"cave-mountain-paths","apply":"wilderness.mountain","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"cave"}},
 {"id":"mountain-crude-rocks","apply":"material.crude-rock","count":{"min":1,"max":3},"probability":0.5,"hasType":"wilderness","wilderness":{"hasWildernessType":"mountain"}}
 ],
-kitchen.rules.json
+pharmacy.rules.json
 [
-{"id":"kitchen-items","apply":"household.kitchen-item","count":{"min":0,"max":1},"hasType":"room","room":{"hasRoomType":"kitchen"}},
-{"id":"kitchen-food-ingredients","apply":"material.food-ingredient","count":{"min":1,"max":2},"hasType":"room","room":{"hasRoomType":"kitchen"}},
-{"id":"kitchen-drink-ingredients","apply":"material.drink-ingredient","count":{"min":1,"max":2},"hasType":"room","room":{"hasRoomType":"kitchen"}}
+{"id":"pharmacy-npc-pharmacist","apply":"npc.pharmacy.pharmacist","count":{"min":1,"max":1},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"pharmacy"},
+{"id":"pharmacy-materials-herbs","apply":"material.herb","count":{"min":0,"max":2},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"pharmacy"},
+{"id":"pharmacy-materials-potion-ingredients","apply":"material.potion-ingredient","count":{"min":0,"max":2},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"pharmacy"},
+{"id":"pharmacy-household-potion-brewing-equipment","apply":"household.potion-brewing-equipment","count":{"min":0,"max":1},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"pharmacy"}
 ],
 river.rules.json
 [
@@ -1254,18 +1260,6 @@ river.rules.json
 {"id":"forest-river-paths","apply":"wilderness.river","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"forest"}},
 {"id":"river-mountain-paths","apply":"wilderness.mountain","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"river"}},
 {"id":"mountain-river-paths","apply":"wilderness.river","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"mountain"}}
-],
-pharmacy.rules.json
-[
-{"id":"pharmacy-npc-pharmacist","apply":"npc.pharmacy.pharmacist","count":{"min":1,"max":1},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"pharmacy"},
-{"id":"pharmacy-materials-herbs","apply":"material.herb","count":{"min":0,"max":2},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"pharmacy"},
-{"id":"pharmacy-materials-potion-ingredients","apply":"material.potion-ingredient","count":{"min":0,"max":2},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"pharmacy"},
-{"id":"pharmacy-household-potion-brewing-equipment","apply":"household.potion-brewing-equipment","count":{"min":0,"max":1},"hasType":"building","building":{"hasBuildingType":"store"},"hasLabel":"pharmacy"}
-],
-storage.rules.json
-[
-{"id":"cellar-food","apply":"food.simple-food","count":{"min":1,"max":5},"hasType":"room","room":{"hasRoomType":"storage"}},
-{"id":"cellar-drinks","apply":"drink.simple-drink","count":{"min":1,"max":5},"hasType":"room","room":{"hasRoomType":"storage"}}
 ],
 root.rules.json
 [
@@ -1281,6 +1275,11 @@ swamp.rules.json
 {"id":"swamp-mud-boots","apply":"item.swamp.mud-boots","count":{"min":0,"max":1},"hasType":"wilderness","wilderness":{"hasWildernessType":"swamp"},"probability":0.6},
 {"id":"swamp-forest-paths","apply":"wilderness.forest","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"swamp"}},
 {"id":"forest-swamp-paths","apply":"wilderness.swamp","count":{"min":0,"max":1},"depth":{"min":0,"max":5},"hasType":"wilderness","wilderness":{"hasWildernessType":"forest"}}
+],
+storage.rules.json
+[
+{"id":"cellar-food","apply":"food.simple-food","count":{"min":1,"max":5},"hasType":"room","room":{"hasRoomType":"storage"}},
+{"id":"cellar-drinks","apply":"drink.simple-drink","count":{"min":1,"max":5},"hasType":"room","room":{"hasRoomType":"storage"}}
 ],
 tavern.rules.json
 [

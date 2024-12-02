@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 import { Card } from "./Card";
 import { EventNarrator2 } from "../ai/EventNarrator2";
 import { useLanguageModel } from "@siocode/base";
+import { TurnHeadlineWriter } from "../ai/TurnHeadlineWriter";
 
 export function GameFeed() {
 
@@ -17,7 +18,7 @@ export function GameFeed() {
     const [gameEvents, setGameEvents] = useState<Array<IGameEvent>>([]);
     const [gameNarration, setGameNarration] = useState<string>("");
     const [gameHeadline, setGameHeadline] = useState<string>("");
-    const allTurnsRef = useRef<Array<{ events: Array<IGameEvent>, narration: string }>>([]);
+    const allTurnsRef = useRef<Array<{ events: Array<IGameEvent>, narration: string, headline: string }>>([]);
     const [turnCount, setTurnCount] = useState(0);
     const [selectedTurn, setSelectedTurn] = useState(-1);
     const [now, setNow] = useState(
@@ -41,7 +42,7 @@ export function GameFeed() {
                 (opts) => {
                     const newTurns = [
                         ...allTurnsRef.current,
-                        { events: opts.events, narration: opts.endTurnEvent.notes }
+                        { events: opts.events, narration: opts.endTurnEvent.notes, headline: opts.endTurnEvent.details?.headline }
                     ];
                     allTurnsRef.current = newTurns;
                     setSelectedTurn(newTurns.length - 1);
@@ -80,6 +81,7 @@ export function GameFeed() {
             setSelectedTurn(selectedTurn - 1);
             setGameEvents(allTurnsRef.current[selectedTurn - 1].events);
             setGameNarration(allTurnsRef.current[selectedTurn - 1].narration);
+            setGameHeadline(allTurnsRef.current[selectedTurn - 1].headline);
         }
     };
 
@@ -88,6 +90,7 @@ export function GameFeed() {
             setSelectedTurn(selectedTurn + 1);
             setGameEvents(allTurnsRef.current[selectedTurn + 1].events);
             setGameNarration(allTurnsRef.current[selectedTurn + 1].narration);
+            setGameHeadline(allTurnsRef.current[selectedTurn + 1].headline);
         }
     };
 
@@ -111,8 +114,15 @@ export function GameFeed() {
             )
         });
 
+        const headliner = new TurnHeadlineWriter(lm);
+        const headline = await headliner.prompt({
+            narration,
+        });
+
         allTurnsRef.current[selectedTurn].narration = narration;
+        allTurnsRef.current[selectedTurn].headline = headline;
         setGameNarration(narration);
+        setGameHeadline(headline);
 
         forceUpdate();
 
@@ -133,10 +143,6 @@ export function GameFeed() {
 
                         <button className="text-xl text-black dark:text-white" onClick={onNextTurn}>
                             <Icon icon="mdi:chevron-right" />
-                        </button>
-
-                        <button className="text-xl text-black dark:text-white" onClick={onCopyTurnData}>
-                            <Icon icon="mdi:content-copy" />
                         </button>
 
                         <button className="text-xl text-black dark:text-white" onClick={onRejectTurnNarration}>
@@ -169,26 +175,6 @@ export function GameFeed() {
                     (event, idx) => <GameEvent value={event} key={`${selectedTurn}.${event.origin}.${idx}`} />
                 )
             }
-            {/*
-            <GameEvent title="You" time={now}>
-                <p className="text-sm italic">What do you do?</p>
-                <div className="flex flex-row flex-wrap gap-2 justify-start items-center">
-                    <button className={buttonCn} onClick={onLookAround}>Look around</button>
-                    <button className={buttonCn}>Go elsewhere</button>
-                    <button className={buttonCn}>Inspect an item</button>
-                    <button className={buttonCn}>Use an item</button>
-                    <button className={buttonCn}>Talk with someone</button>
-                    <button className={buttonCn}>Craft something</button>
-                    <button className={buttonCn}>Farm something</button>
-                    <button className={buttonCn}>Cast a spell</button>
-                    <button className={buttonCn}>Eat something</button>
-                    <button className={buttonCn}>Drink something</button>
-                    <button className={buttonCn}>Give someone a thing</button>
-                    <button className={buttonCn}>Take something</button>
-                    <button className={buttonCn}>Put something down</button>
-                </div>
-            </GameEvent>
-            */}
         </div>
     </>;
 }
