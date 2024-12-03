@@ -127,3 +127,15 @@ Once you venture out of your _starting village_, you will find yourself in the _
 When you are fighting, the **Wandering ...** box comes **Combat!**. This box shows you the _enemy you are fighting_, and also contains the button for your **Attack** action.
 
 ![](./images/game-combat.png)
+
+# Quests
+
+You can _talk to NPCs_, and _offer them your help_. This will generate a _quest_, which you can _complete_ for _rewards_. You can decide which quests to accept, but once you accept a quest for an NPC, you must _complete it_ before you can _accept another quest_ from the same NPC.
+
+![](./images/game-npc-quest.png)
+
+# Trading
+
+You can _trade with NPCs_ as well. You can _sell_ items from your _inventory_, and _buy_ items from the _NPC's inventory_. You can also _trade items_ with the NPC, if you have something they want.
+
+![](./images/game-npc-trading.png)
