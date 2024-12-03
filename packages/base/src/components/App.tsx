@@ -27,7 +27,7 @@ export function App(
 
             <div className={rootDivCn}>
 
-                {/*<Header middle={props.headerMiddle} right={props.headerRight} />*/}
+                {<Header middle={props.headerMiddle} right={props.headerRight} />}
 
                 <div className={contentDivCn}>
                     {props.children}

@@ -1,0 +1,35 @@
+{
+    "short_name": "TCT",
+    "name": "The Crooked Tankard",
+    "description": "A text-based adventure game, using built-in AI",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/logo-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/logo-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/logo-1024.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        },
+        {
+            "src": "/logo-64.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        }
+    ],
+    "start_url": ".",
+    "theme_color": "#ffffff",
+    "background_color": "#28ec8d",
+    "categories": [
+        "games",
+        "entertainment"
+    ]
+}

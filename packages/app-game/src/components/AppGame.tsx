@@ -18,6 +18,7 @@ import { GameLayout } from "./GameLayout";
 import { useGameLayout } from "../context/GameLayout.context";
 import { LoadingModal } from "./LoadingModal";
 import { GameOverScreen } from "./GameOverScreen";
+import { GameTutorialWizard } from "./GameTutorialWizard";
 
 function ShownLayout() {
 
@@ -109,7 +110,12 @@ function ShownLayout() {
 
 export function AppGame() {
 
+    const [wizardCompleted, setWizardCompleted] = useState(false);
     const [characterCreated, setCharacterCreated] = useState(false);
+
+    if (!wizardCompleted) {
+        return <GameTutorialWizard onFinished={() => setWizardCompleted(true)} />;
+    }
 
     if (!characterCreated) {
         return <GameCharacterCreation>
