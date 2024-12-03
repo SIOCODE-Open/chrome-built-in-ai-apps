@@ -1,3 +1,4 @@
 packages/*/public/index.js
 packages/*/public/index.css
 node_modules/
+packages/*/*.zip

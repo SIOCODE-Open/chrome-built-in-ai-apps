@@ -18,7 +18,8 @@
         "typescript": "*",
         "@types/react": "*",
         "@types/react-dom": "*",
-        "@types/classnames": "*"
+        "@types/classnames": "*",
+        "zip-a-folder": "*"
     },
     "scripts": {
         "build:js": "esbuild src/index.tsx --bundle --minify --jsx=automatic --outfile=public/index.js",
@@ -26,6 +27,7 @@
         "serve:js": "esbuild src/index.tsx --bundle --servedir=public --jsx=automatic --outfile=public/index.js --serve=0.0.0.0:3200",
         "serve:css": "tailwindcss -i src/index.css -o public/index.css --watch",
         "serve": "concurrently \"npm run serve:js\" \"npm run serve:css\"",
-        "build": "npm run build:js && npm run build:css"
+        "build": "npm run build:js && npm run build:css",
+        "zip": "node zip.js"
     }
 }

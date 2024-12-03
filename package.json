@@ -20,14 +20,17 @@
         "@types/react": "18.3.12",
         "@types/react-dom": "18.3.1",
         "@types/classnames": "2.3.4",
-        "@types/node": "22.10.1"
+        "@types/node": "22.10.1",
+        "zip-a-folder": "3.1.7"
     },
     "workspaces": ["packages/*"],
     "scripts": {
         "build:brainstorm": "npm run -w @siocode/app-brainstorm build",
         "serve:brainstorm": "npm run -w @siocode/app-brainstorm serve",
+        "zip:brainstorm": "npm run -w @siocode/app-brainstorm zip",
         "build:game": "npm run -w @siocode/app-game build",
         "serve:game": "npm run -w @siocode/app-game serve",
+        "zip:game": "npm run -w @siocode/app-game zip",
         "build:all": "npm run build:brainstorm && npm run build:game && echo 'All apps built.'",
         "build:extender": "npm run -w @siocode/extender-cli build",
         "start:extender": "npm run -w @siocode/extender-cli start"

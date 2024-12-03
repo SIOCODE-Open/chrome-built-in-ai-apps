@@ -1,0 +1,15 @@
+# CI/CD pipeline for The Crooked Tankard
+# Builds the app, zips it, and uploads to Artifact Registry
+# The update script on the server downloads it, and unzips it
+steps:
+  - name: node
+    entrypoint: /bin/sh
+    args:
+      - -c
+      - |
+        npm install
+        npm run build:game
+        npm run zip:game
+  - name: gcr.io/cloud-builders/gcloud
+    args: ['artifacts', 'generic', 'upload', '--source=packages/app-game/game.zip', '--package=crookedtankard.com', '--version=${TAG_NAME}', '--location=europe', '--repository=siocloud-generic']
+logsBucket: 'gs://build-logs.cloud.siocode.hu'
