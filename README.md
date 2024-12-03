@@ -14,8 +14,6 @@ The Crooked Tankard is a _text-based role playing game_. It is powered by _web t
 
 📖 [See how the game works](./docs/INTERNALS.md)
 
-📖 [Read about our experience on making the game](./docs/MAKINGOF.md)
-
 ## Building
 
 To build the project, you need to have [Node.js](https://nodejs.org) installed.
