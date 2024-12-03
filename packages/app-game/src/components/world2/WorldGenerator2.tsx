@@ -660,6 +660,11 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
 
     private postProcessNode(node: IWorldNode) {
 
+        const hasFriendlyNpcs = node.npcs.some(npc => npc.stance === "friendly");
+        if (!hasFriendlyNpcs) {
+            return;
+        }
+
         const villageNpcs = allNpcsInVillage(node);
         const closebyItems = allItemsInRadius(node, 2)
             .filter(item => item.item.tier !== "common" && item.item.tier !== "garbage");
@@ -1090,6 +1095,8 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
         this._rootNode = rootNode;
 
         const appliedSet = new Set<string>();
+        const populatedNodesSet = new Set<number>();
+        const populatedNodesNonChildrenSet = new Set<number>();
 
         const appliedSetKey = (node: IWorldNode, rule: INodePopulatorRule) => {
             return `${node.id}::::${rule.id}`;
@@ -1406,10 +1413,14 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             return applicableItemRules;
         };
 
+        const childrenGenStart = Date.now();
+
         while (roundCount < MAX_ROUNDS) {
 
             // Find all applicable node - rule pairs
-            const applicableChildrenRules = generatedNodes.flatMap(findApplicableChildrenRules);
+            const applicableChildrenRules = generatedNodes.filter(
+                n => !populatedNodesSet.has(n.node.id)
+            ).flatMap(findApplicableChildrenRules);
 
             // Apply the rules
             for (const { generatedNode, populator, rule, key } of applicableChildrenRules) {
@@ -1424,6 +1435,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
                     }
 
                     applyChildrenPopulator({ generatedNode, rule, populator, key });
+                    populatedNodesSet.add(generatedNode.node.id);
                 }
             }
 
@@ -1435,7 +1447,9 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             let appliedAnyRule = false;
 
             // Find all applicable node - rule pairs
-            const applicableChildrenRules = generatedNodes.flatMap(findApplicableChildrenRules);
+            const applicableChildrenRules = generatedNodes.filter(
+                n => !populatedNodesSet.has(n.node.id)
+            ).flatMap(findApplicableChildrenRules);
 
             // Apply the rules
             for (const { generatedNode, populator, rule, key } of applicableChildrenRules) {
@@ -1450,6 +1464,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
                     }
 
                     applyChildrenPopulator({ generatedNode, rule, populator, key });
+                    populatedNodesSet.add(generatedNode.node.id);
                     appliedAnyRule = true;
                 }
             }
@@ -1459,12 +1474,18 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             }
         }
 
+        const childrenGenEnd = Date.now();
+
+        console.log("[WorldGenerator2] Children generation took", childrenGenEnd - childrenGenStart, "ms");
+
         // Apply any non-children rules, until we can
         while (true) {
             let appliedAnyRule = false;
 
             // Find all applicable node - rule pairs
-            const applicableItemRules = generatedNodes.flatMap(findApplicableNonChildrenRules);
+            const applicableItemRules = generatedNodes.filter(
+                n => !populatedNodesNonChildrenSet.has(n.node.id)
+            ).flatMap(findApplicableNonChildrenRules);
 
             // Apply the rules
             for (const { generatedNode, populator, rule, key } of applicableItemRules) {
@@ -1475,6 +1496,7 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
                     await applyNpcPopulator({ generatedNode, rule, populator, key });
                     appliedAnyRule = true;
                 }
+                populatedNodesNonChildrenSet.add(generatedNode.node.id);
             }
 
             if (!appliedAnyRule) {
@@ -1482,8 +1504,16 @@ export class WorldGenerator2 implements INodeFactory, IEdgeFactory, IItemFactory
             }
         }
 
+        const nonChildrenGenEnd = Date.now();
+
+        console.log("[WorldGenerator2] Non-children generation took", nonChildrenGenEnd - childrenGenEnd, "ms");
+
         // Post-process nodes
         this.walk(this.postProcessNode.bind(this));
+
+        const postProcessEnd = Date.now();
+
+        console.log("[WorldGenerator2] Post-processing took", postProcessEnd - nonChildrenGenEnd, "ms");
 
         console.log("[WorldGenerator2] Generated nodes:", generatedNodes.length, generatedNodes);
 
