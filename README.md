@@ -4,7 +4,7 @@ The Crooked Tankard is a _text-based role playing game_. It is powered by _web t
 
 ![](./docs/screenshot.png)
 
-▶️ [Watch our video of the game](https://siocode.hu)
+▶️ [Watch our video of the game](https://youtu.be/WRLDsdM7CpU)
 
 🎮 [Play it here](https://crooked-tankard.siocode.hu)
 
