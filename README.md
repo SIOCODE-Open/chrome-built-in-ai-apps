@@ -2,7 +2,7 @@
 
 ⚠️ **This repository contains source code of our hackathon submission for the [Google Chrome Built-in AI Challenge](https://googlechromeai.devpost.com/).** ⚠️
 
-⚠️ **Since the submission, the repository content may have modified. [Go back to revision 7ee9322d](https://github.com/SIOCODE-Open/chrome-built-in-ai-apps/commit/7ee9322dc99974a29939bf374802fb3a52cd27af) to see the state of the repository at the time of the submission.** ⚠️
+⚠️ **Since the submission, the repository content may have modified. [Go back to revision 03198ad1](https://github.com/SIOCODE-Open/chrome-built-in-ai-apps/commit/03198ad141cb25e7768662cd4a1abe2a75bdfe84) to see the state of the repository at the time of the submission.** ⚠️
 
 ![](packages/app-game/public/logo-192.png)
 
