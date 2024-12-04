@@ -1,5 +1,9 @@
 # 🍻 The Crooked Tankard
 
+⚠️ **This repository contains source code of our hackathon submission for the [Google Chrome Built-in AI Challenge](https://googlechromeai.devpost.com/).** ⚠️
+
+⚠️ **Since the submission, the repository content may have modified. [Go back to revision 7ee9322d](https://github.com/SIOCODE-Open/chrome-built-in-ai-apps/commit/7ee9322dc99974a29939bf374802fb3a52cd27af) to see the state of the repository at the time of the submission.** ⚠️
+
 ![](packages/app-game/public/logo-192.png)
 
 The Crooked Tankard is a _text-based role playing game_. It is powered by _web technologies_, specifically _built-in AI_ and _React_. The AI generates narration, items, and many more to create _infinite replayability_ and a _vast random world_.
